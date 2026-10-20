@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Art House | گالری تخصصی آثار تجربی کایان</title>
     
     <!-- Tailwind CSS -->
@@ -45,7 +45,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .dark .glass-card {
-            background: rgba(11, 15, 25, 0.85);
+            background: rgba(11, 15, 25, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .gradient-text {
@@ -55,23 +55,23 @@
         }
     </style>
 </head>
-<body class="bg-lightBg text-slate-800 dark:bg-darkBg dark:text-slate-100 min-h-screen relative overflow-x-hidden selection:bg-teal-500 selection:text-white art-pattern-bg">
+<body class="bg-lightBg text-slate-800 dark:bg-darkBg dark:text-slate-100 min-h-screen relative overflow-x-hidden selection:bg-teal-500 selection:text-white art-pattern-bg pb-24 md:pb-12">
 
     <!-- Navigation Bar -->
-    <header class="fixed top-0 left-0 right-0 z-50 glass-card px-4 sm:px-8 lg:px-16 py-3.5 flex items-center justify-between border-b border-white/10 shadow-2xl">
-        <div class="flex items-center gap-2.5">
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card px-3 sm:px-8 lg:px-16 py-3.5 flex items-center justify-between border-b border-white/10 shadow-2xl">
+        <div class="flex items-center gap-2">
             <a href="https://kayancreative.agency" class="flex items-center gap-2 group">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden border border-teal-500/40 bg-slate-900 flex items-center justify-center">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden border border-teal-500/40 bg-slate-900 flex items-center justify-center shrink-0">
                     <img src="logo.webp" alt="Kayan Logo" class="w-full h-full object-cover">
                 </div>
-                <span class="font-black text-lg sm:text-xl gradient-text">ART HOUSE</span>
+                <span class="font-black text-base sm:text-xl gradient-text">ART HOUSE</span>
             </a>
         </div>
         <div class="flex items-center gap-2">
-            <button onclick="toggleTheme()" class="w-9 h-9 rounded-xl glass-card flex items-center justify-center hover:scale-105 transition-transform">
+            <button onclick="toggleTheme()" class="w-9 h-9 rounded-xl glass-card flex items-center justify-center hover:scale-105 transition-transform shrink-0">
                 <i id="theme-icon" class="fa-solid fa-moon text-tealBrand text-sm"></i>
             </button>
-            <a href="https://kayancreative.agency" class="px-3.5 sm:px-5 py-2 rounded-xl glass-card hover:bg-white/10 text-[11px] sm:text-xs font-semibold flex items-center gap-2 text-teal-400 border border-teal-500/30 transition-all">
+            <a href="https://kayancreative.agency" class="px-3 sm:px-5 py-2 rounded-xl glass-card hover:bg-white/10 text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 text-teal-400 border border-teal-500/30 transition-all shrink-0">
                 <i class="fa-solid fa-arrow-right text-[10px]"></i>
                 <span class="hidden sm:inline">بازگشت به سایت اصلی</span>
                 <span class="sm:hidden">بازگشت</span>
@@ -79,8 +79,28 @@
         </div>
     </header>
 
+    <!-- Super App Bottom Navigation Bar (Mobile Only) -->
+    <div class="md:hidden fixed bottom-3 inset-x-3 z-50 glass-card rounded-2xl p-1.5 flex items-center justify-around border border-white/15 shadow-2xl backdrop-blur-2xl">
+        <a href="https://kayancreative.agency" class="flex flex-col items-center justify-center py-2 px-3 rounded-xl text-slate-400 hover:text-tealBrand hover:bg-white/10 transition-all text-xs font-medium gap-1">
+            <i class="fa-solid fa-house text-sm"></i>
+            <span class="text-[10px]">خانه</span>
+        </a>
+        <a href="https://kayancreative.agency#portfolio" class="flex flex-col items-center justify-center py-2 px-3 rounded-xl text-slate-400 hover:text-tealBrand hover:bg-white/10 transition-all text-xs font-medium gap-1">
+            <i class="fa-solid fa-layer-group text-sm"></i>
+            <span class="text-[10px]">پروژه‌ها</span>
+        </a>
+        <a href="arthouse.html" class="flex flex-col items-center justify-center py-2 px-3 rounded-xl text-teal-400 bg-teal-500/15 transition-all text-xs font-bold gap-1 border border-teal-500/30">
+            <i class="fa-solid fa-palette text-sm"></i>
+            <span class="text-[10px]">آرت هاوس</span>
+        </a>
+        <a href="https://kayancreative.agency#contact" class="flex flex-col items-center justify-center py-2 px-3 rounded-xl text-slate-400 hover:text-orangeBrand hover:bg-white/10 transition-all text-xs font-medium gap-1">
+            <i class="fa-solid fa-headset text-sm"></i>
+            <span class="text-[10px]">ارتباط</span>
+        </a>
+    </div>
+
     <!-- Main Content -->
-    <main class="pt-28 sm:pt-32 pb-20 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto space-y-8 sm:space-y-12 relative z-10">
+    <main class="pt-24 sm:pt-32 pb-20 px-3 sm:px-8 lg:px-16 max-w-7xl mx-auto space-y-6 sm:space-y-12 relative z-10">
 
         <!-- Header Section -->
         <div class="text-center space-y-3 max-w-2xl mx-auto">
@@ -97,19 +117,5 @@
         </div>
 
         <!-- Filter Tags -->
-        <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 text-xs">
-            <button onclick="filterGrid('all')" class="filter-btn px-4 py-2 rounded-xl bg-teal-600 text-white font-bold transition-all shadow-md shrink-0">همه آثار</button>
-            <button onclick="filterGrid('ai')" class="filter-btn px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-all shrink-0">تست‌های AI & فیس‌لاک</button>
-            <button onclick="filterGrid('cinematic')" class="filter-btn px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-all shrink-0">کادر سینمایی</button>
-            <button onclick="filterGrid('motion')" class="filter-btn px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-all shrink-0">برندینگ و گرافیک</button>
-        </div>
-
-        <!-- Bento Visual Grid (Fully Responsive Grid Cards) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-[240px]">
-            
-            <!-- Card 1 -->
-            <div class="grid-item ai sm:col-span-2 sm:row-span-2 glass-card rounded-3xl overflow-hidden relative group cursor-pointer shadow-lg" onclick="openLightbox('kayan-face.webp', 'پرتره سینمایی & فیس‌لاک هوش مصنوعی')">
-                <img src="kayan-face.webp" alt="Art 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-85"></div>
-                <div class="absolute bottom-5 right-5 left-5 space-y-1">
-                    <span class="text-[10px] font-bold tracking-widest text-teal-400 uppercase bg-teal-950/80 px-2 py-0.5 
+        <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 text-xs scrollbar-none">
+            <button onclick="filterGrid('all')" class="filter-btn px-4 py-2 rounded-xl bg-teal-600 text-white font-bold transition-all shadow
