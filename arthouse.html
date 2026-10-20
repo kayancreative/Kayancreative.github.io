@@ -34,11 +34,11 @@
         }
         .art-pattern-bg {
             background-image: radial-gradient(rgba(13, 148, 136, 0.15) 1px, transparent 1px), radial-gradient(rgba(249, 115, 22, 0.1) 1px, transparent 1px);
-            background-size: 36px 36px;
-            background-position: 0 0, 18px 18px;
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
         }
         .glass-card {
-            background: rgba(13, 18, 30, 0.75);
+            background: rgba(13, 18, 30, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -49,179 +49,69 @@
             -webkit-text-fill-color: transparent;
         }
         .grid-card {
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .grid-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px -15px rgba(13, 148, 136, 0.3);
+            transform: translateY(-4px);
             border-color: rgba(13, 148, 136, 0.4);
         }
     </style>
 </head>
 <body class="art-pattern-bg min-h-screen relative overflow-x-hidden selection:bg-teal-500 selection:text-white">
 
-    <!-- Ambient Dynamic Lighting Orbs -->
-    <div class="fixed top-10 left-10 w-96 h-96 bg-teal-500/10 rounded-full blur-[140px] pointer-events-none"></div>
-    <div class="fixed bottom-10 right-10 w-96 h-96 bg-orange-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <!-- Ambient Lighting -->
+    <div class="fixed top-10 left-10 w-72 h-72 bg-teal-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="fixed bottom-10 right-10 w-72 h-72 bg-orange-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
     <!-- Navigation Bar -->
-    <header class="fixed top-0 left-0 right-0 z-50 glass-card px-6 lg:px-16 py-4 flex items-center justify-between border-b border-white/10 shadow-2xl">
-        <div class="flex items-center gap-3">
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card px-4 sm:px-8 py-3.5 flex items-center justify-between border-b border-white/10 shadow-2xl">
+        <div class="flex items-center gap-2">
             <a href="https://kayancreative.agency" class="flex items-center gap-2 group">
-                <div class="w-10 h-10 rounded-xl overflow-hidden border border-teal-500/40 bg-slate-900 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden border border-teal-500/40 bg-slate-900 flex items-center justify-center">
                     <img src="logo.webp" alt="Kayan Logo" class="w-full h-full object-cover">
                 </div>
-                <span class="font-black text-xl gradient-text">ART HOUSE</span>
+                <span class="font-black text-base sm:text-lg gradient-text tracking-wider">ART HOUSE</span>
             </a>
         </div>
         <div>
-            <a href="https://kayancreative.agency" class="px-5 py-2.5 rounded-xl glass-card hover:bg-white/10 text-xs font-semibold flex items-center gap-2 text-teal-400 border border-teal-500/30 transition-all hover:scale-105">
-                <i class="fa-solid fa-arrow-right"></i>
-                بازگشت به سایت اصلی
+            <a href="https://kayancreative.agency" class="px-3.5 sm:px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 text-teal-400 border border-teal-500/30 transition-all">
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                <span class="hidden sm:inline">بازگشت به سایت اصلی</span>
+                <span class="sm:hidden">بازگشت</span>
             </a>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="pt-32 pb-24 px-4 lg:px-16 max-w-7xl mx-auto space-y-12 relative z-10">
+    <main class="pt-28 pb-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto space-y-8 relative z-10">
 
         <!-- Header Section -->
-        <div class="text-center space-y-4 max-w-2xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card text-xs font-semibold text-teal-400 border border-teal-500/20">
+        <div class="text-center space-y-3 max-w-2xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-card text-[11px] sm:text-xs font-semibold text-teal-400 border border-teal-500/20">
                 <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
                 <span>آرشیو تجربی و آزمایشگاهی هوش مصنوعی & ویدیو</span>
             </div>
-            <h1 class="text-4xl lg:text-6xl font-black">
+            <h1 class="text-3xl sm:text-5xl font-black">
                 گالری <span class="gradient-text">Art House</span>
             </h1>
-            <p class="text-slate-400 text-sm lg:text-base leading-relaxed">
+            <p class="text-slate-400 text-xs sm:text-sm lg:text-base leading-relaxed">
                 مجموعه‌ای از تست‌های استایل بصری، رندرهای مفهومی، پوسترهای سینمایی و فریم‌های تجربی هوش مصنوعی تولید شده در استودیوی کایان.
             </p>
         </div>
 
-        <!-- Filter Tags -->
-        <div class="flex flex-wrap items-center justify-center gap-2.5 text-xs">
-            <button onclick="filterGrid('all')" class="filter-btn active px-4 py-2 rounded-xl bg-teal-600 text-white font-bold transition-all shadow-md">همه آثار</button>
-            <button onclick="filterGrid('ai')" class="filter-btn px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-300 transition-all">تست‌های AI & فیس‌لاک</button>
-            <button onclick="filterGrid('cinematic')" class="filter-btn px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-300 transition-all">کادر سینمایی</button>
-            <button onclick="filterGrid('motion')" class="filter-btn px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-300 transition-all">برندینگ و گرافیک</button>
+        <!-- Filter Tags (Scrollable on mobile) -->
+        <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 text-xs scrollbar-none">
+            <button onclick="filterGrid('all')" class="filter-btn active px-3.5 py-2 rounded-xl bg-teal-600 text-white font-bold whitespace-nowrap shadow-md">همه آثار</button>
+            <button onclick="filterGrid('ai')" class="filter-btn px-3.5 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-300 whitespace-nowrap">تست‌های AI & فیس‌لاک</button>
+            <button onclick="filterGrid('cinematic')" class="filter-btn px-3.5 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-300 whitespace-nowrap">کادر سینمایی</button>
+            <button onclick="filterGrid('motion')" class="filter-btn px-3.5 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-300 whitespace-nowrap">برندینگ و گرافیک</button>
         </div>
 
-        <!-- Bento / Masonry Visual Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[240px]">
+        <!-- Bento / Responsive Grid (Optimized for Mobile) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-[220px] sm:auto-rows-[240px]">
             
-            <!-- Card 1: Large Feature -->
-            <div class="grid-item ai md:col-span-2 md:row-span-2 glass-card rounded-3xl overflow-hidden relative group grid-card cursor-pointer" onclick="openLightbox('kayan-face.webp', 'پرتره سینمایی & فیس‌لاک هوش مصنوعی')">
+            <!-- Card 1 -->
+            <div class="grid-item ai sm:col-span-2 sm:row-span-2 glass-card rounded-3xl overflow-hidden relative group grid-card cursor-pointer" onclick="openLightbox('kayan-face.webp', 'پرتره سینمایی & فیس‌لاک هوش مصنوعی')">
                 <img src="kayan-face.webp" alt="Art 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#070a13] via-transparent to-transparent opacity-85"></div>
-                <div class="absolute bottom-6 right-6 left-6 space-y-1.5">
-                    <span class="text-[10px] font-bold tracking-widest text-teal-400 uppercase bg-teal-950/60 px-2.5 py-1 rounded-md border border-teal-500/20">AI Visual & Face-Lock</span>
-                    <h3 class="text-xl font-bold text-white">پرتره مفهومی استودیویی با فیس‌لاک هوش مصنوعی</h3>
-                </div>
-            </div>
-
-            <!-- Card 2: Tall Aspect -->
-            <div class="grid-item cinematic md:col-span-1 md:row-span-2 glass-card rounded-3xl overflow-hidden relative group grid-card cursor-pointer" onclick="openLightbox('capture1.webp', 'فریم‌های ادیت سینمایی و لایتینگ')">
-                <img src="capture1.webp" alt="Art 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-[#070a13] via-transparent to-transparent opacity-85"></div>
-                <div class="absolute bottom-6 right-6 left-6 space-y-1">
-                    <span class="text-[10px] font-bold tracking-widest text-orange-400 uppercase bg-orange-950/60 px-2.5 py-1 rounded-md border border-orange-500/20">Cinematic Grade</span>
-                    <h4 class="text-base font-bold text-white">فریم‌های اصلاح رنگ و لایتینگ استودیویی</h4>
-                </div>
-            </div>
-
-            <!-- Card 3: Standard Box -->
-            <div class="grid-item motion md:col-span-1 md:row-span-1 glass-card rounded-3xl overflow-hidden relative group grid-card cursor-pointer" onclick="openLightbox('logo.webp', 'طراحی هویت بصری مدرن')">
-                <div class="w-full h-full bg-slate-900 flex items-center justify-center p-8 group-hover:scale-105 transition-transform duration-700">
-                    <img src="logo.webp" alt="Art 3" class="max-w-[70%] max-h-[70%] object-contain">
-                </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-[#070a13] via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-4 right-4 left-4">
-                    <span class="text-[10px] font-bold text-teal-400">Brand Identity</span>
-                    <h4 class="text-sm font-bold text-white">هندسه انتزاعی لوگو</h4>
-                </div>
-            </div>
-
-            <!-- Card 4: Standard Box -->
-            <div class="grid-item motion md:col-span-1 md:row-span-1 glass-card rounded-3xl overflow-hidden relative group grid-card cursor-pointer" onclick="openLightbox('Captures.webp', 'داشبورد توسعه و زیرساخت بصری')">
-                <img src="Captures.webp" alt="Art 4" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-[#070a13] via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-4 right-4 left-4">
-                    <span class="text-[10px] font-bold text-orange-400">UI / System Art</span>
-                    <h4 class="text-sm font-bold text-white">داشبورد هویت بصری</h4>
-                </div>
-            </div>
-
-            <!-- Card 5: Wide Feature -->
-            <div class="grid-item ai md:col-span-2 md:row-span-1 glass-card rounded-3xl overflow-hidden relative group grid-card cursor-pointer" onclick="openLightbox('nMo73E7xSmPNYmr1KALINa14aIA-PAwyvb8KRmCGMithfGGBsw.webp', 'کامپوزیت نوری و بک‌گراند نئونی')">
-                <img src="nMo73E7xSmPNYmr1KALINa14aIA-PAwyvb8KRmCGMithfGGBsw.webp" alt="Art 5" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-[#070a13] via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-5 right-6 left-6">
-                    <span class="text-[10px] font-bold text-teal-400 uppercase">Composite</span>
-                    <h4 class="text-base font-bold text-white">کامپوزیت نوری و والپیپر سینمایی نئون</h4>
-                </div>
-            </div>
-
-            <!-- Card 6: Square Highlight -->
-            <div class="grid-item cinematic md:col-span-2 md:row-span-1 glass-card rounded-3xl overflow-hidden relative group grid-card flex items-center justify-center p-6 text-center border-dashed border-teal-500/30">
-                <div class="space-y-2">
-                    <i class="fa-solid fa-plus-circle text-3xl text-teal-400"></i>
-                    <h4 class="font-bold text-slate-200">به‌روزرسانی هفتگی آرشیو</h4>
-                    <p class="text-xs text-slate-400">آثار روزمره و آزمایش‌های رندرینگ جدید در حال آپلود...</p>
-                </div>
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- Lightbox Modal -->
-    <div id="lightbox" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
-        <button onclick="closeLightbox()" class="absolute top-6 left-6 w-12 h-12 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/20 transition-all text-lg">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-        <div class="max-w-4xl max-h-[85vh] flex flex-col items-center">
-            <img id="lightbox-img" src="" alt="Enlarged Art" class="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl border border-white/10">
-            <p id="lightbox-desc" class="mt-4 text-sm font-semibold text-slate-300 text-center"></p>
-        </div>
-    </div>
-
-    <!-- Script -->
-    <script>
-        function openLightbox(src, desc) {
-            document.getElementById('lightbox-img').src = src;
-            document.getElementById('lightbox-desc').textContent = desc;
-            const lb = document.getElementById('lightbox');
-            lb.classList.remove('hidden');
-            lb.classList.add('flex');
-        }
-
-        function closeLightbox() {
-            const lb = document.getElementById('lightbox');
-            lb.classList.add('hidden');
-            lb.classList.remove('flex');
-        }
-
-        // Filter Functionality
-        function filterGrid(category) {
-            const items = document.querySelectorAll('.grid-item');
-            const buttons = document.querySelectorAll('.filter-btn');
-
-            buttons.forEach(btn => {
-                btn.classList.remove('bg-teal-600', 'text-white', 'font-bold');
-                btn.classList.add('glass-card', 'text-slate-300');
-            });
-            event.target.classList.add('bg-teal-600', 'text-white', 'font-bold');
-            event.target.classList.remove('glass-card', 'text-slate-300');
-
-            items.forEach(item => {
-                if (category === 'all' || item.classList.contains(category)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+                <div class="absolute bottom-5 right-5 left-5 space-y-1">
