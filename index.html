@@ -1,29 +1,462 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سایت من</title>
+    <title>Kayan Creative Agency | آژانس خلاق کایان</title>
+    <meta name="description" content="استودیو تخصصی تولید محتوا، تدوین سینمایی، تیزرهای تبلیغاتی و ویدیوهای هوش مصنوعی">
+    
+    <!-- فونت وزیرمتن و آیکون‌ها -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#FF5E00',
+                            neon: '#FF7700',
+                            teal: '#00E5FF',
+                            darkTeal: '#0A252E',
+                            darkBg: '#060B0E',
+                            lightBg: '#F4F8FA'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 4s infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%': { transform: 'scale(1)', opacity: '0.4' },
+                            '100%': { transform: 'scale(1.2)', opacity: '0.8' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         body {
-            margin: 0;
-            background: #0d1117;
-            color: #58a6ff;
-            font-family: system-ui, -apple-system, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
+            font-family: 'Vazirmatn', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
-        h1 { font-size: 2.5rem; margin-bottom: 10px; color: #f0f6fc; }
-        p { font-size: 1.2rem; color: #8b949e; }
+        .glass-panel {
+            background: rgba(10, 37, 46, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 229, 255, 0.15);
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(255, 94, 0, 0.2);
+        }
+        .teal-orange-gradient {
+            background: linear-gradient(135deg, #FF5E00 0%, #00E5FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glow-orange {
+            box-shadow: 0 0 25px rgba(255, 94, 0, 0.5);
+        }
+        .glow-teal {
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
+        }
     </style>
 </head>
-<body>
-    <div>
-        <h1>سایت کایان به زودی...</h1>
-        <p>میزبانی شده روی GitHub Pages با عملکرد فوق‌العاده 🚀</p>
+
+<body class="bg-brand-darkBg text-slate-100 transition-colors duration-500 selection:bg-brand-orange selection:text-white pb-20 md:pb-0">
+
+    <!-- افکت‌های نوری پس‌زمینه (Ambient Glow) -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div id="ambient-orange" class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-brand-orange/20 blur-[120px] animate-pulse-glow"></div>
+        <div id="ambient-teal" class="absolute top-1/2 -left-32 w-96 h-96 rounded-full bg-brand-teal/20 blur-[130px] animate-float"></div>
     </div>
+
+    <!-- هدر و نوبار ریسپانسیو -->
+    <header class="sticky top-0 z-50 glass-panel border-b transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- لوگوتایپ کایان -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-teal flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform duration-300">
+                    <span class="font-black text-2xl text-black">K</span>
+                </div>
+                <div>
+                    <span class="font-black text-xl tracking-tight block">KAYAN <span class="text-brand-orange">CREATIVE</span></span>
+                    <span class="text-[10px] text-brand-teal tracking-widest block uppercase font-semibold">Visual Studio</span>
+                </div>
+            </a>
+
+            <!-- منوی دسکتاپ -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+                <a href="#services" class="hover:text-brand-orange transition-colors">خدمات تخصصی</a>
+                <a href="#portfolio" class="hover:text-brand-teal transition-colors">نمونه‌کارها</a>
+                <a href="#about" class="hover:text-brand-orange transition-colors">درباره ما</a>
+                <a href="#contact" class="hover:text-brand-teal transition-colors">شروع پروژه</a>
+            </nav>
+
+            <!-- ابزار نورپردازی محیطی + دکمه CTA -->
+            <div class="flex items-center gap-3">
+                
+                <!-- سوییچر حالت روز / شب / تنظیم خودکار منطقه‌ای -->
+                <button id="theme-toggle" class="p-2.5 rounded-xl glass-panel text-brand-orange hover:text-brand-teal transition-all flex items-center gap-2 text-xs" title="تغییر حالت نور محیطی">
+                    <i id="theme-icon" class="fas fa-moon text-lg"></i>
+                    <span id="theme-status" class="hidden sm:inline font-mono">شبانه (خودکار)</span>
+                </button>
+
+                <a href="https://wa.me/989120000000" target="_blank" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-orange text-black font-bold text-sm hover:bg-brand-neon hover:shadow-lg hover:shadow-brand-orange/40 transition-all">
+                    <span>همکاری سریع</span>
+                    <i class="fab fa-whatsapp text-lg"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- بخش قهرمان (HERO SECTION) -->
+    <section class="relative z-10 min-h-[85vh] flex items-center justify-center px-4 py-16 text-center">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- تگ لاین پر انرژی -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-brand-orange/40 mb-6 animate-float">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-orange animate-ping"></span>
+                <span class="text-xs sm:text-sm font-bold text-brand-orange tracking-wide">پذیرش پروژه‌های تبلیغاتی سینمایی ۲۰۲۶</span>
+            </div>
+
+            <!-- تیتر اصلی با اثر Teal & Orange -->
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black leading-tight sm:leading-none mb-6">
+                روایت‌های بصری که <br class="hidden sm:block"/>
+                <span class="teal-orange-gradient">می‌فروشند و ماندگار می‌شوند</span>
+            </h1>
+
+            <p class="text-base sm:text-xl text-slate-4xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+                ما در <strong>کایان کریتیو</strong> با تلفیق هنر فیلم‌برداری مدرن، اصلاح‌رنگ هالیوودی و جادوی هوش مصنوعی، برند شما را در ذهن مخاطب حک می‌کنیم.
+            </p>
+
+            <!-- دکمه‌های اقدام دوتایی -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#portfolio" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-orange text-black font-extrabold text-base glow-orange hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3">
+                    <span>دیدن نمونه‌کارها</span>
+                    <i class="fas fa-play text-xs"></i>
+                </a>
+                <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel border border-brand-teal/50 text-brand-teal font-extrabold text-base hover:bg-brand-teal/10 hover:border-brand-teal transition-all flex items-center justify-center gap-3">
+                    <i class="fas fa-paper-plane text-sm"></i>
+                    <span>مشاوره و تخمین هزینه</span>
+                </a>
+            </div>
+
+            <!-- شاخص‌های اعتماد و آمارها -->
+            <div class="grid grid-cols-3 gap-4 mt-16 pt-10 border-t border-slate-800/80 max-w-2xl mx-auto">
+                <div>
+                    <span class="block text-2xl sm:text-4xl font-black text-brand-orange font-mono">+۵۰</span>
+                    <span class="text-xs text-slate-400 mt-1 block">پروژه موفق تبلیغاتی</span>
+                </div>
+                <div>
+                    <span class="block text-2xl sm:text-4xl font-black text-brand-teal font-mono">+۱۰M</span>
+                    <span class="text-xs text-slate-400 mt-1 block">بازدید ارگانیک ویدیوها</span>
+                </div>
+                <div>
+                    <span class="block text-2xl sm:text-4xl font-black text-brand-orange font-mono">۴K</span>
+                    <span class="text-xs text-slate-400 mt-1 block">استاندارد Cine Grade</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش خدمات (SERVICES) -->
+    <section id="services" class="relative z-10 py-20 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-xs sm:text-sm font-bold text-brand-teal tracking-widest uppercase mb-2">تخصص‌های ما</h2>
+            <p class="text-3xl sm:text-4xl font-black">خدماتی که کسب‌وکار شما را ترند می‌کند</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- سرویس ۱ -->
+            <div class="glass-panel p-7 rounded-3xl relative overflow-hidden group hover:border-brand-orange transition-all duration-300">
+                <div class="w-14 h-14 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-orange group-hover:text-black transition-all">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">تیزر تبلیغاتی و ریلز</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">تولید ریلزهای فروش با ریتم بالا، قلاب‌های بصری میخکوب‌کننده و سناریوهای روانشناسی جذب مشتری.</p>
+            </div>
+
+            <!-- سرویس ۲ -->
+            <div class="glass-panel p-7 rounded-3xl relative overflow-hidden group hover:border-brand-teal transition-all duration-300">
+                <div class="w-14 h-14 rounded-2xl bg-brand-teal/10 text-brand-teal flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-teal group-hover:text-black transition-all">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">اصلاح رنگ Teal & Orange</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">کالرگریدینگ حرفه‌ای در DaVinci Resolve برای خلق اتمسفر سینمایی و هویت رنگی لوکس برای برند.</p>
+            </div>
+
+            <!-- سرویس ۳ -->
+            <div class="glass-panel p-7 rounded-3xl relative overflow-hidden group hover:border-brand-orange transition-all duration-300">
+                <div class="w-14 h-14 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-orange group-hover:text-black transition-all">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">تلفیق هوش مصنوعی و VFX</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">خلق صحنه‌های ناممکن با ابزارهای نسل جدید هوش مصنوعی ویدیویی و جلوه‌های ویژه بصری منحصربه‌فرد.</p>
+            </div>
+
+            <!-- سرویس ۴ -->
+            <div class="glass-panel p-7 rounded-3xl relative overflow-hidden group hover:border-brand-teal transition-all duration-300">
+                <div class="w-14 h-14 rounded-2xl bg-brand-teal/10 text-brand-teal flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-teal group-hover:text-black transition-all">
+                    <i class="fas fa-helicopter"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">تصویربرداری هوایی و صنعتی</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">تصویربرداری هوایی FPV و شات‌های صنعتی خطوط تولید با رعایت بالاترین استانداردهای بصری مارکتینگ.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش پورتفولیو ویدیویی و ویترین کارها -->
+    <section id="portfolio" class="relative z-10 py-20 px-4 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <div>
+                <h2 class="text-xs sm:text-sm font-bold text-brand-orange tracking-widest uppercase mb-2">ویترین پروژه‌ها</h2>
+                <p class="text-3xl sm:text-4xl font-black">نمونه‌کارهای منتخب استودیو کایان</p>
+            </div>
+            
+            <!-- فیلترها -->
+            <div class="flex items-center gap-2 mt-6 md:mt-0 overflow-x-auto pb-2 scrollbar-none">
+                <button class="px-5 py-2 rounded-full bg-brand-orange text-black font-bold text-xs shrink-0">همه پروژه‌ها</button>
+                <button class="px-5 py-2 rounded-full glass-panel hover:text-brand-teal text-xs shrink-0 font-medium transition-colors">تیزر صنعتی</button>
+                <button class="px-5 py-2 rounded-full glass-panel hover:text-brand-orange text-xs shrink-0 font-medium transition-colors">ریلز اینستاگرام</button>
+                <button class="px-5 py-2 rounded-full glass-panel hover:text-brand-teal text-xs shrink-0 font-medium transition-colors">هوش مصنوعی</button>
+            </div>
+        </div>
+
+        <!-- گرید کارت‌های ویدیو -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- پروژه ۱ -->
+            <div class="group rounded-3xl overflow-hidden glass-panel border border-slate-800 hover:border-brand-orange transition-all duration-500 cursor-pointer" onclick="openVideoModal('تیزر کارخانجات تولیدی و پلیمری', 'https://www.w3schools.com/html/mov_bbb.mp4')">
+                <div class="relative h-64 overflow-hidden bg-slate-900">
+                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80" alt="پروژه ادیت ویدیو" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-14 h-14 rounded-full bg-brand-orange/90 text-black flex items-center justify-center text-lg glow-orange group-hover:scale-125 transition-all">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-bold bg-black/60 backdrop-blur-md text-brand-teal border border-brand-teal/30">تیزر صنعتی</span>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-lg font-bold group-hover:text-brand-orange transition-colors">مستند صنعتی و رونمایی خط تولید</h4>
+                    <p class="text-xs text-slate-400 mt-2">تصویربرداری درون‌کارگاهی، کالرگریدینگ اختصاصی و طراحی صداگذاری هیجانی.</p>
+                </div>
+            </div>
+
+            <!-- پروژه ۲ -->
+            <div class="group rounded-3xl overflow-hidden glass-panel border border-slate-800 hover:border-brand-teal transition-all duration-500 cursor-pointer" onclick="openVideoModal('ریلزهای تبلیغاتی اینستاگرام', 'https://www.w3schools.com/html/mov_bbb.mp4')">
+                <div class="relative h-64 overflow-hidden bg-slate-900">
+                    <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=800&q=80" alt="کالرگریدینگ سینمایی" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-14 h-14 rounded-full bg-brand-teal/90 text-black flex items-center justify-center text-lg glow-teal group-hover:scale-125 transition-all">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-bold bg-black/60 backdrop-blur-md text-brand-orange border border-brand-orange/30">Color Grade</span>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-lg font-bold group-hover:text-brand-teal transition-colors">اصلاح رنگ سینمایی Teal & Orange</h4>
+                    <p class="text-xs text-slate-400 mt-2">تبدیل فوتیج‌های خام لاگ به تصاویر لوکس چشم‌نواز با کنتراست داینامیک بالا.</p>
+                </div>
+            </div>
+
+            <!-- پروژه ۳ -->
+            <div class="group rounded-3xl overflow-hidden glass-panel border border-slate-800 hover:border-brand-orange transition-all duration-500 cursor-pointer" onclick="openVideoModal('تولید تیزر با هوش مصنوعی', 'https://www.w3schools.com/html/mov_bbb.mp4')">
+                <div class="relative h-64 overflow-hidden bg-slate-900">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" alt="هوش مصنوعی ویدیو" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-14 h-14 rounded-full bg-brand-orange/90 text-black flex items-center justify-center text-lg glow-orange group-hover:scale-125 transition-all">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-bold bg-black/60 backdrop-blur-md text-brand-teal border border-brand-teal/30">Next-Gen AI</span>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-lg font-bold group-hover:text-brand-orange transition-colors">کمپین بصری تلفیقی هوش مصنوعی</h4>
+                    <p class="text-xs text-slate-400 mt-2">خلق فانتزی‌های فوق‌العاده برای برند با ترکیب مدل‌های تصویری و کامپوزیت سینمایی.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- بخش ثبت سفارش و فرم سریع همکاری -->
+    <section id="contact" class="relative z-10 py-20 px-4 max-w-4xl mx-auto">
+        <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-brand-orange/30 glow-orange relative overflow-hidden">
+            <div class="text-center mb-8">
+                <h3 class="text-2xl sm:text-3xl font-black mb-2">پروژه ویدیویی بعدی‌تان را بسازیم؟</h3>
+                <p class="text-slate-400 text-sm">پیام بفرستید، سناریو و ایده‌تان را به اشتراک بگذارید تا در سریع‌ترین زمان تخمین هزینه و زمان را تقدیم کنیم.</p>
+            </div>
+
+            <form class="space-y-4" onsubmit="event.preventDefault(); alert('پیام شما با موفقیت ثبت شد کایان به زودی با شما تماس می‌گیرد!');">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input type="text" placeholder="نام یا نام برند شما" required class="w-full px-5 py-3.5 rounded-2xl glass-panel border border-slate-700 focus:border-brand-orange focus:outline-none text-sm">
+                    <input type="tel" placeholder="شماره تماس (جهت هماهنگی)" required class="w-full px-5 py-3.5 rounded-2xl glass-panel border border-slate-700 focus:border-brand-orange focus:outline-none text-sm">
+                </div>
+                <textarea rows="4" placeholder="توضیح مختصر درباره ایده، نوع ویدیو یا بودجه مدنظرتان..." class="w-full px-5 py-3.5 rounded-2xl glass-panel border border-slate-700 focus:border-brand-teal focus:outline-none text-sm"></textarea>
+                
+                <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-brand-orange to-brand-neon text-black font-black text-base hover:opacity-95 transition-all shadow-lg shadow-brand-orange/30">
+                    ارسال فرم و درخواست بررسی استودیو
+                </button>
+            </form>
+
+            <div class="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-slate-800 text-slate-400 text-sm">
+                <a href="https://instagram.com" target="_blank" class="hover:text-brand-orange transition-colors flex items-center gap-2">
+                    <i class="fab fa-instagram text-lg"></i>
+                    <span>اینستاگرام</span>
+                </a>
+                <a href="https://t.me" target="_blank" class="hover:text-brand-teal transition-colors flex items-center gap-2">
+                    <i class="fab fa-telegram text-lg"></i>
+                    <span>تلگرام</span>
+                </a>
+                <a href="mailto:info@kayancreative.agency" class="hover:text-brand-orange transition-colors flex items-center gap-2">
+                    <i class="fas fa-envelope text-lg"></i>
+                    <span>ایمیل رسمی</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- فوتر ساده و باوقار -->
+    <footer class="relative z-10 py-8 border-t border-slate-800/60 text-center text-xs text-slate-500">
+        <p>© 2026 KAYAN CREATIVE AGENCY • تمامی حقوق محفوظ است.</p>
+    </footer>
+
+    <!-- پاپ‌آپ ویدیو پلیر (Light-box Modal) -->
+    <div id="videoModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-3xl glass-panel rounded-3xl p-4 border border-brand-teal/40">
+            <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-800">
+                <h5 id="modalTitle" class="font-bold text-sm text-brand-teal">عنوان ویدیو</h5>
+                <button onclick="closeVideoModal()" class="text-slate-400 hover:text-brand-orange text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black">
+                <video id="modalVideoPlayer" controls class="w-full h-full">
+                    <source src="" type="video/mp4">
+                    مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- داک شناور مخصوص موبایل (Bottom Quick-Action Dock) جهت تبدیل حداکثری مشتریان -->
+    <div class="fixed bottom-3 inset-x-3 z-40 md:hidden glass-panel rounded-2xl p-2.5 flex items-center justify-between shadow-2xl border border-brand-orange/30">
+        <a href="#contact" class="flex-1 text-center py-2 text-xs font-bold text-slate-200 hover:text-brand-orange">
+            <i class="fas fa-bolt block text-sm mb-1 text-brand-orange"></i>
+            ثبت سفارش
+        </a>
+        <a href="https://wa.me/989120000000" target="_blank" class="flex-1 bg-brand-orange text-black py-2.5 rounded-xl text-center text-xs font-black shadow-lg shadow-brand-orange/30">
+            <i class="fab fa-whatsapp text-sm inline-block ml-1"></i>
+            واتساپ آنی
+        </a>
+        <a href="#portfolio" class="flex-1 text-center py-2 text-xs font-bold text-slate-200 hover:text-brand-teal">
+            <i class="fas fa-film block text-sm mb-1 text-brand-teal"></i>
+            نمونه‌کارها
+        </a>
+    </div>
+
+    <!-- اسکریپت هوشمند: موتور تشخیص شب و روز و کنترل اتمسفر -->
+    <script>
+        // ۱. کنترل اتمسفر بر اساس زمان محلی (ساعت دستگاه)
+        function initLightingEngine() {
+            const currentHour = new Date().getHours();
+            // اگر بین ساعت ۶:۳۰ صبح تا ۶:۳۰ عصر بود، روز در نظر بگیر
+            const isDayTime = currentHour >= 7 && currentHour < 18;
+            
+            const savedTheme = localStorage.getItem('kayan_theme');
+            if (savedTheme) {
+                applyTheme(savedTheme === 'light');
+            } else {
+                applyTheme(isDayTime);
+            }
+        }
+
+        function applyTheme(isLight) {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeStatus = document.getElementById('theme-status');
+            const ambientOrange = document.getElementById('ambient-orange');
+            const ambientTeal = document.getElementById('ambient-teal');
+
+            if (isLight) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                document.body.classList.remove('bg-brand-darkBg', 'text-slate-100');
+                document.body.classList.add('bg-brand-lightBg', 'text-slate-900');
+                themeIcon.className = 'fas fa-sun text-brand-orange text-lg';
+                themeStatus.textContent = 'روزانه';
+                ambientOrange.style.opacity = '0.3';
+                ambientTeal.style.opacity = '0.2';
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                document.body.classList.remove('bg-brand-lightBg', 'text-slate-900');
+                document.body.classList.add('bg-brand-darkBg', 'text-slate-100');
+                themeIcon.className = 'fas fa-moon text-brand-teal text-lg';
+                themeStatus.textContent = 'شبانه';
+                ambientOrange.style.opacity = '0.6';
+                ambientTeal.style.opacity = '0.5';
+            }
+        }
+
+        // سوییچ دستی تم
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            const isCurrentlyLight = document.documentElement.classList.contains('light');
+            const nextMode = !isCurrentlyLight;
+            applyTheme(nextMode);
+            localStorage.setItem('kayan_theme', nextMode ? 'light' : 'dark');
+        });
+
+        // ۲. باز و بسته کردن مودال ویدیویی
+        function openVideoModal(title, videoUrl) {
+            const modal = document.getElementById('videoModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const player = document.getElementById('modalVideoPlayer');
+
+            modalTitle.textContent = title;
+            player.src = videoUrl;
+            modal.classList.remove('hidden');
+            player.play();
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('modalVideoPlayer');
+            player.pause();
+            player.src = '';
+            modal.classList.add('hidden');
+        }
+
+        // بستن با کلیک بیرون از مودال
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) closeVideoModal();
+        });
+
+        // اجرای خودکار موتور نور هنگام لود صفحه
+        initLightingEngine();
+    </script>
 </body>
 </html>
