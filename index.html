@@ -302,5 +302,78 @@ go(VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'home');
   }
 })();
 </script>
+  <script>
+(function() {
+  const ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
+
+  let vid = localStorage.getItem('kayan_vid');
+  if (!vid) {
+    vid = 'k_' + Math.random().toString(36).substring(2, 9);
+    localStorage.setItem('kayan_vid', vid);
+  }
+
+  function sendTelemetry(eventType, sectionName, details = '') {
+    const payload = JSON.stringify({
+      visitor_id: vid,
+      event_type: eventType,
+      section: sectionName,
+      details: details,
+      path: window.location.pathname + window.location.hash,
+      referrer: document.referrer || 'Direct',
+      screen: window.innerWidth + 'x' + window.innerHeight
+    });
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
+      keepalive: true
+    }).catch(() => {});
+  }
+
+  // ۱. ثبت ورود اولیه به سایت
+  sendTelemetry('page_view', 'ورود به صفحه اصلی');
+
+  // ۲. ردیابی هوشمند اینکه کاربر به کدام بخش سایت نگاه می‌کند (IntersectionObserver)
+  const trackedSections = document.querySelectorAll('section, header, footer, #contact, #about, #portfolio, #services');
+  const viewedSections = new Set();
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id || entry.target.tagName.toLowerCase();
+        const friendlyName = {
+          'contact': 'فرم و بخش تماس (#contact)',
+          'about': 'درباره ما (#about)',
+          'portfolio': 'نمونه کارها (#portfolio)',
+          'services': 'خدمات (#services)',
+          'header': 'هدر بالای سایت',
+          'footer': 'پاورقی (انتهای سایت)'
+        }[id] || ('بخش ' + id);
+
+        // اگر کاربر قبلاً این بخش را ندیده باشد، ارسال کن تا اسپم نشود
+        if (!viewedSections.has(id)) {
+          viewedSections.add(id);
+          sendTelemetry('section_view', friendlyName);
+        }
+      }
+    });
+  }, { threshold: 0.5 }); // وقتی ۵۰٪ آن بخش در دید کاربر آمد
+
+  trackedSections.forEach(s => observer.observe(s));
+
+  // ۳. کلیک روی دکمه‌های خاص یا فرم تماس
+  document.addEventListener('click', function(e) {
+    const target = e.target.closest('a, button');
+    if (target) {
+      const text = target.innerText.trim() || target.getAttribute('href') || 'دکمه ناشناس';
+      if (target.getAttribute('href')?.startsWith('#contact') || target.type === 'submit') {
+        sendTelemetry('click_action', 'کلیک دکمه/فرم', text);
+      }
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
