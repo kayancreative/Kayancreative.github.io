@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>Art House | گالری تخصصی آثار تجربی کایان</title>
     
     <!-- Tailwind CSS -->
@@ -15,7 +15,8 @@
                     colors: {
                         tealBrand: '#0d9488',
                         orangeBrand: '#f97316',
-                        darkBg: '#070a13'
+                        darkBg: '#070a13',
+                        lightBg: '#f8fafc'
                     }
                 }
             }
@@ -29,18 +30,22 @@
     <style>
         body {
             font-family: 'Vazirmatn', 'Outfit', sans-serif;
-            background-color: #070a13;
-            color: #f1f5f9;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            -webkit-tap-highlight-color: transparent;
         }
         .art-pattern-bg {
-            background-image: radial-gradient(rgba(13, 148, 136, 0.15) 1px, transparent 1px), radial-gradient(rgba(249, 115, 22, 0.1) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(13, 148, 136, 0.12) 1px, transparent 1px), radial-gradient(rgba(249, 115, 22, 0.08) 1px, transparent 1px);
             background-size: 32px 32px;
             background-position: 0 0, 16px 16px;
         }
         .glass-card {
-            background: rgba(13, 18, 30, 0.85);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .dark .glass-card {
+            background: rgba(11, 15, 25, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .gradient-text {
@@ -48,33 +53,25 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .grid-card {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .grid-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(13, 148, 136, 0.4);
-        }
     </style>
 </head>
-<body class="art-pattern-bg min-h-screen relative overflow-x-hidden selection:bg-teal-500 selection:text-white">
-
-    <!-- Ambient Lighting -->
-    <div class="fixed top-10 left-10 w-72 h-72 bg-teal-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="fixed bottom-10 right-10 w-72 h-72 bg-orange-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+<body class="bg-lightBg text-slate-800 dark:bg-darkBg dark:text-slate-100 min-h-screen relative overflow-x-hidden selection:bg-teal-500 selection:text-white art-pattern-bg">
 
     <!-- Navigation Bar -->
-    <header class="fixed top-0 left-0 right-0 z-50 glass-card px-4 sm:px-8 py-3.5 flex items-center justify-between border-b border-white/10 shadow-2xl">
-        <div class="flex items-center gap-2">
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card px-4 sm:px-8 lg:px-16 py-3.5 flex items-center justify-between border-b border-white/10 shadow-2xl">
+        <div class="flex items-center gap-2.5">
             <a href="https://kayancreative.agency" class="flex items-center gap-2 group">
                 <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden border border-teal-500/40 bg-slate-900 flex items-center justify-center">
                     <img src="logo.webp" alt="Kayan Logo" class="w-full h-full object-cover">
                 </div>
-                <span class="font-black text-base sm:text-lg gradient-text tracking-wider">ART HOUSE</span>
+                <span class="font-black text-lg sm:text-xl gradient-text">ART HOUSE</span>
             </a>
         </div>
-        <div>
-            <a href="https://kayancreative.agency" class="px-3.5 sm:px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 text-teal-400 border border-teal-500/30 transition-all">
+        <div class="flex items-center gap-2">
+            <button onclick="toggleTheme()" class="w-9 h-9 rounded-xl glass-card flex items-center justify-center hover:scale-105 transition-transform">
+                <i id="theme-icon" class="fa-solid fa-moon text-tealBrand text-sm"></i>
+            </button>
+            <a href="https://kayancreative.agency" class="px-3.5 sm:px-5 py-2 rounded-xl glass-card hover:bg-white/10 text-[11px] sm:text-xs font-semibold flex items-center gap-2 text-teal-400 border border-teal-500/30 transition-all">
                 <i class="fa-solid fa-arrow-right text-[10px]"></i>
                 <span class="hidden sm:inline">بازگشت به سایت اصلی</span>
                 <span class="sm:hidden">بازگشت</span>
@@ -83,7 +80,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="pt-28 pb-20 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto space-y-8 relative z-10">
+    <main class="pt-28 sm:pt-32 pb-20 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto space-y-8 sm:space-y-12 relative z-10">
 
         <!-- Header Section -->
         <div class="text-center space-y-3 max-w-2xl mx-auto">
@@ -91,27 +88,28 @@
                 <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
                 <span>آرشیو تجربی و آزمایشگاهی هوش مصنوعی & ویدیو</span>
             </div>
-            <h1 class="text-3xl sm:text-5xl font-black">
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black">
                 گالری <span class="gradient-text">Art House</span>
             </h1>
-            <p class="text-slate-400 text-xs sm:text-sm lg:text-base leading-relaxed">
+            <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm lg:text-base leading-relaxed">
                 مجموعه‌ای از تست‌های استایل بصری، رندرهای مفهومی، پوسترهای سینمایی و فریم‌های تجربی هوش مصنوعی تولید شده در استودیوی کایان.
             </p>
         </div>
 
-        <!-- Filter Tags (Scrollable on mobile) -->
-        <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 text-xs scrollbar-none">
-            <button onclick="filterGrid('all')" class="filter-btn active px-3.5 py-2 rounded-xl bg-teal-600 text-white font-bold whitespace-nowrap shadow-md">همه آثار</button>
-            <button onclick="filterGrid('ai')" class="filter-btn px-3.5 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-300 whitespace-nowrap">تست‌های AI & فیس‌لاک</button>
-            <button onclick="filterGrid('cinematic')" class="filter-btn px-3.5 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-300 whitespace-nowrap">کادر سینمایی</button>
-            <button onclick="filterGrid('motion')" class="filter-btn px-3.5 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-300 whitespace-nowrap">برندینگ و گرافیک</button>
+        <!-- Filter Tags -->
+        <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 text-xs">
+            <button onclick="filterGrid('all')" class="filter-btn px-4 py-2 rounded-xl bg-teal-600 text-white font-bold transition-all shadow-md shrink-0">همه آثار</button>
+            <button onclick="filterGrid('ai')" class="filter-btn px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-all shrink-0">تست‌های AI & فیس‌لاک</button>
+            <button onclick="filterGrid('cinematic')" class="filter-btn px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-all shrink-0">کادر سینمایی</button>
+            <button onclick="filterGrid('motion')" class="filter-btn px-4 py-2 rounded-xl glass-card hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-all shrink-0">برندینگ و گرافیک</button>
         </div>
 
-        <!-- Bento / Responsive Grid (Optimized for Mobile) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-[220px] sm:auto-rows-[240px]">
+        <!-- Bento Visual Grid (Fully Responsive Grid Cards) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-[240px]">
             
             <!-- Card 1 -->
-            <div class="grid-item ai sm:col-span-2 sm:row-span-2 glass-card rounded-3xl overflow-hidden relative group grid-card cursor-pointer" onclick="openLightbox('kayan-face.webp', 'پرتره سینمایی & فیس‌لاک هوش مصنوعی')">
+            <div class="grid-item ai sm:col-span-2 sm:row-span-2 glass-card rounded-3xl overflow-hidden relative group cursor-pointer shadow-lg" onclick="openLightbox('kayan-face.webp', 'پرتره سینمایی & فیس‌لاک هوش مصنوعی')">
                 <img src="kayan-face.webp" alt="Art 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-[#070a13] via-transparent to-transparent opacity-85"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-85"></div>
                 <div class="absolute bottom-5 right-5 left-5 space-y-1">
+                    <span class="text-[10px] font-bold tracking-widest text-teal-400 uppercase bg-teal-950/80 px-2 py-0.5 
