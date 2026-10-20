@@ -104,11 +104,14 @@
             <span class="font-black text-xl tracking-wider gradient-text">KAYAN</span>
         </div>
 
-        <!-- Navigation Links -->
+        <!-- Navigation Links (Art House opens arthouse.html in new tab) -->
         <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
             <a href="#hero" class="hover:text-tealBrand transition-colors" data-i18n="nav-home">خانه</a>
             <a href="#portfolio" class="hover:text-tealBrand transition-colors" data-i18n="nav-portfolio">نمونه‌کارها</a>
-            <a href="#arthouse" class="hover:text-tealBrand transition-colors" data-i18n="nav-arthouse">آرت هاوس</a>
+            <a href="arthouse.html" target="_blank" rel="noopener noreferrer" class="hover:text-tealBrand transition-colors flex items-center gap-1.5 text-teal-400 font-bold" data-i18n="nav-arthouse">
+                <span>آرت هاوس</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
             <a href="#contact" class="hover:text-tealBrand transition-colors" data-i18n="nav-contact">ارتباط مستقیم</a>
         </nav>
 
@@ -195,15 +198,21 @@
             </div>
         </section>
 
-        <!-- Art House / Daily Creations -->
-        <section id="arthouse" class="glass-card rounded-[2.5rem] p-8 lg:p-14 space-y-6 relative overflow-hidden shadow-2xl border border-teal-500/20">
+        <!-- Art House Teaser Section (Links to arthouse.html in new tab) -->
+        <section id="arthouse" class="glass-card rounded-[2.5rem] p-8 lg:p-14 space-y-6 relative overflow-hidden shadow-2xl border border-teal-500/20 group">
             <div class="absolute -right-20 -bottom-20 w-72 h-72 bg-teal-500/15 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="space-y-3 relative z-10">
+            <div class="space-y-4 relative z-10 max-w-3xl">
                 <span class="text-xs font-bold text-tealBrand tracking-widest uppercase px-3.5 py-1 rounded-full bg-teal-500/10 inline-block" data-i18n="arthouse-tag">Art House</span>
                 <h2 class="text-3xl lg:text-4xl font-black" data-i18n="arthouse-title">خلق روزانه و آثار تجربی</h2>
-                <p class="text-slate-400 text-sm lg:text-base max-w-2xl leading-relaxed" data-i18n="arthouse-desc">
+                <p class="text-slate-400 text-sm lg:text-base leading-relaxed" data-i18n="arthouse-desc">
                     این بخش متعلق به ایده‌های خلاقانه روزمره، تست‌های هوش مصنوعی، کامپوزیت‌های سریع و هنرهای دیجیتال تجربی است که مرزهای نوآوری را جابجا می‌کند.
                 </p>
+                <div class="pt-2">
+                    <a href="arthouse.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-sm shadow-xl shadow-teal-500/25 transition-all group-hover:scale-105">
+                        <span data-i18n="arthouse-btn">ورود به گرید تخصصی Art House (تب جدید)</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -282,6 +291,7 @@
                 "arthouse-tag": "آرت هاوس",
                 "arthouse-title": "خلق روزانه و آثار تجربی",
                 "arthouse-desc": "این بخش متعلق به ایده‌های خلاقانه روزمره، تست‌های هوش مصنوعی، کامپوزیت‌های سریع و هنرهای دیجیتال تجربی است که مرزهای نوآوری را جابجا می‌کند.",
+                "arthouse-btn": "ورود به گرید تخصصی Art House (تب جدید)",
                 "contact-title": "ارتباط مستقیم با کایان",
                 "contact-subtitle": "برای سفارش پروژه، مشاوره یا همکاری، از راه‌های زیر مستقیماً در ارتباط باشید:",
                 "contact-email-label": "ایمیل مستقیم",
@@ -306,6 +316,7 @@
                 "arthouse-tag": "Art House",
                 "arthouse-title": "Daily Creations & Experiments",
                 "arthouse-desc": "Dedicated to everyday creative ideas, AI tests, rapid composites, and experimental digital arts pushing innovation boundaries.",
+                "arthouse-btn": "Open Art House Grid Gallery (New Tab)",
                 "contact-title": "Direct Contact with Kayan",
                 "contact-subtitle": "Get in touch for projects, consultations, or collaborations directly through:",
                 "contact-email-label": "Direct Email",
@@ -330,6 +341,7 @@
                 "arthouse-tag": "Art House",
                 "arthouse-title": "الإبداعات اليومية والتجارب",
                 "arthouse-desc": "مخصص للأفكار الإبداعية اليومية، اختبارات الذكاء الاصطناعي والفنون الرقمية التجريبية التي تدفع حدود الابتكار.",
+                "arthouse-btn": "فتح معرض Art House (علامة تبويب جديدة)",
                 "contact-title": "التواصل المباشر مع كيان",
                 "contact-subtitle": "تواصل معنا للمشاريع، الاستشارات أو التعاون مباشرة عبر القنوات التالية:",
                 "contact-email-label": "البريد الإلكتروني",
