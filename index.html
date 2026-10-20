@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kayan Creative Agency | آژانس خلاق کایان</title>
-    <meta name="description" content="استودیو تخصصی تولید محتوا، تدوین سینمایی، تیزرهای تبلیغاتی و ویدیوهای هوش مصنوعی">
+    <title>کایان | Kayan Creative Agency - Professional Visual Studio</title>
     
-    <!-- فونت وزیرمتن و آیکون‌ها -->
+    <!-- Meta tags for SEO & Brand Entity -->
+    <meta name="description" content="Kayan Creative Agency - Professional video editing, cinematic color grading, and AI visual production by Kayan.">
+    <meta name="keywords" content="کایان, Kayan, Kayan Creative, Danial Kayan, استودیو کایان">
+    <link rel="canonical" href="https://kayancreative.agency/">
+
+    <!-- Google Fonts & Tailwind -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -23,26 +27,25 @@
                             orange: '#FF5E00',
                             neon: '#FF7700',
                             teal: '#00E5FF',
-                            darkTeal: '#0A252E',
-                            darkBg: '#060B0E',
-                            lightBg: '#F4F8FA'
+                            darkBg: '#05090C',
+                            lightBg: '#F8FAFC'
                         }
                     },
                     fontFamily: {
-                        sans: ['Vazirmatn', 'sans-serif'],
+                        sans: ['Vazirmatn', 'Plus Jakarta Sans', 'sans-serif'],
                     },
                     animation: {
-                        'pulse-glow': 'pulseGlow 4s infinite alternate',
                         'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 4s infinite alternate',
                     },
                     keyframes: {
-                        pulseGlow: {
-                            '0%': { transform: 'scale(1)', opacity: '0.4' },
-                            '100%': { transform: 'scale(1.2)', opacity: '0.8' },
-                        },
                         float: {
                             '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-12px)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseGlow: {
+                            '0%': { transform: 'scale(1)', opacity: '0.4' },
+                            '100%': { transform: 'scale(1.25)', opacity: '0.8' },
                         }
                     }
                 }
@@ -51,412 +54,418 @@
     </script>
 
     <style>
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            overflow-x: hidden;
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
+        body { font-family: 'Vazirmatn', 'Plus Jakarta Sans', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; overflow-x: hidden; }
         .glass-panel {
-            background: rgba(10, 37, 46, 0.45);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 229, 255, 0.15);
+            background: rgba(10, 25, 35, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 229, 255, 0.18);
         }
         .light .glass-panel {
-            background: rgba(255, 255, 255, 0.75);
-            border: 1px solid rgba(255, 94, 0, 0.2);
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(255, 94, 0, 0.22);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
         .teal-orange-gradient {
             background: linear-gradient(135deg, #FF5E00 0%, #00E5FF 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .glow-orange {
-            box-shadow: 0 0 25px rgba(255, 94, 0, 0.5);
-        }
-        .glow-teal {
-            box-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
-        }
+        .glow-orange { box-shadow: 0 0 30px rgba(255, 94, 0, 0.4); }
+        .glow-teal { box-shadow: 0 0 30px rgba(0, 229, 255, 0.35); }
     </style>
 </head>
 
-<body class="bg-brand-darkBg text-slate-100 transition-colors duration-500 selection:bg-brand-orange selection:text-white pb-20 md:pb-0">
+<body class="bg-brand-darkBg text-slate-100 selection:bg-brand-orange selection:text-white pb-24 md:pb-0">
 
-    <!-- افکت‌های نوری پس‌زمینه (Ambient Glow) -->
+    <!-- Ambient Background Shapes -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div id="ambient-orange" class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-brand-orange/20 blur-[120px] animate-pulse-glow"></div>
-        <div id="ambient-teal" class="absolute top-1/2 -left-32 w-96 h-96 rounded-full bg-brand-teal/20 blur-[130px] animate-float"></div>
+        <div id="ambient-orange" class="absolute -top-40 -right-40 w-[450px] h-[450px] rounded-full bg-brand-orange/20 blur-[140px] animate-pulse-glow"></div>
+        <div id="ambient-teal" class="absolute top-1/3 -left-40 w-[450px] h-[450px] rounded-full bg-brand-teal/15 blur-[150px] animate-float"></div>
     </div>
 
-    <!-- هدر و نوبار ریسپانسیو -->
+    <!-- HEADER / NAVBAR -->
     <header class="sticky top-0 z-50 glass-panel border-b transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <!-- لوگوتایپ کایان -->
+            <!-- Logo & Face Avatar -->
             <a href="#" class="flex items-center gap-3 group">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-teal flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform duration-300">
-                    <span class="font-black text-2xl text-black">K</span>
+                <div class="w-11 h-11 rounded-2xl overflow-hidden border-2 border-brand-orange glow-orange group-hover:scale-105 transition-transform">
+                    <img src="photo_2026-02-27_02-32-46 (2).webp" alt="Kayan" class="w-full h-full object-cover">
                 </div>
                 <div>
-                    <span class="font-black text-xl tracking-tight block">KAYAN <span class="text-brand-orange">CREATIVE</span></span>
-                    <span class="text-[10px] text-brand-teal tracking-widest block uppercase font-semibold">Visual Studio</span>
+                    <span class="font-black text-lg tracking-tight block">KAYAN <span class="text-brand-orange">CREATIVE</span></span>
+                    <span class="text-[10px] text-brand-teal tracking-widest block uppercase font-bold" data-i18n="subtitle">Visual Studio</span>
                 </div>
             </a>
 
-            <!-- منوی دسکتاپ -->
-            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
-                <a href="#services" class="hover:text-brand-orange transition-colors">خدمات تخصصی</a>
-                <a href="#portfolio" class="hover:text-brand-teal transition-colors">نمونه‌کارها</a>
-                <a href="#about" class="hover:text-brand-orange transition-colors">درباره ما</a>
-                <a href="#contact" class="hover:text-brand-teal transition-colors">شروع پروژه</a>
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-300">
+                <a href="#services" class="hover:text-brand-orange transition-colors" data-i18n="nav_services">خدمات</a>
+                <a href="#portfolio" class="hover:text-brand-teal transition-colors" data-i18n="nav_portfolio">پورتفولیو</a>
+                <a href="#art-house" class="hover:text-brand-orange transition-colors" data-i18n="nav_arthouse">Art House (روزمره‌ها)</a>
+                <a href="#contact" class="hover:text-brand-teal transition-colors" data-i18n="nav_contact">ارتباط مستقیم</a>
             </nav>
 
-            <!-- ابزار نورپردازی محیطی + دکمه CTA -->
-            <div class="flex items-center gap-3">
-                
-                <!-- سوییچر حالت روز / شب / تنظیم خودکار منطقه‌ای -->
-                <button id="theme-toggle" class="p-2.5 rounded-xl glass-panel text-brand-orange hover:text-brand-teal transition-all flex items-center gap-2 text-xs" title="تغییر حالت نور محیطی">
-                    <i id="theme-icon" class="fas fa-moon text-lg"></i>
-                    <span id="theme-status" class="hidden sm:inline font-mono">شبانه (خودکار)</span>
-                </button>
+            <!-- Controls (Language & Theme Switcher) -->
+            <div class="flex items-center gap-2.5">
+                <!-- Language Selector -->
+                <select id="lang-select" onchange="changeLanguage(this.value)" class="glass-panel text-xs px-3 py-2 rounded-xl text-brand-teal font-bold focus:outline-none cursor-pointer">
+                    <option value="fa" class="bg-slate-900 text-white">فارسی</option>
+                    <option value="en" class="bg-slate-900 text-white">English</option>
+                    <option value="ar" class="bg-slate-900 text-white">العربية</option>
+                </select>
 
-                <a href="https://wa.me/989120000000" target="_blank" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-orange text-black font-bold text-sm hover:bg-brand-neon hover:shadow-lg hover:shadow-brand-orange/40 transition-all">
-                    <span>همکاری سریع</span>
-                    <i class="fab fa-whatsapp text-lg"></i>
-                </a>
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-2.5 rounded-xl glass-panel text-brand-orange hover:text-brand-teal transition-all flex items-center gap-1.5 text-xs">
+                    <i id="theme-icon" class="fas fa-moon text-base"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- بخش قهرمان (HERO SECTION) -->
-    <section class="relative z-10 min-h-[85vh] flex items-center justify-center px-4 py-16 text-center">
-        <div class="max-w-4xl mx-auto">
+    <!-- HERO SECTION -->
+    <section class="relative z-10 min-h-[85vh] flex items-center justify-center px-4 py-16">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <!-- تگ لاین پر انرژی -->
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-brand-orange/40 mb-6 animate-float">
-                <span class="w-2.5 h-2.5 rounded-full bg-brand-orange animate-ping"></span>
-                <span class="text-xs sm:text-sm font-bold text-brand-orange tracking-wide">پذیرش پروژه‌های تبلیغاتی سینمایی ۲۰۲۶</span>
-            </div>
-
-            <!-- تیتر اصلی با اثر Teal & Orange -->
-            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black leading-tight sm:leading-none mb-6">
-                روایت‌های بصری که <br class="hidden sm:block"/>
-                <span class="teal-orange-gradient">می‌فروشند و ماندگار می‌شوند</span>
-            </h1>
-
-            <p class="text-base sm:text-xl text-slate-4xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-                ما در <strong>کایان کریتیو</strong> با تلفیق هنر فیلم‌برداری مدرن، اصلاح‌رنگ هالیوودی و جادوی هوش مصنوعی، برند شما را در ذهن مخاطب حک می‌کنیم.
-            </p>
-
-            <!-- دکمه‌های اقدام دوتایی -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#portfolio" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-orange text-black font-extrabold text-base glow-orange hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3">
-                    <span>دیدن نمونه‌کارها</span>
-                    <i class="fas fa-play text-xs"></i>
-                </a>
-                <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel border border-brand-teal/50 text-brand-teal font-extrabold text-base hover:bg-brand-teal/10 hover:border-brand-teal transition-all flex items-center justify-center gap-3">
-                    <i class="fas fa-paper-plane text-sm"></i>
-                    <span>مشاوره و تخمین هزینه</span>
-                </a>
-            </div>
-
-            <!-- شاخص‌های اعتماد و آمارها -->
-            <div class="grid grid-cols-3 gap-4 mt-16 pt-10 border-t border-slate-800/80 max-w-2xl mx-auto">
-                <div>
-                    <span class="block text-2xl sm:text-4xl font-black text-brand-orange font-mono">+۵۰</span>
-                    <span class="text-xs text-slate-400 mt-1 block">پروژه موفق تبلیغاتی</span>
+            <!-- Left text info -->
+            <div class="lg:col-span-7 text-center lg:text-start">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-brand-orange/40 mb-6 animate-float">
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand-orange animate-ping"></span>
+                    <span class="text-xs sm:text-sm font-bold text-brand-orange" data-i18n="hero_badge">استودیوی پیشرو تدوین و کالرگریدینگ سینمایی</span>
                 </div>
-                <div>
-                    <span class="block text-2xl sm:text-4xl font-black text-brand-teal font-mono">+۱۰M</span>
-                    <span class="text-xs text-slate-400 mt-1 block">بازدید ارگانیک ویدیوها</span>
-                </div>
-                <div>
-                    <span class="block text-2xl sm:text-4xl font-black text-brand-orange font-mono">۴K</span>
-                    <span class="text-xs text-slate-400 mt-1 block">استاندارد Cine Grade</span>
+
+                <h1 class="text-4xl sm:text-6xl font-black leading-tight mb-6">
+                    <span data-i18n="hero_title_1">روایت‌های بصری که</span> <br/>
+                    <span class="teal-orange-gradient" data-i18n="hero_title_2">استاندارد بازار را تغییر می‌دهند</span>
+                </h1>
+
+                <p class="text-base sm:text-lg text-slate-300 max-w-xl mb-8 leading-relaxed font-light" data-i18n="hero_desc">
+                    خلق تیزرهای تجاری لوکس، اصلاح رنگ حرفه‌ای Teal & Orange و کامپوزیت‌های ویدیویی منحصربه‌فرد با بالاترین کیفیت جهانی.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="#portfolio" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-orange text-black font-extrabold text-sm glow-orange hover:scale-105 transition-all flex items-center justify-center gap-3">
+                        <span data-i18n="btn_portfolio">مشاهده نمونه‌کارها</span>
+                        <i class="fas fa-arrow-down text-xs"></i>
+                    </a>
+                    <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel border border-brand-teal/50 text-brand-teal font-extrabold text-sm hover:bg-brand-teal/10 transition-all flex items-center justify-center gap-3">
+                        <i class="fas fa-phone-alt text-xs"></i>
+                        <span data-i18n="btn_contact">تماس مستقیم با کایان</span>
+                    </a>
                 </div>
             </div>
+
+            <!-- Right side: Cinematic Avatar Frame -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="relative w-72 sm:w-80 h-96 sm:h-[420px] rounded-3xl overflow-hidden glass-panel p-3 glow-teal border border-brand-teal/30 group">
+                    <img src="photo_2026-02-27_02-32-46 (2).webp" alt="Kayan" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-x-6 bottom-6 glass-panel p-4 rounded-2xl text-center backdrop-blur-md">
+                        <span class="block font-black text-base text-brand-orange">کایان (Kayan)</span>
+                        <span class="text-xs text-slate-300" data-i18n="avatar_role">کارگردان هنری و تدوینگر ارشد</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- بخش خدمات (SERVICES) -->
+    <!-- SERVICES SECTION -->
     <section id="services" class="relative z-10 py-20 px-4 max-w-7xl mx-auto">
         <div class="text-center mb-16">
-            <h2 class="text-xs sm:text-sm font-bold text-brand-teal tracking-widest uppercase mb-2">تخصص‌های ما</h2>
-            <p class="text-3xl sm:text-4xl font-black">خدماتی که کسب‌وکار شما را ترند می‌کند</p>
+            <h2 class="text-xs sm:text-sm font-bold text-brand-teal tracking-widest uppercase mb-2" data-i18n="services_subtitle">تخصص‌های کلیدی</h2>
+            <p class="text-3xl sm:text-4xl font-black" data-i18n="services_title">خدمات حرفه‌ای استودیو</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <!-- سرویس ۱ -->
-            <div class="glass-panel p-7 rounded-3xl relative overflow-hidden group hover:border-brand-orange transition-all duration-300">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-panel p-8 rounded-3xl group hover:border-brand-orange transition-all duration-300">
                 <div class="w-14 h-14 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-orange group-hover:text-black transition-all">
-                    <i class="fas fa-video"></i>
+                    <i class="fas fa-film"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3">تیزر تبلیغاتی و ریلز</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">تولید ریلزهای فروش با ریتم بالا، قلاب‌های بصری میخکوب‌کننده و سناریوهای روانشناسی جذب مشتری.</p>
+                <h3 class="text-xl font-bold mb-3" data-i18n="serv_1_title">تدوین سینمایی و ریلز</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="serv_1_desc">تدوین تخصصی ویدیوهای تجاری و ریلزهای اینستاگرام با ریتم بالا و قلاب‌های جذب مخاطب.</p>
             </div>
 
-            <!-- سرویس ۲ -->
-            <div class="glass-panel p-7 rounded-3xl relative overflow-hidden group hover:border-brand-teal transition-all duration-300">
+            <div class="glass-panel p-8 rounded-3xl group hover:border-brand-teal transition-all duration-300">
                 <div class="w-14 h-14 rounded-2xl bg-brand-teal/10 text-brand-teal flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-teal group-hover:text-black transition-all">
                     <i class="fas fa-palette"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3">اصلاح رنگ Teal & Orange</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">کالرگریدینگ حرفه‌ای در DaVinci Resolve برای خلق اتمسفر سینمایی و هویت رنگی لوکس برای برند.</p>
+                <h3 class="text-xl font-bold mb-3" data-i18n="serv_2_title">اصلاح رنگ Teal & Orange</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="serv_2_desc">کالرگریدینگ حرفه‌ای در DaVinci Resolve برای خلق اتمسفر سینمایی و لوکس.</p>
             </div>
 
-            <!-- سرویس ۳ -->
-            <div class="glass-panel p-7 rounded-3xl relative overflow-hidden group hover:border-brand-orange transition-all duration-300">
+            <div class="glass-panel p-8 rounded-3xl group hover:border-brand-orange transition-all duration-300">
                 <div class="w-14 h-14 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-orange group-hover:text-black transition-all">
                     <i class="fas fa-brain"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3">تلفیق هوش مصنوعی و VFX</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">خلق صحنه‌های ناممکن با ابزارهای نسل جدید هوش مصنوعی ویدیویی و جلوه‌های ویژه بصری منحصربه‌فرد.</p>
-            </div>
-
-            <!-- سرویس ۴ -->
-            <div class="glass-panel p-7 rounded-3xl relative overflow-hidden group hover:border-brand-teal transition-all duration-300">
-                <div class="w-14 h-14 rounded-2xl bg-brand-teal/10 text-brand-teal flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-teal group-hover:text-black transition-all">
-                    <i class="fas fa-helicopter"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-3">تصویربرداری هوایی و صنعتی</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">تصویربرداری هوایی FPV و شات‌های صنعتی خطوط تولید با رعایت بالاترین استانداردهای بصری مارکتینگ.</p>
+                <h3 class="text-xl font-bold mb-3" data-i18n="serv_3_title">هوش مصنوعی و کامپوزیت</h3>
+                <p class="text-slate-400 text-sm leading-relaxed" data-i18n="serv_3_desc">تلفیق فناوری‌های نوین هوش مصنوعی ویدیویی با جلوه‌های ویژه بصری مدرن.</p>
             </div>
         </div>
     </section>
 
-    <!-- بخش پورتفولیو ویدیویی و ویترین کارها -->
+    <!-- PORTFOLIO SECTION (Clean Photo Grid) -->
     <section id="portfolio" class="relative z-10 py-20 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-xs sm:text-sm font-bold text-brand-orange tracking-widest uppercase mb-2" data-i18n="portfolio_subtitle">گالری آثار</h2>
+            <p class="text-3xl sm:text-4xl font-black" data-i18n="portfolio_title">پروژه‌های منتخب بصری</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="group rounded-3xl overflow-hidden glass-panel border border-slate-800 hover:border-brand-orange transition-all duration-500">
+                <div class="relative h-72 overflow-hidden">
+                    <img src="Captures.webp" alt="Project 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-transparent to-transparent"></div>
+                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold bg-black/70 backdrop-blur-md text-brand-teal border border-brand-teal/30" data-i18n="tag_industrial">تیزر صنعتی</span>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-lg font-bold mb-2" data-i18n="proj_1_title">مستند خط تولید و پلیمری</h4>
+                    <p class="text-xs text-slate-400" data-i18n="proj_1_desc">شات‌های صنعتی پیشرفته و تنظیم دقیق نور و رنگ.</p>
+                </div>
+            </div>
+
+            <div class="group rounded-3xl overflow-hidden glass-panel border border-slate-800 hover:border-brand-teal transition-all duration-500">
+                <div class="relative h-72 overflow-hidden">
+                    <img src="photo_2026-02-27_02-32-46 (2).webp" alt="Project 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-transparent to-transparent"></div>
+                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold bg-black/70 backdrop-blur-md text-brand-orange border border-brand-orange/30" data-i18n="tag_colorgrade">اصلاح رنگ</span>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-lg font-bold mb-2" data-i18n="proj_2_title">پروژه استودیویی Teal & Orange</h4>
+                    <p class="text-xs text-slate-400" data-i18n="proj_2_desc">کالرگریدینگ سینمایی پرتره و تیزر تبلیغاتی.</p>
+                </div>
+            </div>
+
+            <div class="group rounded-3xl overflow-hidden glass-panel border border-slate-800 hover:border-brand-orange transition-all duration-500">
+                <div class="relative h-72 overflow-hidden">
+                    <img src="KAYAN-JPG-03.webp" alt="Project 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-transparent to-transparent"></div>
+                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold bg-black/70 backdrop-blur-md text-brand-teal border border-brand-teal/30" data-i18n="tag_ai">هوش مصنوعی</span>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-lg font-bold mb-2" data-i18n="proj_3_title">کمپین بصری هوش مصنوعی</h4>
+                    <p class="text-xs text-slate-400" data-i18n="proj_3_desc">خلق بصری نوین و فضاسازی فانتزی تجاری.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ART HOUSE / DAILY CREATION (Isolated section so main page isn't cluttered) -->
+    <section id="art-house" class="relative z-10 py-20 px-4 max-w-7xl mx-auto border-t border-slate-800">
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
-                <h2 class="text-xs sm:text-sm font-bold text-brand-orange tracking-widest uppercase mb-2">ویترین پروژه‌ها</h2>
-                <p class="text-3xl sm:text-4xl font-black">نمونه‌کارهای منتخب استودیو کایان</p>
+                <h2 class="text-xs sm:text-sm font-bold text-brand-teal tracking-widest uppercase mb-2" data-i18n="arthouse_subtitle">تولیدات روزمره و تجربی</h2>
+                <p class="text-3xl sm:text-4xl font-black" data-i18n="arthouse_title">Art House & Daily Creations</p>
             </div>
-            
-            <!-- فیلترها -->
-            <div class="flex items-center gap-2 mt-6 md:mt-0 overflow-x-auto pb-2 scrollbar-none">
-                <button class="px-5 py-2 rounded-full bg-brand-orange text-black font-bold text-xs shrink-0">همه پروژه‌ها</button>
-                <button class="px-5 py-2 rounded-full glass-panel hover:text-brand-teal text-xs shrink-0 font-medium transition-colors">تیزر صنعتی</button>
-                <button class="px-5 py-2 rounded-full glass-panel hover:text-brand-orange text-xs shrink-0 font-medium transition-colors">ریلز اینستاگرام</button>
-                <button class="px-5 py-2 rounded-full glass-panel hover:text-brand-teal text-xs shrink-0 font-medium transition-colors">هوش مصنوعی</button>
-            </div>
+            <p class="text-xs text-slate-400 mt-4 md:mt-0 max-w-md" data-i18n="arthouse_desc">
+                این بخش شامل ایده‌های خام، تمرین‌های کلرگریدینگ، فریم‌های روزمره و تست‌های بصری هفتگی کایان است.
+            </p>
         </div>
 
-        <!-- گرید کارت‌های ویدیو -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <!-- پروژه ۱ -->
-            <div class="group rounded-3xl overflow-hidden glass-panel border border-slate-800 hover:border-brand-orange transition-all duration-500 cursor-pointer" onclick="openVideoModal('تیزر کارخانجات تولیدی و پلیمری', 'https://www.w3schools.com/html/mov_bbb.mp4')">
-                <div class="relative h-64 overflow-hidden bg-slate-900">
-                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80" alt="پروژه ادیت ویدیو" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80">
-                    <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-transparent to-transparent"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-14 h-14 rounded-full bg-brand-orange/90 text-black flex items-center justify-center text-lg glow-orange group-hover:scale-125 transition-all">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-bold bg-black/60 backdrop-blur-md text-brand-teal border border-brand-teal/30">تیزر صنعتی</span>
-                </div>
-                <div class="p-6">
-                    <h4 class="text-lg font-bold group-hover:text-brand-orange transition-colors">مستند صنعتی و رونمایی خط تولید</h4>
-                    <p class="text-xs text-slate-400 mt-2">تصویربرداری درون‌کارگاهی، کالرگریدینگ اختصاصی و طراحی صداگذاری هیجانی.</p>
-                </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-panel p-2 rounded-2xl overflow-hidden h-48 group">
+                <img src="Captures.webp" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-all">
             </div>
-
-            <!-- پروژه ۲ -->
-            <div class="group rounded-3xl overflow-hidden glass-panel border border-slate-800 hover:border-brand-teal transition-all duration-500 cursor-pointer" onclick="openVideoModal('ریلزهای تبلیغاتی اینستاگرام', 'https://www.w3schools.com/html/mov_bbb.mp4')">
-                <div class="relative h-64 overflow-hidden bg-slate-900">
-                    <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=800&q=80" alt="کالرگریدینگ سینمایی" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80">
-                    <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-transparent to-transparent"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-14 h-14 rounded-full bg-brand-teal/90 text-black flex items-center justify-center text-lg glow-teal group-hover:scale-125 transition-all">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-bold bg-black/60 backdrop-blur-md text-brand-orange border border-brand-orange/30">Color Grade</span>
-                </div>
-                <div class="p-6">
-                    <h4 class="text-lg font-bold group-hover:text-brand-teal transition-colors">اصلاح رنگ سینمایی Teal & Orange</h4>
-                    <p class="text-xs text-slate-400 mt-2">تبدیل فوتیج‌های خام لاگ به تصاویر لوکس چشم‌نواز با کنتراست داینامیک بالا.</p>
-                </div>
+            <div class="glass-panel p-2 rounded-2xl overflow-hidden h-48 group">
+                <img src="photo_2026-02-27_02-32-46 (2).webp" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-all">
             </div>
-
-            <!-- پروژه ۳ -->
-            <div class="group rounded-3xl overflow-hidden glass-panel border border-slate-800 hover:border-brand-orange transition-all duration-500 cursor-pointer" onclick="openVideoModal('تولید تیزر با هوش مصنوعی', 'https://www.w3schools.com/html/mov_bbb.mp4')">
-                <div class="relative h-64 overflow-hidden bg-slate-900">
-                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" alt="هوش مصنوعی ویدیو" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80">
-                    <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-transparent to-transparent"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-14 h-14 rounded-full bg-brand-orange/90 text-black flex items-center justify-center text-lg glow-orange group-hover:scale-125 transition-all">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-bold bg-black/60 backdrop-blur-md text-brand-teal border border-brand-teal/30">Next-Gen AI</span>
-                </div>
-                <div class="p-6">
-                    <h4 class="text-lg font-bold group-hover:text-brand-orange transition-colors">کمپین بصری تلفیقی هوش مصنوعی</h4>
-                    <p class="text-xs text-slate-400 mt-2">خلق فانتزی‌های فوق‌العاده برای برند با ترکیب مدل‌های تصویری و کامپوزیت سینمایی.</p>
-                </div>
+            <div class="glass-panel p-2 rounded-2xl overflow-hidden h-48 group">
+                <img src="KAYAN-JPG-03.webp" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-all">
             </div>
-
+            <div class="glass-panel p-2 rounded-2xl overflow-hidden h-48 group">
+                <img src="Captures.webp" class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-all">
+            </div>
         </div>
     </section>
 
-    <!-- بخش ثبت سفارش و فرم سریع همکاری -->
+    <!-- DIRECT CONTACT SECTION (No Forms, Pure Direct Access) -->
     <section id="contact" class="relative z-10 py-20 px-4 max-w-4xl mx-auto">
-        <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-brand-orange/30 glow-orange relative overflow-hidden">
-            <div class="text-center mb-8">
-                <h3 class="text-2xl sm:text-3xl font-black mb-2">پروژه ویدیویی بعدی‌تان را بسازیم؟</h3>
-                <p class="text-slate-400 text-sm">پیام بفرستید، سناریو و ایده‌تان را به اشتراک بگذارید تا در سریع‌ترین زمان تخمین هزینه و زمان را تقدیم کنیم.</p>
-            </div>
+        <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-brand-orange/30 glow-orange text-center">
+            <h3 class="text-2xl sm:text-3xl font-black mb-4" data-i18n="contact_title">ارتباط مستقیم با کایان</h3>
+            <p class="text-slate-300 text-sm mb-8" data-i18n="contact_desc">جهت ثبت سفارش، مشاوره پروژه‌های ویدیویی و همکاری، از راه‌های زیر مستقیماً در ارتباط باشید:</p>
 
-            <form class="space-y-4" onsubmit="event.preventDefault(); alert('پیام شما با موفقیت ثبت شد کایان به زودی با شما تماس می‌گیرد!');">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <input type="text" placeholder="نام یا نام برند شما" required class="w-full px-5 py-3.5 rounded-2xl glass-panel border border-slate-700 focus:border-brand-orange focus:outline-none text-sm">
-                    <input type="tel" placeholder="شماره تماس (جهت هماهنگی)" required class="w-full px-5 py-3.5 rounded-2xl glass-panel border border-slate-700 focus:border-brand-orange focus:outline-none text-sm">
-                </div>
-                <textarea rows="4" placeholder="توضیح مختصر درباره ایده، نوع ویدیو یا بودجه مدنظرتان..." class="w-full px-5 py-3.5 rounded-2xl glass-panel border border-slate-700 focus:border-brand-teal focus:outline-none text-sm"></textarea>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <!-- Phone -->
+                <a href="tel:09017486099" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel border border-brand-orange text-brand-orange font-bold text-base hover:bg-brand-orange/10 transition-all flex items-center justify-center gap-3">
+                    <i class="fas fa-phone-alt text-lg"></i>
+                    <span dir="ltr">09017486099</span>
+                </a>
                 
-                <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-brand-orange to-brand-neon text-black font-black text-base hover:opacity-95 transition-all shadow-lg shadow-brand-orange/30">
-                    ارسال فرم و درخواست بررسی استودیو
-                </button>
-            </form>
-
-            <div class="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-slate-800 text-slate-400 text-sm">
-                <a href="https://instagram.com" target="_blank" class="hover:text-brand-orange transition-colors flex items-center gap-2">
-                    <i class="fab fa-instagram text-lg"></i>
-                    <span>اینستاگرام</span>
-                </a>
-                <a href="https://t.me" target="_blank" class="hover:text-brand-teal transition-colors flex items-center gap-2">
-                    <i class="fab fa-telegram text-lg"></i>
-                    <span>تلگرام</span>
-                </a>
-                <a href="mailto:info@kayancreative.agency" class="hover:text-brand-orange transition-colors flex items-center gap-2">
+                <!-- Email -->
+                <a href="mailto:danialkayan@gmail.com" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel border border-brand-teal text-brand-teal font-bold text-base hover:bg-brand-teal/10 transition-all flex items-center justify-center gap-3">
                     <i class="fas fa-envelope text-lg"></i>
-                    <span>ایمیل رسمی</span>
+                    <span>danialkayan@gmail.com</span>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- فوتر ساده و باوقار -->
-    <footer class="relative z-10 py-8 border-t border-slate-800/60 text-center text-xs text-slate-500">
-        <p>© 2026 KAYAN CREATIVE AGENCY • تمامی حقوق محفوظ است.</p>
+    <!-- FOOTER -->
+    <footer class="relative z-10 py-8 border-t border-slate-800 text-center text-xs text-slate-500">
+        <p>© 2026 KAYAN CREATIVE AGENCY • All Rights Reserved.</p>
     </footer>
 
-    <!-- پاپ‌آپ ویدیو پلیر (Light-box Modal) -->
-    <div id="videoModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden flex items-center justify-center p-4">
-        <div class="relative w-full max-w-3xl glass-panel rounded-3xl p-4 border border-brand-teal/40">
-            <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-800">
-                <h5 id="modalTitle" class="font-bold text-sm text-brand-teal">عنوان ویدیو</h5>
-                <button onclick="closeVideoModal()" class="text-slate-400 hover:text-brand-orange text-xl">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black">
-                <video id="modalVideoPlayer" controls class="w-full h-full">
-                    <source src="" type="video/mp4">
-                    مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
-                </video>
-            </div>
-        </div>
-    </div>
-
-    <!-- داک شناور مخصوص موبایل (Bottom Quick-Action Dock) جهت تبدیل حداکثری مشتریان -->
+    <!-- MOBILE QUICK DOCK -->
     <div class="fixed bottom-3 inset-x-3 z-40 md:hidden glass-panel rounded-2xl p-2.5 flex items-center justify-between shadow-2xl border border-brand-orange/30">
-        <a href="#contact" class="flex-1 text-center py-2 text-xs font-bold text-slate-200 hover:text-brand-orange">
-            <i class="fas fa-bolt block text-sm mb-1 text-brand-orange"></i>
-            ثبت سفارش
+        <a href="tel:09017486099" class="flex-1 bg-brand-orange text-black py-2.5 rounded-xl text-center text-xs font-black">
+            <i class="fas fa-phone inline-block ml-1"></i> تماس فوری
         </a>
-        <a href="https://wa.me/989120000000" target="_blank" class="flex-1 bg-brand-orange text-black py-2.5 rounded-xl text-center text-xs font-black shadow-lg shadow-brand-orange/30">
-            <i class="fab fa-whatsapp text-sm inline-block ml-1"></i>
-            واتساپ آنی
+        <a href="mailto:danialkayan@gmail.com" class="flex-1 text-center py-2 text-xs font-bold text-slate-200">
+            <i class="fas fa-envelope block text-sm mb-1 text-brand-teal"></i> ایمیل
         </a>
-        <a href="#portfolio" class="flex-1 text-center py-2 text-xs font-bold text-slate-200 hover:text-brand-teal">
-            <i class="fas fa-film block text-sm mb-1 text-brand-teal"></i>
-            نمونه‌کارها
+        <a href="#art-house" class="flex-1 text-center py-2 text-xs font-bold text-slate-200">
+            <i class="fas fa-images block text-sm mb-1 text-brand-orange"></i> Art House
         </a>
     </div>
 
-    <!-- اسکریپت هوشمند: موتور تشخیص شب و روز و کنترل اتمسفر -->
+    <!-- MULTI-LANGUAGE & SMART THEME SCRIPT -->
     <script>
-        // ۱. کنترل اتمسفر بر اساس زمان محلی (ساعت دستگاه)
-        function initLightingEngine() {
-            const currentHour = new Date().getHours();
-            // اگر بین ساعت ۶:۳۰ صبح تا ۶:۳۰ عصر بود، روز در نظر بگیر
-            const isDayTime = currentHour >= 7 && currentHour < 18;
-            
-            const savedTheme = localStorage.getItem('kayan_theme');
-            if (savedTheme) {
-                applyTheme(savedTheme === 'light');
-            } else {
-                applyTheme(isDayTime);
+        // Translations Dictionary
+        const translations = {
+            fa: {
+                subtitle: "استودیوی بصری",
+                nav_services: "خدمات",
+                nav_portfolio: "پورتفولیو",
+                nav_arthouse: "Art House",
+                nav_contact: "ارتباط مستقیم",
+                hero_badge: "استودیوی پیشرو تدوین و کالرگریدینگ سینمایی",
+                hero_title_1: "روایت‌های بصری که",
+                hero_title_2: "استاندارد بازار را تغییر می‌دهند",
+                hero_desc: "خلق تیزرهای تجاری لوکس، اصلاح رنگ حرفه‌ای Teal & Orange و کامپوزیت‌های ویدیویی منحصربه‌فرد با بالاترین کیفیت جهانی.",
+                btn_portfolio: "مشاهده نمونه‌کارها",
+                btn_contact: "تماس مستقیم با کایان",
+                avatar_role: "کارگردان هنری و تدوینگر ارشد",
+                services_subtitle: "تخصص‌های کلیدی",
+                services_title: "خدمات حرفه‌ای استودیو",
+                serv_1_title: "تدوین سینمایی و ریلز",
+                serv_1_desc: "تدوین تخصصی ویدیوهای تجاری و ریلزهای اینستاگرام با ریتم بالا و قلاب‌های جذب مخاطب.",
+                serv_2_title: "اصلاح رنگ Teal & Orange",
+                serv_2_desc: "کالرگریدینگ حرفه‌ای در DaVinci Resolve برای خلق اتمسفر سینمایی و لوکس.",
+                serv_3_title: "هوش مصنوعی و کامپوزیت",
+                serv_3_desc: "تلفیق فناوری‌های نوین هوش مصنوعی ویدیویی با جلوه‌های ویژه بصری مدرن.",
+                portfolio_subtitle: "گالری آثار",
+                portfolio_title: "پروژه‌های منتخب بصری",
+                tag_industrial: "تیزر صنعتی",
+                tag_colorgrade: "اصلاح رنگ",
+                tag_ai: "هوش مصنوعی",
+                proj_1_title: "مستند خط تولید و پلیمری",
+                proj_1_desc: "شات‌های صنعتی پیشرفته و تنظیم دقیق نور و رنگ.",
+                proj_2_title: "پروژه استودیویی Teal & Orange",
+                proj_2_desc: "کالرگریدینگ سینمایی پرتره و تیزر تبلیغاتی.",
+                proj_3_title: "کمپین بصری هوش مصنوعی",
+                proj_3_desc: "خلق بصری نوین و فضاسازی فانتزی تجاری.",
+                arthouse_subtitle: "تولیدات روزمره و تجربی",
+                arthouse_title: "Art House & Daily Creations",
+                arthouse_desc: "این بخش شامل ایده‌های خام، تمرین‌های کلرگریدینگ، فریم‌های روزمره و تست‌های بصری هفتگی کایان است.",
+                contact_title: "ارتباط مستقیم با کایان",
+                contact_desc: "جهت ثبت سفارش، مشاوره پروژه‌های ویدیویی و همکاری، از راه‌های زیر مستقیماً در ارتباط باشید:"
+            },
+            en: {
+                subtitle: "Visual Studio",
+                nav_services: "Services",
+                nav_portfolio: "Portfolio",
+                nav_arthouse: "Art House",
+                nav_contact: "Direct Contact",
+                hero_badge: "Leading Cinematic Editing & Color Grading Studio",
+                hero_title_1: "Visual Narratives That",
+                hero_title_2: "Redefine Market Standards",
+                hero_desc: "Crafting luxury commercial teasers, professional Teal & Orange color grading, and unique AI video composites.",
+                btn_portfolio: "View Portfolio",
+                btn_contact: "Contact Kayan Direct",
+                avatar_role: "Art Director & Lead Editor",
+                services_subtitle: "Core Expertise",
+                services_title: "Professional Studio Services",
+                serv_1_title: "Cinematic Editing & Reels",
+                serv_1_desc: "Specialized high-paced editing for commercial videos and Instagram reels with strong hooks.",
+                serv_2_title: "Teal & Orange Color Grade",
+                serv_2_desc: "Professional grading in DaVinci Resolve to create a cinematic and luxurious atmosphere.",
+                serv_3_title: "AI & Compositing",
+                serv_3_desc: "Merging next-gen AI video technologies with modern visual effects.",
+                portfolio_subtitle: "Works Gallery",
+                portfolio_title: "Selected Visual Projects",
+                tag_industrial: "Industrial Teaser",
+                tag_colorgrade: "Color Grading",
+                tag_ai: "Artificial Intelligence",
+                proj_1_title: "Industrial & Polymer Line Doc",
+                proj_1_desc: "Advanced industrial shots with precise light and color.",
+                proj_2_title: "Teal & Orange Studio Project",
+                proj_2_desc: "Cinematic portrait and commercial color grading.",
+                proj_3_title: "AI Visual Campaign",
+                proj_3_desc: "Innovative visual creation and commercial fantasy styling.",
+                arthouse_subtitle: "Daily & Experimental Works",
+                arthouse_title: "Art House & Daily Creations",
+                arthouse_desc: "Raw ideas, grading practice, daily frames, and weekly visual tests by Kayan.",
+                contact_title: "Direct Contact with Kayan",
+                contact_desc: "For orders, video project consultations, and collaborations, reach out directly:"
+            },
+            ar: {
+                subtitle: "استوديو بصري",
+                nav_services: "الخدمات",
+                nav_portfolio: "الأعمال",
+                nav_arthouse: "Art House",
+                nav_contact: "اتصال مباشر",
+                hero_badge: "استوديو المونتاج وتصحيح الألوان السينمائي",
+                hero_title_1: "السرد البصري الذي",
+                hero_title_2: "يعيد تعريف معايير السوق",
+                hero_desc: "إنشاء إعلانات تجارية فاخرة، وتصحيح ألوان احترافي Teal & Orange، ومؤثرات ذكاء اصطناعي فريدة.",
+                btn_portfolio: "عرض الأعمال",
+                btn_contact: "اتصل بكایان مباشرة",
+                avatar_role: "مخرج فني ومونتير رئيسي",
+                services_subtitle: "الخبرات الأساسية",
+                services_title: "خدمات الاستوديو الاحترافية",
+                serv_1_title: "المونتاج السينمائي والريلز",
+                serv_1_desc: "مونتاج احترافي للفيديوهات التجارية وريلز الإنستغرام بإيقاع عالٍ.",
+                serv_2_title: "تصحيح الألوان Teal & Orange",
+                serv_2_desc: "تصحيح ألوان احترافي في DaVinci Resolve لخلق أجواء سينمائية.",
+                serv_3_title: "الذكاء الاصطناعي والمؤثرات",
+                serv_3_desc: "دمج تقنيات الفيديو الحديثة للذكاء الاصطناعي مع المؤثرات البصرية.",
+                portfolio_subtitle: "معرض الأعمال",
+                portfolio_title: "المشاريع البصرية المختارة",
+                tag_industrial: "إعلان صناعي",
+                tag_colorgrade: "تصحيح الألوان",
+                tag_ai: "ذكاء اصطناعي",
+                proj_1_title: "مستند خط الإنتاج والبوليمر",
+                proj_1_desc: "لقطات صناعية متقدمة مع ضبط دقيق للإضاءة والألوان.",
+                proj_2_title: "مشروع استوديو Teal & Orange",
+                proj_2_desc: "تصحيح ألوان سينمائي بورتريه وإعلاني.",
+                proj_3_title: "حملة بصرية بالذكاء الاصطناعي",
+                proj_3_desc: "خلق بصري مبتكر وتصميم تجاري خيالي.",
+                arthouse_subtitle: "الأعمال اليومية والتجريبية",
+                arthouse_title: "Art House & Daily Creations",
+                arthouse_desc: "أفكار خام، تمارين الألوان، والإطارات اليومية والاختبارات البصرية الأسبوعية.",
+                contact_title: "الاتصال المباشر بكایان",
+                contact_desc: "للطلبات، استشارات مشاريع الفيديو، والتعاون، تواصل مباشرة:"
             }
-        }
+        };
 
-        function applyTheme(isLight) {
+        function changeLanguage(lang) {
             const html = document.documentElement;
-            const themeIcon = document.getElementById('theme-icon');
-            const themeStatus = document.getElementById('theme-status');
-            const ambientOrange = document.getElementById('ambient-orange');
-            const ambientTeal = document.getElementById('ambient-teal');
+            html.setAttribute('lang', lang);
+            html.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
+            localStorage.setItem('kayan_lang', lang);
+            document.getElementById('lang-select').value = lang;
 
-            if (isLight) {
-                html.classList.remove('dark');
-                html.classList.add('light');
-                document.body.classList.remove('bg-brand-darkBg', 'text-slate-100');
-                document.body.classList.add('bg-brand-lightBg', 'text-slate-900');
-                themeIcon.className = 'fas fa-sun text-brand-orange text-lg';
-                themeStatus.textContent = 'روزانه';
-                ambientOrange.style.opacity = '0.3';
-                ambientTeal.style.opacity = '0.2';
-            } else {
-                html.classList.remove('light');
-                html.classList.add('dark');
-                document.body.classList.remove('bg-brand-lightBg', 'text-slate-900');
-                document.body.classList.add('bg-brand-darkBg', 'text-slate-100');
-                themeIcon.className = 'fas fa-moon text-brand-teal text-lg';
-                themeStatus.textContent = 'شبانه';
-                ambientOrange.style.opacity = '0.6';
-                ambientTeal.style.opacity = '0.5';
+            const t = translations[lang];
+            for (const key in t) {
+                const el = document.querySelector(`[data-i18n="${key}"]`);
+                if (el) el.textContent = t[key];
             }
         }
 
-        // سوییچ دستی تم
-        document.getElementById('theme-toggle').addEventListener('click', () => {
-            const isCurrentlyLight = document.documentElement.classList.contains('light');
-            const nextMode = !isCurrentlyLight;
-            applyTheme(nextMode);
-            localStorage.setItem('kayan_theme', nextMode ? 'light' : 'dark');
-        });
+        // Auto-detect Language & Timezone Lighting Engine
+        function initApp() {
+            // Region / Language auto detection
+            const savedLang = localStorage.getItem('kayan_lang');
+            if (savedLang) {
+                changeLanguage(savedLang);
+            } else {
+                const browserLang = navigator.language || navigator.userLanguage;
+                if (browserLang.startsWith('ar')) changeLanguage('ar');
+                else if (browserLang.startsWith('en')) changeLanguage('en');
+                else changeLanguage('fa');
+            }
 
-        // ۲. باز و بسته کردن مودال ویدیویی
-        function openVideoModal(title, videoUrl) {
-            const modal = document.getElementById('videoModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const player = document.getElementById('modalVideoPlayer');
-
-            modalTitle.textContent = title;
-            player.src = videoUrl;
-            modal.classList.remove('hidden');
-            player.play();
-        }
-
-        function closeVideoModal() {
-            const modal = document.getElementById('videoModal');
-            const player = document.getElementById('modalVideoPlayer');
-            player.pause();
-            player.src = '';
-            modal.classList.add('hidden');
-        }
-
-        // بستن با کلیک بیرون از مودال
-        document.getElementById('videoModal').addEventListener('click', function(e) {
-            if (e.target === this) closeVideoModal();
-        });
-
-        // اجرای خودکار موتور نور هنگام لود صفحه
-        initLightingEngine();
-    </script>
-</body>
-</html>
+            // Theme auto detection based on local time
+            const currentHour = new Date().getHours();
+            const isDayTime = currentHour >= 7 && currentHour < 18;
+            const savedTheme = localStorage.
