@@ -7,6 +7,7 @@ window.PORTFOLIO_DATA = [
     "mediaType": "image",
     "mediaUrl": "assets/portfolio/sample.webp",
     "poster": "",
-    "size": "normal"
+    "size": "large"
   }
 ];
+window.PORTFOLIO_HERO = {"mediaType":"image","mediaUrl":"assets/portfolio/hero.webp","title":"Creative Direction"};
