@@ -1,66 +1,313 @@
-<script>
-(function() {
-  const ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kayan Creative Agency | آژانس خلاقیت و رسانه کایان</title>
   
-  // خواندن یا ساخت Visitor ID
-  let vid = localStorage.getItem('kayan_vid');
-  if (!vid) {
-    vid = 'kv_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
-    localStorage.setItem('kayan_vid', vid);
-  }
+  <!-- فونت Vazirmatn و استایل Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  function getDevice() {
-    const ua = navigator.userAgent;
-    if (/Mobi|Android/i.test(ua)) return 'Mobile';
-    if (/Tablet|iPad/i.test(ua)) return 'Tablet';
-    return 'Desktop';
-  }
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              gold: '#E5A93C',
+              cyan: '#00F5D4',
+              purple: '#7B2CBF',
+              dark: '#0B0D13',
+              card: '#131722',
+            }
+          }
+        }
+      }
+    }
+  </script>
 
-  function sendEvent(eventType, section, target, details = {}) {
-    const payload = {
-      event_type: eventType,
-      type: eventType,
-      section: section || 'general',
-      target: target || 'unknown',
-      details: typeof details === 'object' ? JSON.stringify(details) : String(details),
-      visitor_id: vid,
-      url: window.location.href,
-      device: getDevice(),
-      timestamp: new Date().toISOString()
-    };
+  <style>
+    body {
+      background-color: #080A0F;
+      color: #F3F4F6;
+      font-family: 'Vazirmatn', sans-serif;
+      overflow-x: hidden;
+    }
+    .glow-bg {
+      background: radial-gradient(circle at 50% 20%, rgba(123, 44, 191, 0.18) 0%, rgba(0, 245, 212, 0.05) 45%, transparent 70%);
+    }
+    .glass-card {
+      background: rgba(19, 23, 34, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(0, 245, 212, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px -10px rgba(0, 245, 212, 0.15);
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #FFFFFF 20%, #A5B4FC 60%, #00F5D4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="glow-bg min-h-screen flex flex-col justify-between selection:bg-brand-cyan selection:text-black">
 
-    fetch(ENDPOINT, {
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'omit',
-      headers: {
-        'Content-Type': 'text/plain;charset=UTF-8' // نکته کلیدی: تبدیل به Simple Request برای رفع قطعی نیاز به Preflight
-      },
-      body: JSON.stringify(payload),
-      keepalive: true
-    }).catch(function(err) {
-      console.warn("Analytics error:", err);
-    });
-  }
+  <!-- هدر و نویگیشن -->
+  <header class="sticky top-0 z-50 backdrop-blur-md border-b border-white/5 bg-black/40 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-cyan flex items-center justify-center font-black text-black text-xl shadow-lg shadow-brand-cyan/20">
+          K
+        </div>
+        <div>
+          <span class="font-black text-lg tracking-wider block">KAYAN</span>
+          <span class="text-[10px] text-gray-400 tracking-widest block uppercase">Creative Studio</span>
+        </div>
+      </div>
 
-  // ثبت بازدید اولیه
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      sendEvent('page_view', 'hero', 'load', { title: document.title });
-    });
-  } else {
-    sendEvent('page_view', 'hero', 'load', { title: document.title });
-  }
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <a href="#services" data-track="nav-services" class="hover:text-brand-cyan transition-colors">خدمات</a>
+        <a href="#showcase" data-track="nav-showcase" class="hover:text-brand-cyan transition-colors">نمونه‌کارها</a>
+        <a href="#contact" data-track="nav-contact" class="hover:text-brand-cyan transition-colors">ثبت سفارش</a>
+      </nav>
 
-  // ردیابی هوشمند کلیک‌ها
-  document.addEventListener('click', function(e) {
-    const targetEl = e.target.closest('a, button, [data-track]');
-    if (!targetEl) return;
+      <a href="#contact" data-track="header-cta" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-brand-cyan hover:text-black font-semibold text-xs transition-all duration-300 border border-white/10">
+        شروع همکاری
+      </a>
+    </div>
+  </header>
+
+  <!-- بخش اصلی هیرو (Hero Section) -->
+  <main class="flex-1">
+    <section id="hero" class="max-w-5xl mx-auto px-6 pt-24 pb-20 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-cyan/30 bg-brand-cyan/5 text-brand-cyan text-xs font-medium mb-8">
+        <span class="w-2 h-2 rounded-full bg-brand-cyan animate-ping"></span>
+        آینده تولید محتوای هوشمند و سینمایی
+      </div>
+      
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-tight mb-8">
+        روایت خلاقانه برند شما با <br>
+        <span class="text-gradient">تصویر، سینما و هوش مصنوعی</span>
+      </h1>
+      
+      <p class="max-w-2xl mx-auto text-gray-400 text-base sm:text-lg mb-12 font-light leading-relaxed">
+        ما در کایان با تلفیق هنر کارگردانی، ویدیوگرافی پیشرفته و جدیدترین مدل‌های مولد هوش مصنوعی، ایده‌های شما را به ویدیوهای جریان‌ساز و خیره‌کننده تبدیل می‌کنیم.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#contact" data-track="hero-start-project" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-cyan to-indigo-500 text-black font-bold text-sm shadow-lg shadow-brand-cyan/20 hover:scale-105 transition-transform duration-200">
+          ثبت درخواست پروژه
+        </a>
+        <a href="#services" data-track="hero-explore" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium text-sm border border-white/10 transition-colors">
+          بررسی سرویس‌ها
+        </a>
+      </div>
+    </section>
+
+    <!-- بخش خدمات (Services) -->
+    <section id="services" class="max-w-7xl mx-auto px-6 py-20">
+      <div class="text-center mb-16">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-brand-cyan mb-2">توانمندی‌ها</h2>
+        <h3 class="text-3xl font-black">آنچه در کایان خلق می‌کنیم</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- کارت ۱: ویدیوگرافی و تیزر -->
+        <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-2xl mb-6">
+            🎬
+          </div>
+          <h4 class="text-xl font-bold mb-3">ویدیوگرافی و تیزر صنعتی</h4>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+            تصویربرداری هوایی (Drone)، تصویربرداری خطوط تولید کارخانجات، مصاحبه‌های صنعتی و کارگردانی تیزرهای داستانی با بالاترین استاندارد رنگ و تصویر.
+          </p>
+          <span class="text-xs text-brand-cyan font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+            جزئیات بیشتر ←
+          </span>
+        </div>
+
+        <!-- کارت ۲: هوش مصنوعی و VFX -->
+        <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-brand-cyan flex items-center justify-center text-2xl mb-6">
+            ⚡
+          </div>
+          <h4 class="text-xl font-bold mb-3">AI Video & Generative Arts</h4>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+            شخصیت‌پردازی هوش مصنوعی، فیس‌لاک (Face Lock)، موشن‌گرافی تلفیقی، مدل‌سازی اختصاصی مسکات، و تولید جلوه‌های ویژه فراتر از تصویربرداری سنتی.
+          </p>
+          <span class="text-xs text-brand-cyan font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+            جزئیات بیشتر ←
+          </span>
+        </div>
+
+        <!-- کارت ۳: تدوین و کامپوزیتینگ -->
+        <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-brand-gold flex items-center justify-center text-2xl mb-6">
+            🎞️
+          </div>
+          <h4 class="text-xl font-bold mb-3">تدوین حرفه‌ای و Sound Design</h4>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+            ریتم‌سازی دقیق، اصلاح رنگ سینمایی (Color Grading)، طراحی صدا و افکت‌های صوتی فضاساز متناسب با انتشار در سوشال مدیا و کمپین‌های مارکتینگ.
+          </p>
+          <span class="text-xs text-brand-cyan font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+            جزئیات بیشتر ←
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- بخش فرم سفارش و ثبت تیکت (Contact Form) -->
+    <section id="contact" class="max-w-3xl mx-auto px-6 py-20">
+      <div class="glass-card p-8 sm:p-12 rounded-3xl border border-white/10 shadow-2xl">
+        <div class="text-center mb-10">
+          <h3 class="text-2xl sm:text-3xl font-black mb-3">شروع همکاری و ثبت پروژه</h3>
+          <p class="text-gray-400 text-sm">فرم زیر را تکمیل کنید تا در کمتر از ۲ ساعت با شما تماس بگیریم.</p>
+        </div>
+
+        <form id="projectForm" class="space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-2">نام و نام خانوادگی / نام برند</label>
+              <input type="text" id="nameInput" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-brand-cyan focus:outline-none transition-colors" placeholder="مثال: کارخانه روناک">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-2">شماره تماس یا آیدی تلگرام</label>
+              <input type="text" id="contactInput" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-brand-cyan focus:outline-none transition-colors text-left" dir="ltr" placeholder="0912xxxxxxx">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-300 mb-2">نوع پروژه</label>
+            <select id="projectType" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-brand-cyan focus:outline-none transition-colors text-gray-300">
+              <option value="commercial_video">تیزر ویدیویی / صنعتی</option>
+              <option value="ai_creative">تولید محتوای هوش مصنوعی (AI)</option>
+              <option value="editing">تدوین و ریلز اینستاگرام</option>
+              <option value="branding">طراحی هویت بصری و مشاوره</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-300 mb-2">توضیحات مختصر درباره پروژه</label>
+            <textarea id="descInput" rows="4" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-brand-cyan focus:outline-none transition-colors" placeholder="هدف پروژه، زمان‌بندی و مواردی که مد نظرتان است..."></textarea>
+          </div>
+
+          <button type="submit" id="submitBtn" class="w-full py-4 rounded-xl bg-brand-cyan hover:bg-cyan-400 text-black font-bold text-sm tracking-wide transition-all shadow-lg shadow-brand-cyan/20">
+            ارسال و ثبت درخواست
+          </button>
+          
+          <div id="formStatus" class="hidden text-center text-sm font-medium pt-2"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- فوتر -->
+  <footer class="border-t border-white/5 py-8 text-center text-xs text-gray-500">
+    <p>© 2026 Kayan Creative Agency. تمام حقوق محفوظ است.</p>
+  </footer>
+
+  <!-- اسکریپت ردیابی و تله‌متری بدون ارور CORS -->
+  <script>
+  (function() {
+    const ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
     
-    const targetName = targetEl.getAttribute('data-track') || targetEl.innerText.trim().substring(0, 30) || targetEl.id || targetEl.name || 'button';
-    const section = targetEl.closest('section, header, footer, nav') ? (targetEl.closest('section, header, footer, nav').id || targetEl.closest('section, header, footer, nav').tagName.toLowerCase()) : 'general';
-    
-    sendEvent('click', section, targetName, { tag: targetEl.tagName });
-  });
-})();
-</script>
+    // ۱. ساخت شناسه یکتا برای بازدیدکننده
+    let vid = localStorage.getItem('kayan_vid');
+    if (!vid) {
+      vid = 'kv_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now().toString(36);
+      localStorage.setItem('kayan_vid', vid);
+    }
+
+    function getDevice() {
+      const ua = navigator.userAgent;
+      if (/Mobi|Android/i.test(ua)) return 'Mobile';
+      if (/Tablet|iPad/i.test(ua)) return 'Tablet';
+      return 'Desktop';
+    }
+
+    // متد ارسال تله‌متری که به دلیل text/plain هرگز دچار خطای CORS نمی‌شود
+    function track(eventType, section, target, details = {}) {
+      const payload = {
+        event_type: eventType,
+        section: section || 'general',
+        target: target || 'none',
+        details: typeof details === 'object' ? JSON.stringify(details) : String(details),
+        visitor_id: vid,
+        url: window.location.href,
+        device: getDevice(),
+        timestamp: new Date().toISOString()
+      };
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'text/plain;charset=UTF-8'
+        },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(err => console.debug("Log silent:", err));
+    }
+
+    // ثبت رویداد لود اولیه
+    track('page_view', 'hero', 'load', { title: document.title, referrer: document.referrer });
+
+    // ثبت کلیک روی دکمه‌ها و المان‌های قابل کلیک
+    document.addEventListener('click', function(e) {
+      const el = e.target.closest('a, button, [data-track]');
+      if (!el) return;
+
+      const trackName = el.getAttribute('data-track') || el.innerText.trim().substring(0, 30) || el.id || 'click_element';
+      const section = el.closest('section, header, footer, nav')?.id || 'general';
+
+      track('click', section, trackName, { href: el.getAttribute('href') });
+    });
+
+    // مدیریت ارسال فرم تماس / تیکت
+    const projectForm = document.getElementById('projectForm');
+    const formStatus = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (projectForm) {
+      projectForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('nameInput').value.trim();
+        const contact = document.getElementById('contactInput').value.trim();
+        const type = document.getElementById('projectType').value;
+        const desc = document.getElementById('descInput').value.trim();
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'در حال ثبت...';
+
+        track('ticket_submit', 'contact_form', 'project_inquiry', {
+          client_name: name,
+          contact: contact,
+          project_type: type,
+          description: desc
+        });
+
+        setTimeout(function() {
+          formStatus.className = 'text-center text-sm font-medium pt-2 text-brand-cyan block';
+          formStatus.innerText = 'درخواست شما با موفقیت ثبت شد. به زودی در تماس خواهیم بود!';
+          projectForm.reset();
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'ارسال و ثبت درخواست';
+        }, 600);
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
