@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کایان — Kayan Super App</title>
+<link rel="icon" href="assets/kayan-logo.webp">
+<style>
+:root{
+  --orange:#f97316;--orange2:#fb923c;
+  --bg-dark:#0b0e14;--bg-light:#f2f4f8;
+  --glass-dark:rgba(255,255,255,.06);--glass-light:rgba(255,255,255,.55);
+  --border-dark:rgba(255,255,255,.12);--border-light:rgba(255,255,255,.65);
+  --text-dark:#f1f5f9;--text-light:#1e293b;
+  --muted-dark:#94a3b8;--muted-light:#64748b;
+  --radius:20px;--blur:blur(16px);
+  --t:.45s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Vazirmatn','Segoe UI',Tahoma,sans-serif;background:var(--bg-dark);color:var(--text-dark);min-height:100vh;transition:background var(--t),color var(--t);overflow-x:hidden}
+body.light{background:var(--bg-light);color:var(--text-light)}
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(600px 400px at 15% 20%,rgba(249,115,22,.18),transparent 60%),
+             radial-gradient(500px 400px at 85% 75%,rgba(249,115,22,.12),transparent 60%),
+             radial-gradient(400px 300px at 60% 10%,rgba(59,130,246,.08),transparent 60%)}
+.glass{background:var(--glass-dark);border:1px solid var(--border-dark);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,.25);transition:background var(--t),border-color var(--t),box-shadow var(--t),transform var(--t)}
+body.light .glass{background:var(--glass-light);border-color:var(--border-light);box-shadow:0 8px 32px rgba(30,41,59,.12)}
+
+/* Top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:12px 22px;margin:12px;border-radius:var(--radius)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.12em;font-size:1.1rem;direction:ltr}
+.brand img{height:36px;width:36px;border-radius:10px;object-fit:cover}
+.top-actions{display:flex;align-items:center;gap:10px}
+.lang-switch{display:flex;gap:2px;padding:3px;border-radius:12px}
+.lang-switch button{background:transparent;border:0;color:inherit;font:inherit;font-size:.8rem;font-weight:700;padding:5px 10px;border-radius:9px;cursor:pointer;opacity:.55;transition:all var(--t)}
+.lang-switch button.active{background:var(--orange);color:#fff;opacity:1}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;background:transparent;border:1px solid var(--border-dark);color:inherit;cursor:pointer;transition:all var(--t)}
+body.light .icon-btn{border-color:rgba(30,41,59,.18)}
+.icon-btn:hover{background:var(--orange);border-color:var(--orange);color:#fff;transform:translateY(-1px)}
+.icon-btn svg,.nav-ico svg,.card-ico svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* Desktop nav */
+.desk-nav{display:flex;gap:4px;padding:5px;border-radius:14px}
+.desk-nav a{display:flex;align-items:center;gap:7px;color:inherit;text-decoration:none;font-size:.88rem;font-weight:600;padding:8px 14px;border-radius:11px;opacity:.7;transition:all var(--t);cursor:pointer}
+.desk-nav a:hover{opacity:1;background:rgba(249,115,22,.12)}
+.desk-nav a.active{opacity:1;background:var(--orange);color:#fff}
+@media(max-width:900px){.desk-nav{display:none}}
+
+/* Views */
+main{padding:110px 22px 110px;max-width:1150px;margin:0 auto}
+.view{display:none;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.view.active{display:block;opacity:1;transform:none}
+.hero{text-align:center;padding:56px 30px;margin-bottom:30px}
+.hero img{height:88px;width:88px;border-radius:22px;object-fit:cover;margin-bottom:18px;box-shadow:0 10px 40px rgba(249,115,22,.35)}
+.hero h1{font-size:clamp(1.7rem,4vw,2.6rem);margin-bottom:12px}
+.hero h1 span{background:linear-gradient(90deg,var(--orange),var(--orange2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted-dark);max-width:560px;margin:0 auto 22px;line-height:1.9;font-size:.98rem}
+body.light .hero p{color:var(--muted-light)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--orange),var(--orange2));color:#fff;border:0;font:inherit;font-weight:700;padding:12px 26px;border-radius:14px;cursor:pointer;transition:transform var(--t),box-shadow var(--t);box-shadow:0 8px 24px rgba(249,115,22,.35)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(249,115,22,.5)}
+.btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+.grid{display:grid;gap:18px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{padding:26px;cursor:pointer;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-4px);border-color:rgba(249,115,22,.5);box-shadow:0 16px 40px rgba(249,115,22,.18)}
+.card-ico{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(249,115,22,.15);color:var(--orange);margin-bottom:16px}
+.card h3{margin-bottom:9px;font-size:1.05rem}
+.card p{color:var(--muted-dark);font-size:.87rem;line-height:1.8}
+body.light .card p{color:var(--muted-light)}
+.section-title{font-size:1.5rem;margin:34px 0 18px;text-align:center}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:24px}
+.filter-bar button{background:transparent;border:1px solid var(--border-dark);color:inherit;font:inherit;font-size:.8rem;font-weight:600;padding:7px 16px;border-radius:20px;cursor:pointer;transition:all var(--t);opacity:.7}
+body.light .filter-bar button{border-color:rgba(30,41,59,.18)}
+.filter-bar button.active,.filter-bar button:hover{background:var(--orange);border-color:var(--orange);color:#fff;opacity:1}
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.gal-item{aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;cursor:zoom-in;background:linear-gradient(135deg,rgba(249,115,22,.14),rgba(59,130,246,.1))}
+.gal-item svg{width:56px;height:56px;stroke:var(--orange);fill:none;stroke-width:1;opacity:.85;transition:transform .5s}
+.gal-item:hover svg{transform:scale(1.2)}
+.gal-item span{position:absolute;bottom:12px;font-size:.75rem;font-weight:600;opacity:.7}
+.gal-item.hide{display:none}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(8px)}
+.lightbox.open{display:flex}
+.lb-box{max-width:420px;width:90%;padding:36px;text-align:center;position:relative;animation:pop .35s ease}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.lb-box svg.big{width:120px;height:120px;stroke:var(--orange);fill:none;stroke-width:.8;margin:10px auto 20px;display:block}
+.lb-close{position:absolute;top:12px;inset-inline-end:12px}
+
+/* Contact form */
+form{display:grid;gap:14px;max-width:520px;margin:0 auto;padding:30px}
+form input,form textarea{background:transparent;border:1px solid var(--border-dark);border-radius:12px;color:inherit;font:inherit;padding:12px 14px;transition:border var(--t)}
+body.light form input,body.light form textarea{border-color:rgba(30,41,59,.18)}
+form input:focus,form textarea:focus{outline:none;border-color:var(--orange)}
+form textarea{min-height:110px;resize:vertical}
+.modal-overlay{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:20px;background:rgba(3,7,18,.7);backdrop-filter:blur(14px)}
+.modal-overlay.open{display:grid}.success-card{width:min(480px,100%);padding:38px 30px;text-align:center;position:relative;animation:pop .5s cubic-bezier(.2,.8,.2,1)}
+.success-badge{width:92px;height:92px;margin:0 auto 20px;border-radius:28px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(249,115,22,.3),rgba(251,146,60,.08));box-shadow:0 0 45px rgba(249,115,22,.3);color:#fb923c}
+.success-badge svg{width:62px;height:62px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.success-badge .check{stroke-dasharray:40;stroke-dashoffset:40;animation:draw .8s .25s ease forwards;transform-origin:center}
+@keyframes draw{to{stroke-dashoffset:0}}.success-card h2{margin-bottom:12px;font-size:1.35rem}.success-card p{line-height:1.9;opacity:.76;margin-bottom:24px}
+.toast{position:fixed;z-index:210;inset-inline-end:20px;bottom:24px;width:min(440px,calc(100% - 40px));padding:16px 18px;display:none;align-items:center;justify-content:space-between;gap:12px;border-color:rgba(248,113,113,.4);animation:pop .25s ease}
+.toast.show{display:flex}.toast button{border:0;background:var(--orange);color:white;font:inherit;padding:8px 14px;border-radius:10px;cursor:pointer;white-space:nowrap}
+
+/* Mobile bottom nav */
+.mob-nav{display:none;position:fixed;bottom:12px;left:12px;right:12px;z-index:50;justify-content:space-around;padding:8px;border-radius:var(--radius)}
+.mob-nav a{display:flex;flex-direction:column;align-items:center;gap:3px;color:inherit;text-decoration:none;font-size:.62rem;font-weight:600;opacity:.55;padding:6px 10px;border-radius:12px;transition:all var(--t);cursor:pointer}
+.mob-nav a.active{opacity:1;color:var(--orange);background:rgba(249,115,22,.12)}
+@media(max-width:900px){.mob-nav{display:flex}main{padding-bottom:130px}}
+[dir="ltr"] .brand{font-family:'Segoe UI',sans-serif}
+</style>
+</head>
+<body>
+
+<header class="topbar glass">
+  <div class="brand"><img src="assets/kayan-logo.webp" alt="Kayan logo"><span>KAYAN</span></div>
+  <nav class="desk-nav glass" id="deskNav"></nav>
+  <div class="top-actions">
+    <div class="lang-switch glass" id="langSwitch">
+      <button data-lang="fa">FA</button><button data-lang="en">EN</button><button data-lang="ar">AR</button>
+    </div>
+    <button class="icon-btn" id="searchBtn" aria-label="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+    <button class="icon-btn" id="themeBtn" aria-label="theme"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  </div>
+</header>
+
+<main>
+  <!-- HOME -->
+  <section class="view" id="view-home">
+    <div class="hero glass">
+      <img src="assets/kayan-logo.webp" alt="Kayan">
+      <h1><span data-i="heroTitle"></span></h1>
+      <p data-i="heroSub"></p>
+      <button class="btn" data-go="services"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-i="exploreBtn"></span></button>
+    </div>
+    <h2 class="section-title" data-i="featuresTitle"></h2>
+    <div class="grid g3" id="featuresGrid"></div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="view" id="view-portfolio">
+    <h2 class="section-title" data-i="portfolioTitle"></h2>
+    <div class="filter-bar glass" style="padding:10px" id="filterBar"></div>
+    <div class="gal-grid" id="galGrid"></div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="view" id="view-services">
+    <h2 class="section-title" data-i="servicesTitle"></h2>
+    <div class="grid g3" id="servicesGrid"></div>
+  </section>
+
+  <!-- ART HOUSE -->
+  <section class="view" id="view-arthouse">
+    <h2 class="section-title" data-i="artTitle"></h2>
+    <div class="hero glass" style="padding:36px">
+      <img src="assets/kayan-mark.svg" alt="Kayan art" style="height:120px;width:220px;border-radius:20px;object-fit:cover;margin-bottom:16px">
+      <p data-i="artIntro" style="color:inherit;opacity:.75"></p>
+    </div>
+    <div class="grid g3" id="artGrid"></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="view" id="view-contact">
+    <h2 class="section-title" data-i="contactTitle"></h2>
+    <form class="glass" id="contactForm">
+      <input type="text" data-ip="name" autocomplete="name" required>
+      <input type="tel" data-ip="phone" autocomplete="tel" required>
+      <input type="email" data-ip="email" autocomplete="email" required>
+      <textarea data-ip="message" required></textarea>
+      <button class="btn" type="submit"><svg viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg><span data-i="sendBtn"></span></button>
+    </form>
+  </section>
+</main>
+
+<nav class="mob-nav glass" id="mobNav"></nav>
+<div class="modal-overlay" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle"><div class="success-card glass"><div class="success-badge"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M16 33l11 11 22-24" class="check"/></svg></div><h2 id="successTitle" data-i="successModalTitle"></h2><p data-i="successModalSub"></p><button class="btn" id="modalClose" data-i="modalCloseBtn"></button></div></div>
+<div class="toast glass" id="errorToast" role="alert"><span data-i="errorText"></span><button id="retryBtn" data-i="retryBtn"></button></div>
+
+<div class="lightbox" id="lightbox">
+  <div class="lb-box glass">
+    <button class="icon-btn lb-close" id="lbClose"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <svg class="big" viewBox="0 0 24 24" id="lbIcon"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4-4-8 8"/></svg>
+    <h3 id="lbTitle"></h3>
+    <p id="lbDesc" style="opacity:.7;font-size:.88rem;margin-top:8px;line-height:1.8"></p>
+  </div>
+</div>
+
+<script>
+const ICONS={
+ home:'<svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>',
+ gallery:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4-4-8 8"/></svg>',
+ services:'<svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.1-2.1z"/></svg>',
+ arthouse:'<svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c1.5 0 2-.9 2-2 0-.7-.4-1.1-.4-1.8 0-.9.7-1.6 1.7-1.6H17a4 4 0 0 0 4-4c0-4.8-4-8.6-9-8.6z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg>',
+ contact:'<svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg>',
+ rocket:'<svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2 0-2.8a2 2 0 0 0-3 0z"/><path d="M12 15l-3-3a17 17 0 0 1 9-9c2 0 3 1 3 3a17 17 0 0 1-9 9z"/><path d="M9 12H5l3-4m7 7v4l4-3"/></svg>',
+ shield:'<svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+ bolt:'<svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>',
+ palette:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10" r="1.2"/><circle cx="12" cy="7.5" r="1.2"/><circle cx="15.5" cy="10" r="1.2"/><path d="M12 21a3 3 0 0 1 0-6h2"/></svg>',
+ globe:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg>',
+ abstract:'<svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="4"/><rect x="12" y="12" width="9" height="9" rx="2.5"/><path d="M5 20h6"/></svg>',
+ shape:'<svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="5"/><rect x="11" y="11" width="10" height="10" rx="2"/></svg>',
+ layers:'<svg viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg>',
+ camera:'<svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+ motion:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5 16 12l-6 3.5z"/></svg>',
+ brush:'<svg viewBox="0 0 24 24"><path d="M17 3a3 3 0 0 1 4 4L8 20l-5 1 1-5z"/></svg>'
+};
+const I18N={
+ fa:{dir:"rtl",nav:{home:"خانه",portfolio:"گالری",services:"خدمات",arthouse:"خانه هنر",contact:"تماس"},
+  heroTitle:"استودیو خلاقیت کایان",heroSub:"طراحی، برندینگ و تجربه‌های دیجیتال مینیمال و مدرن — جایی که سادگی به هنر تبدیل می‌شود.",
+  exploreBtn:"کاوش خدمات",featuresTitle:"چرا کایان؟",portfolioTitle:"گالری آثار",servicesTitle:"خدمات ما",artTitle:"خانه هنر کایان",contactTitle:"ارتباط با ما",
+  searchPlaceholder:"جستجو…",filterAll:"همه",sendBtn:"ارسال پیام",sentMsg:"پیام شما ارسال شد. سپاس!",
+  phName:"نام",phPhone:"شماره تماس / واتساپ",phEmail:"ایمیل",phMessage:"پیام شما", successModalTitle:"درخواست شما با موفقیت ثبت شد",successModalSub:"پیام شما مستقیماً به استودیو کایان تحویل داده شد. به زودی جهت هماهنگی و بررسی پروژه با شما تماس خواهیم گرفت.",modalCloseBtn:"متوجه شدم",errorText:"خطا در برقراری ارتباط، لطفاً دوباره تلاش کنید",retryBtn:"تلاش دوباره",
+  features:[{t:"سرعت و دقت",d:"طراحی دقیق و بهینه با جزئیات بی‌نقص.",i:"rocket"},{t:"امنیت و اعتماد",d:"استانداردهای امن و شفاف در همه پروژه‌ها.",i:"shield"},{t:"عملکرد بالا",d:"تجربه‌ای سریع و روان در هر دستگاه.",i:"bolt"},{t:"هویت بصری",d:"زبان بصری متمایز و مینیمال برای برند شما.",i:"palette"},{t:"چندزبانه",d:"پشتیبانی کامل از فارسی، انگلیسی و عربی.",i:"globe"},{t:"هنر انتزاعی",d:"گرافیک انتزاعی و خلاقانه بدون شلوغی.",i:"abstract"}],
+  services:[{t:"طراحی رابط کاربری",d:"رابط‌های شیشه‌ای، مدرن و کاربرمحور.",i:"layers"},{t:"توسعه وب",d:"وب‌سایت‌های سریع و واکنش‌گرا.",i:"bolt"},{t:"برندینگ",d:"هویت برند منسجم و به‌یادماندنی.",i:"palette"},{t:"عکاسی محصول",d:"نمایش مینیمال و حرفه‌ای محصولات.",i:"camera"},{t:"موشن گرافیک",d:"انیمیشن‌های روان و معنادار.",i:"motion"},{t:"مشاوره خلاقیت",d:"راهبری ایده‌ها تا اجرای نهایی.",i:"rocket"}],
+  art:[{t:"فرم و فضا",d:"ترکیب‌بندی‌های انتزاعی از فرم‌های هندسی.",i:"shape"},{t:"نور و رنگ",d:"بازی نور نارنجی در فضای تیره و شیشه‌ای.",i:"bolt"},{t:"لایه‌های معنا",d:"لایه‌های شفاف و عمق بصری.",i:"layers"},{t:"قلم آزاد",d:"خطوط دست‌ساز و خلاقانه.",i:"brush"}],
+  gallery:["کاوش نارنجی","تعادل هندسی","جریان نور","مونوگرام کایان","لایه‌های شیشه‌ای","نبض انتزاعی","دایره و مربع","افق مینیمال"]},
+ en:{dir:"ltr",nav:{home:"Home",portfolio:"Gallery",services:"Services",arthouse:"Art House",contact:"Contact"},
+  heroTitle:"Kayan Creative Studio",heroSub:"Minimal, modern design, branding and digital experiences — where simplicity becomes art.",
+  exploreBtn:"Explore Services",featuresTitle:"Why Kayan?",portfolioTitle:"Portfolio",servicesTitle:"Our Services",artTitle:"Kayan Art House",contactTitle:"Contact Us",
+  searchPlaceholder:"Search…",filterAll:"All",sendBtn:"Send Message",sentMsg:"Your message has been sent. Thank you!",
+  phName:"Name",phPhone:"Phone / WhatsApp",phEmail:"Email",phMessage:"Your message", successModalTitle:"Inquiry Received Successfully",successModalSub:"Your project inquiry has been securely routed to Kayan Creative Studio. Our team will get in touch with you shortly.",modalCloseBtn:"Understood",errorText:"خطا در برقراری ارتباط، لطفاً دوباره تلاش کنید",retryBtn:"Retry",
+  features:[{t:"Speed & Precision",d:"Pixel-perfect, optimized design details.",i:"rocket"},{t:"Trust & Security",d:"Secure, transparent standards on every project.",i:"shield"},{t:"Performance",d:"Fast, smooth experience on any device.",i:"bolt"},{t:"Visual Identity",d:"A distinct minimal visual language for your brand.",i:"palette"},{t:"Multilingual",d:"Full Persian, English and Arabic support.",i:"globe"},{t:"Abstract Art",d:"Creative abstract graphics without clutter.",i:"abstract"}],
+  services:[{t:"UI Design",d:"Modern, glassy, user-centered interfaces.",i:"layers"},{t:"Web Development",d:"Fast, responsive websites.",i:"bolt"},{t:"Branding",d:"Cohesive, memorable brand identity.",i:"palette"},{t:"Product Photography",d:"Minimal, professional product visuals.",i:"camera"},{t:"Motion Graphics",d:"Smooth, meaningful animations.",i:"motion"},{t:"Creative Consulting",d:"Guiding ideas to final execution.",i:"rocket"}],
+  art:[{t:"Form & Space",d:"Abstract compositions of geometric forms.",i:"shape"},{t:"Light & Color",d:"Orange light play on dark glass surfaces.",i:"bolt"},{t:"Layers of Meaning",d:"Translucent layers and visual depth.",i:"layers"},{t:"Free Stroke",d:"Hand-crafted, expressive lines.",i:"brush"}],
+  gallery:["Orange Exploration","Geometric Balance","Light Flow","Kayan Monogram","Glass Layers","Abstract Pulse","Circle & Square","Minimal Horizon"]},
+ ar:{dir:"rtl",nav:{home:"الرئيسية",portfolio:"المعرض",services:"الخدمات",arthouse:"دار الفن",contact:"اتصل بنا"},
+  heroTitle:"استوديو كيان الإبداعي",heroSub:"تصميم وعلامة تجارية وتجارب رقمية بسيطة وعصرية — حيث تصبح البساطة فنًا.",
+  exploreBtn:"استكشف الخدمات",featuresTitle:"لماذا كيان؟",portfolioTitle:"معرض الأعمال",servicesTitle:"خدماتنا",artTitle:"دار فن كيان",contactTitle:"تواصل معنا",
+  searchPlaceholder:"بحث…",filterAll:"الكل",sendBtn:"إرسال الرسالة",sentMsg:"تم إرسال رسالتك. شكرًا!",
+  phName:"الاسم",phPhone:"رقم الهاتف / واتساب",phEmail:"البريد الإلكتروني",phMessage:"رسالتك", successModalTitle:"تم استلام طلبكم بنجاح",successModalSub:"تم تحويل رسالتكم مباشرة إلى استودیو كيان الإبداعي. سنتواصل معكم في أقرب وقت لتنسيق ومتابعة المشروع.",modalCloseBtn:"تم الاستلام",errorText:"خطا در برقراری ارتباط، لطفاً دوباره تلاش کنید",retryBtn:"إعادة المحاولة",
+  features:[{t:"السرعة والدقة",d:"تصميم دقيق ومحسّن بأدق التفاصيل.",i:"rocket"},{t:"الثقة والأمان",d:"معايير آمنة وشفافة في كل مشروع.",i:"shield"},{t:"الأداء",d:"تجربة سريعة وسلسة على أي جهاز.",i:"bolt"},{t:"الهوية البصرية",d:"لغة بصرية بسيطة ومميزة لعلامتك.",i:"palette"},{t:"متعدد اللغات",d:"دعم كامل للفارسية والإنجليزية والعربية.",i:"globe"},{t:"فن تجريدي",d:"رسومات تجريدية إبداعية دون ازدحام.",i:"abstract"}],
+  services:[{t:"تصميم الواجهات",d:"واجهات زجاجية عصرية تتمحور حول المستخدم.",i:"layers"},{t:"تطوير الويب",d:"مواقع سريعة ومتجاوبة.",i:"bolt"},{t:"العلامة التجارية",d:"هوية متكاملة لا تُنسى.",i:"palette"},{t:"تصوير المنتجات",d:"عرض بسيط واحترافي للمنتجات.",i:"camera"},{t:"الموشن جرافيك",d:"حركات سلسة وهادفة.",i:"motion"},{t:"الاستشارات الإبداعية",d:"قيادة الأفكار حتى التنفيذ.",i:"rocket"}],
+  art:[{t:"الشكل والفضاء",d:"تكوينات تجريدية من الأشكال الهندسية.",i:"shape"},{t:"الضوء واللون",d:"لعب الضوء البرتقالي على الأسطح الداكنة.",i:"bolt"},{t:"طبقات المعنى",d:"طبقات شفافة وعمق بصري.",i:"layers"},{t:"الخط الحر",d:"خطوط يدوية معبّرة.",i:"brush"}],
+  gallery:["استكشاف برتقالي","توازن هندسي","تدفق الضوء","مونوغرام كيان","طبقات زجاجية","نبض تجريدي","دائرة ومربع","أفق بسيط"]}
+};
+let lang=localStorage.getItem('kayan-lang')||'fa',t=k=>I18N[lang][k]||k;
+const $=s=>document.querySelector(s),VIEWS=['home','portfolio','services','arthouse','contact'];
+const SVG_HTML=i=>ICONS[i]||ICONS.abstract;
+
+function buildStatic(){
+  const navHTML=VIEWS.map(v=>`<a data-go="${v}">${SVG_HTML(v==='portfolio'?'gallery':v==='arthouse'?'palette':v)}<span data-i="nav.${v}"></span></a>`).join('');
+  $('#deskNav').innerHTML=navHTML;$('#mobNav').innerHTML=navHTML;
+  document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();go(el.dataset.go)}));
+}
+function render(){
+  const L=I18N[lang];
+  document.documentElement.lang=lang;document.documentElement.dir=L.dir;
+  document.querySelectorAll('[data-i]').forEach(el=>{
+    const k=el.dataset.i;
+    if(k.startsWith('nav.'))el.textContent=t('nav')[k.slice(4)];
+    else el.textContent=t(k);
+  });
+  document.querySelectorAll('[data-ip]').forEach(el=>el.placeholder=t('ph'+el.dataset.ip[0].toUpperCase()+el.dataset.ip.slice(1)));
+  $('#searchBtn').setAttribute('title',t('searchPlaceholder'));
+  $('#featuresGrid').innerHTML=t('features').map(c=>`<div class="card glass"><div class="card-ico">${SVG_HTML(c.i)}</div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
+  $('#servicesGrid').innerHTML=t('services').map(c=>`<div class="card glass"><div class="card-ico">${SVG_HTML(c.i)}</div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
+  $('#artGrid').innerHTML=t('art').map(c=>`<div class="card glass"><div class="card-ico">${SVG_HTML(c.i)}</div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
+  // gallery: abstract SVG art tiles, no photos
+  const shapes=['shape','abstract','layers','palette','motion','bolt','brush','globe'];
+  $('#galGrid').innerHTML=L.gallery.map((g,n)=>`<div class="gal-item glass" data-cat="${n%3}" data-title="${g}">${SVG_HTML(shapes[n%shapes.length])}<span>${g}</span></div>`).join('');
+  $('#filterBar').innerHTML=[['all',t('filterAll')],['0',t('gallery')[0]],['1',t('gallery')[1]],['2',t('gallery')[2]]]
+    .map(([v,l],i)=>`<button data-f="${v}" class="${i==0?'active':''}">${l}</button>`).join('');
+  document.querySelectorAll('#filterBar button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('#filterBar button').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+    document.querySelectorAll('.gal-item').forEach(it=>it.classList.toggle('hide',b.dataset.f!=='all'&&it.dataset.cat!==b.dataset.f));
+  });
+  document.querySelectorAll('.gal-item').forEach(it=>it.onclick=()=>openLB(it));
+  document.querySelectorAll('#langSwitch button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+}
+function go(v){
+  const previous=document.querySelector('.view.active')?.id.replace('view-','');
+  VIEWS.forEach(x=>$('#view-'+x).classList.toggle('active',x===v));
+  document.querySelectorAll('[data-go]').forEach(a=>a.classList.toggle('active',a.dataset.go===v));
+  if(location.hash!=='#'+v)location.hash=v;
+  if(previous!==v&&window.kayanTrackView)window.kayanTrackView(v);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openLB(el){$('#lbTitle').textContent=el.dataset.title;$('#lbDesc').textContent=t('portfolioTitle')+' — KAYAN';$('#lightbox').classList.add('open')}
+$('#lbClose').onclick=()=>$('#lightbox').classList.remove('open');
+$('#lightbox').onclick=e=>{if(e.target.id==='lightbox')$('#lightbox').classList.remove('open')};
+$('#themeBtn').onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('kayan-theme',document.body.classList.contains('light')?'light':'dark')};
+document.querySelectorAll('#langSwitch button').forEach(b=>b.onclick=()=>{lang=b.dataset.lang;localStorage.setItem('kayan-lang',lang);render()});
+$('#searchBtn').onclick=()=>go('portfolio');
+if(localStorage.getItem('kayan-theme')==='light')document.body.classList.add('light');
+window.addEventListener('hashchange',()=>{const v=location.hash.slice(1);if(VIEWS.includes(v))go(v)});
+
+// Contact ticket submission: success is shown only after explicit server confirmation.
+let pendingPayload=null;
+const submitContact=async()=>{
+ const form=$('#contactForm'),btn=form.querySelector('button[type="submit"]'),label=btn.querySelector('span');
+ if(!pendingPayload){if(!form.reportValidity())return;const nameVal=form.querySelector('[data-ip="name"]').value.trim(),phoneVal=form.querySelector('[data-ip="phone"]').value.trim(),emailVal=form.querySelector('[data-ip="email"]').value.trim(),messageVal=form.querySelector('[data-ip="message"]').value.trim();pendingPayload={name:nameVal,phone:phoneVal,contact:phoneVal+' | '+emailVal,email:emailVal,subject:'پیام از سایت — استودیو کایان',message:messageVal};}
+ btn.disabled=true;btn.dataset.busy='1';btn.setAttribute('aria-busy','true');label.textContent=lang==='en'?'Sending…':lang==='ar'?'جارٍ الإرسال…':'در حال ارسال…';$('#errorToast').classList.remove('show');
+ try{const response=await fetch('https://kayan-analytics.danialkayan.workers.dev/api/ticket',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(pendingPayload)});let data={};try{data=await response.json()}catch(_){}
+ const confirmed=(response.status===200||response.status===201)&&(data.status==='ok'||response.ok);
+ if(!confirmed)throw new Error('Ticket request was not confirmed');
+ if(window.kayanTrackEvent)window.kayanTrackEvent('contact_submit','Successful contact submission');pendingPayload=null;form.reset();$('#successModal').classList.add('open');
+ }catch(err){console.error('Contact submission failed',err);$('#errorToast').classList.add('show');}
+ finally{btn.disabled=false;btn.removeAttribute('aria-busy');btn.dataset.busy='';label.textContent=t('sendBtn');}
+};
+$('#contactForm').addEventListener('submit',e=>{e.preventDefault();pendingPayload=null;submitContact()});
+$('#retryBtn').onclick=()=>submitContact();$('#modalClose').onclick=()=>$('#successModal').classList.remove('open');
+$('#successModal').addEventListener('click',e=>{if(e.target.id==='successModal')$('#successModal').classList.remove('open')});
+buildStatic();
+render();
+go(VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'home');
+</script>
+<script>
+(function () {
+  const ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
+
+  function getStableVisitorId() {
+    let vid = localStorage.getItem('kayan_vid');
+    if (!vid) {
+      const match = document.cookie.match(/(?:^|; )kayan_vid=([^;]*)/);
+      if (match) vid = decodeURIComponent(match[1]);
+    }
+    if (!vid) vid = 'k_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+    localStorage.setItem('kayan_vid', vid);
+    document.cookie = `kayan_vid=${encodeURIComponent(vid)}; path=/; max-age=31536000; SameSite=Lax`;
+    return vid;
+  }
+
+  const visitorId = getStableVisitorId();
+  function dispatchTelemetry(eventType, sectionName, details = '') {
+    const payload = JSON.stringify({
+      visitor_id: visitorId,
+      event_type: eventType,
+      section: sectionName,
+      details,
+      path: window.location.pathname + (window.location.hash || ''),
+      referrer: document.referrer || 'Direct',
+      screen: window.innerWidth + 'x' + window.innerHeight
+    });
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(ENDPOINT, new Blob([payload], { type: 'application/json' }));
+      } else {
+        fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(() => {});
+      }
+    } catch (error) {}
+  }
+
+  dispatchTelemetry('page_view', 'صفحه اصلی');
+  const sectionFriendlyNames = {
+    home: 'صفحه اصلی (خانه)', portfolio: 'نمونه‌کارها و گالری (#portfolio)',
+    services: 'خدمات ما (#services)', arthouse: 'خانه هنر (#arthouse)', contact: 'فرم و بخش تماس (#contact)'
+  };
+  const trackedViews = new Set(['home']);
+  window.kayanTrackView = function (viewId) {
+    if (!trackedViews.has(viewId)) {
+      trackedViews.add(viewId);
+      dispatchTelemetry('section_view', sectionFriendlyNames[viewId] || ('بخش ' + viewId));
+    }
+  };
+  window.kayanTrackEvent = function (eventType, details) {
+    dispatchTelemetry(eventType, eventType === 'contact_submit' ? 'فرم و بخش تماس (#contact)' : 'تعامل تعاملی', details);
+  };
+})();
+
+</script>
+</body>
+</html>
