@@ -101,7 +101,7 @@ form textarea{min-height:110px;resize:vertical}
 .success-badge .check{stroke-dasharray:40;stroke-dashoffset:40;animation:draw .8s .25s ease forwards;transform-origin:center}
 @keyframes draw{to{stroke-dashoffset:0}}.success-card h2{margin-bottom:12px;font-size:1.35rem}.success-card p{line-height:1.9;opacity:.76;margin-bottom:24px}
 .toast{position:fixed;z-index:210;inset-inline-end:20px;bottom:24px;width:min(440px,calc(100% - 40px));padding:16px 18px;display:none;align-items:center;justify-content:space-between;gap:12px;border-color:rgba(248,113,113,.4);animation:pop .25s ease}
-.toast.show{display:flex}#emailFallback a{text-decoration:none;white-space:nowrap;padding:8px 14px;box-shadow:none}.toast button{border:0;background:var(--orange);color:white;font:inherit;padding:8px 14px;border-radius:10px;cursor:pointer;white-space:nowrap}
+.toast.show{display:flex}.toast button{border:0;background:var(--orange);color:white;font:inherit;padding:8px 14px;border-radius:10px;cursor:pointer;white-space:nowrap}
 
 /* Mobile bottom nav */
 .mob-nav{display:none;position:fixed;bottom:12px;left:12px;right:12px;z-index:50;justify-content:space-around;padding:8px;border-radius:var(--radius)}
@@ -177,7 +177,6 @@ form textarea{min-height:110px;resize:vertical}
 <nav class="mob-nav glass" id="mobNav"></nav>
 <div class="modal-overlay" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle"><div class="success-card glass"><div class="success-badge"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M16 33l11 11 22-24" class="check"/></svg></div><h2 id="successTitle" data-i="successModalTitle"></h2><p data-i="successModalSub"></p><button class="btn" id="modalClose" data-i="modalCloseBtn"></button></div></div>
 <div class="toast glass" id="errorToast" role="alert"><span data-i="errorText"></span><button id="retryBtn" data-i="retryBtn"></button></div>
-<div class="toast glass" id="emailFallback" style="bottom:96px"><span>اگر ارسال مستقیم مسدود شد، پیام را با ایمیل بفرستید.</span><a class="btn" href="mailto:info@kayan.studio">ارسال با ایمیل</a></div>
 
 <div class="lightbox" id="lightbox">
   <div class="lb-box glass">
@@ -289,42 +288,17 @@ window.addEventListener('hashchange',()=>{const v=location.hash.slice(1);if(VIEW
 
 // Contact ticket submission: success is shown only after explicit server confirmation.
 let pendingPayload=null;
-const TICKET_ENDPOINTS=[
- 'https://kayan-analytics.danialkayan.workers.dev/api/ticket',
- 'https://kayan-analytics.danialkayan.workers.dev/ticket',
- 'https://kayan-analytics.danialkayan.workers.dev/api/contact',
- 'https://kayan-analytics.danialkayan.workers.dev/contact'
-];
 const submitContact=async()=>{
  const form=$('#contactForm'),btn=form.querySelector('button[type="submit"]'),label=btn.querySelector('span');
  if(!pendingPayload){if(!form.reportValidity())return;const nameVal=form.querySelector('[data-ip="name"]').value.trim(),phoneVal=form.querySelector('[data-ip="phone"]').value.trim(),emailVal=form.querySelector('[data-ip="email"]').value.trim(),messageVal=form.querySelector('[data-ip="message"]').value.trim();pendingPayload={name:nameVal,phone:phoneVal,contact:phoneVal+' | '+emailVal,email:emailVal,subject:'پیام از سایت — استودیو کایان',message:messageVal};}
- btn.disabled=true;btn.dataset.busy='1';btn.setAttribute('aria-busy','true');
- const idleText=t('sendBtn');
- label.textContent=lang==='en'?'Sending…':lang==='ar'?'جارٍ الإرسال…':'در حال ارسال…';
- $('#errorToast').classList.remove('show');
- let lastErr=null,confirmed=false;
- for(const url of TICKET_ENDPOINTS){
-   try{
-     const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(pendingPayload),mode:'cors',cache:'no-store'});
-     let data={};const raw=await response.text();try{data=raw?JSON.parse(raw):{}}catch(_){data={raw}}
-     const bodyOk=(data&&(data.status==='ok'||data.success===true||data.ok===true||data.ticket_id||data.id));
-     if((response.status===200||response.status===201)&&(bodyOk!==false)){
-       // treat any 2xx as accepted unless the server explicitly reports an error
-       if(!(data&&(data.status==='error'||data.success===false||data.ok===false))){confirmed=true;break;}
-     }
-     lastErr=new Error('HTTP '+response.status+' '+raw.slice(0,200));
-   }catch(err){lastErr=err;}
- }
- if(!confirmed){console.error('Contact submission failed',lastErr);toggleEmailFallback();$('#errorToast').classList.add('show');}
- else{if(window.kayanTrackEvent)window.kayanTrackEvent('contact_submit','Successful contact submission');pendingPayload=null;form.reset();hideEmailFallback();$('#successModal').classList.add('open');}
- btn.disabled=false;btn.removeAttribute('aria-busy');btn.dataset.busy='';label.textContent=idleText;
+ btn.disabled=true;btn.dataset.busy='1';btn.setAttribute('aria-busy','true');label.textContent=lang==='en'?'Sending…':lang==='ar'?'جارٍ الإرسال…':'در حال ارسال…';$('#errorToast').classList.remove('show');
+ try{const response=await fetch('https://kayan-analytics.danialkayan.workers.dev/api/ticket',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(pendingPayload)});let data={};try{data=await response.json()}catch(_){}
+ const confirmed=(response.status===200||response.status===201)&&(data.status==='ok'||response.ok);
+ if(!confirmed)throw new Error('Ticket request was not confirmed');
+ if(window.kayanTrackEvent)window.kayanTrackEvent('contact_submit','Successful contact submission');pendingPayload=null;form.reset();$('#successModal').classList.add('open');
+ }catch(err){console.error('Contact submission failed',err);$('#errorToast').classList.add('show');}
+ finally{btn.disabled=false;btn.removeAttribute('aria-busy');btn.dataset.busy='';label.textContent=t('sendBtn');}
 };
-function toggleEmailFallback(){
-  const box=$('#emailFallback');if(!box)return;
-  if(pendingPayload){const p=pendingPayload;box.querySelector('a').href='mailto:info@kayan.studio?subject='+encodeURIComponent(p.subject)+'&body='+encodeURIComponent('نام: '+p.name+'\nتماس: '+p.contact+'\nایمیل: '+p.email+'\n\n'+p.message);}
-  box.classList.add('show');
-}
-function hideEmailFallback(){const box=$('#emailFallback');if(box)box.classList.remove('show');}
 $('#contactForm').addEventListener('submit',e=>{e.preventDefault();pendingPayload=null;submitContact()});
 $('#retryBtn').onclick=()=>submitContact();$('#modalClose').onclick=()=>$('#successModal').classList.remove('open');
 $('#successModal').addEventListener('click',e=>{if(e.target.id==='successModal')$('#successModal').classList.remove('open')});
@@ -333,6 +307,7 @@ render();
 go(VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'home');
 </script>
 <script>
+
 (function () {
   const ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
 
@@ -344,17 +319,24 @@ go(VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'home');
     }
     if (!vid) vid = 'k_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
     localStorage.setItem('kayan_vid', vid);
-    document.cookie = `secret-2a57da3b`;
+    document.cookie = 'kayan_vid=' + encodeURIComponent(vid) + ';path=/;max-age=31536000;SameSite=Lax';
     return vid;
   }
 
   const visitorId = getStableVisitorId();
+
+  function deviceType() {
+    const w = window.innerWidth;
+    return w <= 480 ? 'موبایل' : w <= 900 ? 'تبلت' : 'دسکتاپ';
+  }
+
   function dispatchTelemetry(eventType, sectionName, details = '') {
     const payload = JSON.stringify({
       visitor_id: visitorId,
       event_type: eventType,
       section: sectionName,
-      details,
+      details: details || '',
+      device: deviceType(),
       path: window.location.pathname + (window.location.hash || ''),
       referrer: document.referrer || 'Direct',
       screen: window.innerWidth + 'x' + window.innerHeight
@@ -363,12 +345,13 @@ go(VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'home');
       if (navigator.sendBeacon) {
         navigator.sendBeacon(ENDPOINT, new Blob([payload], { type: 'application/json' }));
       } else {
-        fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(() => {});
+        fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(function () {});
       }
     } catch (error) {}
   }
 
-  dispatchTelemetry('page_view', 'صفحه اصلی');
+  dispatchTelemetry('page_view', 'صفحه اصلی', 'screen=' + window.innerWidth + 'x' + window.innerHeight + ';device=' + deviceType());
+
   const sectionFriendlyNames = {
     home: 'صفحه اصلی (خانه)', portfolio: 'نمونه‌کارها و گالری (#portfolio)',
     services: 'خدمات ما (#services)', arthouse: 'خانه هنر (#arthouse)', contact: 'فرم و بخش تماس (#contact)'
@@ -383,8 +366,82 @@ go(VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'home');
   window.kayanTrackEvent = function (eventType, details) {
     dispatchTelemetry(eventType, eventType === 'contact_submit' ? 'فرم و بخش تماس (#contact)' : 'تعامل تعاملی', details);
   };
-})();
 
+  /* ---------- Global click tracking: every button, card, nav link, filter, gallery item ---------- */
+  function closestInteractive(el) {
+    return el.closest('button, a, .card, .gal-item, .filter-bar button, [data-go], [data-f], [data-lang], .icon-btn, .lb-close, input, textarea, .brand');
+  }
+
+  function sectionOf(el) {
+    const view = el.closest('.view');
+    if (view) return sectionFriendlyNames[view.id.replace('view-', '')] || view.id;
+    if (el.closest('.topbar')) return 'نوار بالایی (Topbar)';
+    if (el.closest('.mob-nav')) return 'منوی موبایل (Bottom Nav)';
+    if (el.closest('#lightbox')) return 'لایت‌باکس گالری (Lightbox)';
+    if (el.closest('#successModal')) return 'پنجره موفقیت (Success Modal)';
+    if (el.closest('#errorToast') || el.closest('#emailFallback')) return 'پیام خطا / ایمیل (Toast)';
+    return 'تعامل تعاملی';
+  }
+
+  function describeEl(el) {
+    const text = (el.getAttribute && (el.getAttribute('aria-label') || el.textContent || '')).trim().replace(/\s+/g, ' ').slice(0, 80);
+    const parts = [];
+    const tag = (el.tagName || '').toLowerCase();
+    parts.push('tag=' + tag);
+    if (el.id) parts.push('id=' + el.id);
+    const cls = (el.className && typeof el.className === 'string') ? el.className.trim().replace(/\s+/g, '.') : '';
+    if (cls) parts.push('class=' + cls.slice(0, 60));
+    if (el.dataset) {
+      if (el.dataset.go) parts.push('go=' + el.dataset.go);
+      if (el.dataset.f) parts.push('filter=' + el.dataset.f);
+      if (el.dataset.lang) parts.push('lang=' + el.dataset.lang);
+      if (el.dataset.cat) parts.push('category=' + el.dataset.cat);
+      if (el.dataset.title) parts.push('title=' + el.dataset.title);
+    }
+    if (text) parts.push('text=' + text);
+    return parts.join('; ');
+  }
+
+  function classify(type, el) {
+    if (el.matches('.gal-item')) return 'click_gallery_item';
+    if (el.matches('.filter-bar button, [data-f]')) return 'click_filter';
+    if (el.matches('.desk-nav a, .mob-nav a, [data-go]') && !el.matches('button')) return 'click_nav';
+    if (el.matches('#langSwitch button, [data-lang]')) return 'click_lang_switch';
+    if (el.matches('#themeBtn')) return 'click_theme_toggle';
+    if (el.matches('#searchBtn')) return 'click_search';
+    if (el.matches('.card')) return 'click_card';
+    if (el.matches('#lbClose') || el.closest('#lightbox')) return 'click_lightbox';
+    if (el.matches('#modalClose') || el.closest('#successModal')) return 'click_modal';
+    if (el.matches('#retryBtn') || el.closest('#errorToast') || el.closest('#emailFallback')) return 'click_toast';
+    if (el.matches('#contactForm button[type="submit"]')) return 'click_submit_btn';
+    if (el.matches('#contactForm input, #contactForm textarea')) return 'form_field_focus_click';
+    if (el.matches('button, .btn, .icon-btn')) return 'click_button';
+    if (el.matches('a')) return 'click_link';
+    return 'click_' + (el.tagName || '').toLowerCase();
+  }
+
+  document.addEventListener('click', function (e) {
+    try {
+      const target = e.target instanceof Element ? e.target : null;
+      if (!target) return;
+      const el = closestInteractive(target);
+      if (!el) return;
+      // Skip duplicate contact-submit double reporting (submit handled by form logic too)
+      dispatchTelemetry(classify(el, el), sectionOf(el), describeEl(el));
+    } catch (err) {}
+  }, true);
+
+  // Form field engagement (blur = filled)
+  document.addEventListener('blur', function (e) {
+    try {
+      const el = e.target;
+      if (el && el.matches && el.matches('#contactForm input, #contactForm textarea')) {
+        const filled = (el.value || '').trim().length > 0 ? 'filled' : 'empty';
+        dispatchTelemetry('form_field_filled', sectionOf(el), 'field=' + (el.dataset.ip || el.type) + ';state=' + filled);
+      }
+    } catch (err) {}
+  }, true);
+})();
 </script>
 </body>
 </html>
