@@ -443,5 +443,118 @@ go(VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'home');
   }, true);
 })();
 </script>
-</body>
+</body<!-- KAYAN ADVANCED TELEMETRY TRACKER -->
+<script>
+(function() {
+  'use strict';
+  const API_ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
+
+  // ۱. تولید و نگهداری شناسه یکتای کاربر (Visitor ID)
+  function getVisitorId() {
+    let vid = document.cookie.replace(/(?:(?:^|.*;\s*)kayan_vid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    if (!vid) {
+      vid = 'usr_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+      document.cookie = "kayan_vid=" + vid + "; path=/; max-age=31536000; SameSite=Lax";
+    }
+    return vid;
+  }
+
+  // ۲. تشخیص هوشمند دستگاه و مرورگر
+  function getDeviceInfo() {
+    const ua = navigator.userAgent;
+    let device = 'Desktop';
+    if (/tablet|ipad/i.test(ua)) device = 'Tablet';
+    else if (/mobile|iphone|android/i.test(ua)) device = 'Mobile';
+
+    let os = 'Unknown OS';
+    if (/windows/i.test(ua)) os = 'Windows';
+    else if (/android/i.test(ua)) os = 'Android';
+    else if (/iphone|ipad|ipod/i.test(ua)) os = 'iOS';
+    else if (/macintosh|mac os x/i.test(ua)) os = 'macOS';
+    else if (/linux/i.test(ua)) os = 'Linux';
+
+    let browser = 'Unknown Browser';
+    if (/edg/i.test(ua)) browser = 'Edge';
+    else if (/chrome|crios/i.test(ua)) browser = 'Chrome';
+    else if (/firefox|fxios/i.test(ua)) browser = 'Firefox';
+    else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = 'Safari';
+
+    return { device, os, browser, screen: `${window.innerWidth}x${window.innerHeight}` };
+  }
+
+  // ۳. تشخیص تب یا بخش فعال جاری
+  function getActiveTab() {
+    const hash = window.location.hash;
+    if (hash) return hash.replace('#', '');
+    const activeSection = document.querySelector('section[id]:hover') || document.querySelector('section.active');
+    return activeSection ? activeSection.id : 'home';
+  }
+
+  // ۴. ارسال تله‌متری با قابلیت Beacon و Fetch Keepalive
+  function sendEvent(type, target, details = {}) {
+    const dev = getDeviceInfo();
+    const payload = JSON.stringify({
+      visitor_id: getVisitorId(),
+      type: type,
+      tab: getActiveTab(),
+      target: target,
+      device: dev.device,
+      os: dev.os,
+      browser: dev.browser,
+      screen: dev.screen,
+      url: window.location.href,
+      path: window.location.pathname + window.location.hash,
+      timestamp: Date.now(),
+      details: details
+    });
+
+    if (navigator.sendBeacon) {
+      try {
+        const blob = new Blob([payload], { type: 'application/json' });
+        if (navigator.sendBeacon(API_ENDPOINT, blob)) return;
+      } catch (e) {}
+    }
+
+    fetch(API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
+      keepalive: true
+    }).catch(() => {});
+  }
+
+  // ثبت بازدید اولیه صفحه
+  window.addEventListener('DOMContentLoaded', () => {
+    sendEvent('page_view', 'صفحه اصلی');
+  });
+
+  // مانیتورینگ تغییر هش و تب‌ها در URL
+  window.addEventListener('hashchange', () => {
+    sendEvent('tab_change', window.location.hash.replace('#', ''));
+  });
+
+  // رهگیری دقیق تمام کلیک‌ها در سراسر سایت
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('a, button, [role="button"], input[type="submit"], .card, .gallery-item');
+    if (!el) return;
+
+    const label = el.innerText?.trim().slice(0, 50) || 
+                  el.getAttribute('title') || 
+                  el.getAttribute('aria-label') || 
+                  el.getAttribute('href') || 
+                  el.className || 
+                  el.tagName.toLowerCase();
+
+    const parentSection = el.closest('section, header, footer, nav');
+    const sectionName = parentSection ? (parentSection.id || parentSection.tagName.toLowerCase()) : 'global';
+
+    sendEvent('click', label, {
+      section: sectionName,
+      tag: el.tagName.toLowerCase(),
+      href: el.getAttribute('href') || null
+    });
+  }, true);
+})();
+</script>
+>
 </html>
