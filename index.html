@@ -2,556 +2,519 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Kayan Super App | استودیو خلاقیت کایان</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KAYAN CREATIVE STUDIO | Creative Video Powerhouse</title>
+  <meta name="description" content="آژانس تخصصی تولید ویدیوهای سینمایی هوش مصنوعی، تدوین پیشرفته و کمپین‌های تبلیغاتی">
   
-  <!-- فونت وزیرمتن و آیکون‌ها -->
+  <!-- فونت و آیکون‌ها -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Vazirmatn', 'sans-serif'],
-          },
-          colors: {
-            teal: {
-              300: '#2DD4BF',
-              400: '#14B8A6',
-              500: '#00F5D4',
-              DEFAULT: '#00C2A8',
-              glow: 'rgba(0, 245, 212, 0.35)',
-            },
-            orange: {
-              400: '#FB923C',
-              500: '#FF7B00',
-              DEFAULT: '#FF5400',
-              glow: 'rgba(255, 84, 0, 0.35)',
-            },
-            surface: {
-              bg: '#07090E',
-              card: '#0F131D',
-              cardLight: '#181E2E',
-              border: '#1F273D',
-            }
-          }
-        }
-      }
-    }
-  </script>
-
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Vazirmatn:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      --bg-dark: #07090e;
+      --bg-card: #0f131d;
+      --bg-card-hover: #161c2b;
+      --teal: #00F5D4;
+      --orange: #FF5400;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --font-fa: 'Vazirmatn', sans-serif;
+      --font-en: 'Space Grotesk', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background-color: #07090E;
-      color: #F8FAFC;
-      font-family: 'Vazirmatn', sans-serif;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-fa);
+      overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    /* امضای نوری Teal & Orange */
-    .bg-cinema-glow {
-      background: radial-gradient(circle at 15% 15%, rgba(0, 194, 168, 0.12) 0%, transparent 45%),
-                  radial-gradient(circle at 85% 75%, rgba(255, 84, 0, 0.12) 0%, transparent 45%);
+    /* Ambient Lighting */
+    .glow-bg {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,245,212,0.12) 0%, rgba(255,84,0,0.06) 50%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
     }
 
-    .glass-app {
-      background: rgba(15, 19, 29, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+    /* Typography & Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 6%;
+      position: sticky;
+      top: 0;
+      background: rgba(7, 9, 14, 0.85);
+      backdrop-filter: blur(16px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand {
+      font-family: var(--font-en);
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand span { color: var(--teal); }
+    .brand-dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; }
+
+    .nav-actions { display: flex; gap: 16px; align-items: center; }
+    .btn-cta {
+      background: linear-gradient(135deg, var(--teal), #00c4aa);
+      color: #000;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 10px 24px;
+      border-radius: 40px;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 245, 212, 0.35);
     }
 
-    .glass-tab {
-      background: rgba(24, 30, 46, 0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+    /* Hero Section (Like 351 Studio) */
+    .hero {
+      padding: 100px 6% 60px;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto;
     }
-
-    .badge-teal {
-      background: rgba(0, 245, 212, 0.1);
-      color: #00F5D4;
-      border: 1px solid rgba(0, 245, 212, 0.3);
-    }
-
-    .badge-orange {
+    .tagline-pill {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 30px;
       background: rgba(255, 84, 0, 0.1);
-      color: #FF7B00;
       border: 1px solid rgba(255, 84, 0, 0.3);
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 76px);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+    .hero h1 span.gradient-text {
+      background: linear-gradient(90deg, #fff 30%, var(--teal) 70%, var(--orange) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-muted);
+      max-width: 750px;
+      margin: 0 auto 40px;
+      font-weight: 300;
     }
 
-    /* اسکرول‌بار مخفی و نرم */
-    ::-webkit-scrollbar {
-      width: 4px;
+    /* 351 Studio Proven Facts Counter */
+    .metrics-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin: 60px 0 100px;
+    }
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 32px 24px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border 0.3s;
+    }
+    .metric-card:hover { border-color: var(--teal); }
+    .metric-card h3 {
+      font-family: var(--font-en);
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+    .metric-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* Video Reel Showcase Frame */
+    .reel-container {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+      margin-bottom: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+    }
+    .reel-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(7,9,14,0.95) 100%);
+      z-index: 2;
+    }
+    .reel-play-btn {
+      z-index: 3;
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 0 40px rgba(255, 84, 0, 0.6);
+      transition: transform 0.3s;
+      border: none;
+    }
+    .reel-play-btn:hover { transform: scale(1.1); }
+
+    /* Core Services Grid (351 Pillars) */
+    .services-section {
+      padding: 0 6% 120px;
+    }
+    .section-title {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title::before {
+      content: "";
+      width: 16px;
       height: 4px;
+      background: var(--teal);
+      border-radius: 4px;
     }
-    ::-webkit-scrollbar-thumb {
-      background: #1F273D;
-      border-radius: 9999px;
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #00C2A8;
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 40px 30px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .service-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--orange);
+      transform: translateY(-5px);
+    }
+    .service-card .num {
+      font-family: var(--font-en);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 20px;
+    }
+    .service-card h4 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .service-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Order / Ticket Contact Desk */
+    .contact-section {
+      padding: 80px 6%;
+      background: #0a0d15;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .form-box {
+      max-width: 650px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 40px;
+      border-radius: 24px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      color: #fff;
+      font-family: var(--font-fa);
+      font-size: 14px;
+      outline: none;
+      transition: border 0.3s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--teal);
+      background: rgba(0, 245, 212, 0.02);
+    }
+
+    footer {
+      padding: 40px 6%;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
     }
   </style>
 </head>
-<body class="bg-cinema-glow min-h-screen flex flex-col justify-between selection:bg-orange-DEFAULT selection:text-white">
+<body>
 
-  <!-- ================= TOP SUPER APP HEADER ================= -->
-  <header class="sticky top-0 z-50 glass-app border-b border-surface-border px-4 lg:px-8 py-3">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      
-      <!-- Brand & Status -->
-      <div class="flex items-center gap-3">
-        <div class="relative w-10 h-10 rounded-2xl bg-gradient-to-tr from-teal to-orange flex items-center justify-center font-black text-black text-xl shadow-lg shadow-teal-glow">
-          K
-          <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-teal-300 border-2 border-surface-bg rounded-full"></span>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-black text-base tracking-wider block">KAYAN</span>
-            <span class="badge-orange text-[9px] px-2 py-0.5 rounded-full font-bold">SUPER APP</span>
-          </div>
-          <span class="text-[10px] text-gray-400 font-light block">Creative Studio & AI Engine</span>
-        </div>
-      </div>
+  <div class="glow-bg"></div>
 
-      <!-- Desktop Tabs Switcher -->
-      <nav class="hidden md:flex items-center gap-2 glass-tab p-1.5 rounded-2xl">
-        <button onclick="switchTab('feed')" id="btn-tab-feed" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-teal to-teal-400 text-black shadow-md">
-          🎬 استودیو و ویترین
-        </button>
-        <button onclick="switchTab('calc')" id="btn-tab-calc" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold text-gray-300 hover:text-white transition-all">
-          ⚡ محاسبه‌گر هوشمند
-        </button>
-        <button onclick="switchTab('ticket')" id="btn-tab-ticket" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold text-gray-300 hover:text-white transition-all">
-          🎫 میز ثبت سفارش
-        </button>
-      </nav>
-
-      <!-- Quick Session Telemetry Pin -->
-      <div class="flex items-center gap-2">
-        <div class="hidden sm:flex items-center gap-2 bg-surface-card px-3 py-1.5 rounded-xl border border-surface-border text-[11px] text-gray-300 font-mono">
-          <span class="w-2 h-2 rounded-full bg-teal animate-ping"></span>
-          <span id="sessionTimer">00:00</span>
-        </div>
-        <button onclick="switchTab('ticket')" data-track="cta-top" class="px-4 py-2 rounded-xl bg-orange hover:bg-orange-500 text-white font-bold text-xs transition-all shadow-lg shadow-orange-glow flex items-center gap-1.5">
-          <span>شروع پروژه</span>
-          <span class="text-sm">←</span>
-        </button>
-      </div>
-
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      KAYAN <span>STUDIO</span>
+      <div class="brand-dot"></div>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-cta" onclick="scrollToOrder()">شروع پروژه شما</button>
     </div>
   </header>
 
-  <!-- ================= MAIN APP VIEWPORT ================= -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6 pb-24 md:pb-10">
+  <!-- Hero Section -->
+  <main>
+    <section class="hero">
+      <div class="tagline-pill">AI VIDEO POWERHOUSE • 2026 EDITION</div>
+      <h1>
+        خلق ویدیوهای سینمایی<br>
+        <span class="gradient-text">با قدرت هوش مصنوعی و تدوین بی‌نقص</span>
+      </h1>
+      <p>
+        ترکیب مهندسی پرامپت، سینماتوگرافی و موشن‌گرافیک پیشرفته برای برندهایی که می‌خواهند از نویز رسانه‌ای عبور کرده و ماندگار شوند.
+      </p>
 
-    <!-- ========== TAB 1: STUDIO SHOWCASE & SERVICES ========== -->
-    <section id="tab-feed" class="tab-content block space-y-8 animate-fadeIn">
-      
-      <!-- Super App Mini Banner -->
-      <div class="glass-app p-6 sm:p-10 rounded-3xl relative overflow-hidden border border-surface-border">
-        <div class="absolute -right-10 -top-10 w-48 h-48 bg-orange/15 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -left-10 -bottom-10 w-48 h-48 bg-teal/15 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="relative z-10 max-w-2xl">
-          <div class="inline-flex items-center gap-2 badge-teal text-xs px-3 py-1 rounded-full mb-4">
-            <span class="w-1.5 h-1.5 rounded-full bg-teal"></span>
-            تلفیق تصویربرداری صنعتی، Drone و مدل‌های AI
-          </div>
-          <h1 class="text-3xl sm:text-5xl font-black leading-tight mb-4">
-            خلق محتوای سینمایی با هارمونی <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal to-orange">Teal & Orange</span>
-          </h1>
-          <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-6 font-light">
-            به سوپراپ کایان خوش آمدید. از بررسی تعرفه و برآورد هوشمند پروژه تا مشاهده آخرین ریلزها و ثبت سفارش مستقیم در پایگاه داده.
-          </p>
-          <div class="flex flex-wrap gap-3">
-            <button onclick="switchTab('calc')" class="px-5 py-3 rounded-xl bg-teal text-black font-bold text-xs shadow-lg shadow-teal-glow hover:scale-105 transition-all">
-              ⚡ محاسبه آنلاین هزینه
-            </button>
-            <a href="#portfolio-grid" class="px-5 py-3 rounded-xl bg-surface-card hover:bg-surface-cardLight text-gray-200 border border-surface-border text-xs font-semibold transition-all">
-              دیدن نمونه‌کارها ↓
-            </a>
-          </div>
+      <!-- Facts Metric Counter (Like 351 Studio) -->
+      <div class="metrics-bar">
+        <div class="metric-card" data-metric="70%">
+          <h3>+۷۰٪</h3>
+          <p>افزایش نرخ درگیری مخاطب (Engagement Rate)</p>
+        </div>
+        <div class="metric-card" data-metric="10M+">
+          <h3>۱۰M+</h3>
+          <p>مجموع ویو ویدیوهای تولیدی در شبکه‌های اجتماعی</p>
+        </div>
+        <div class="metric-card" data-metric="3x">
+          <h3>۳X</h3>
+          <p>سرعت تحویل بالاتر پروژه‌ها نسبت به متدهای سنتی</p>
         </div>
       </div>
 
-      <!-- Quick Action Pills -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 text-xs font-medium no-scrollbar">
-        <span class="text-gray-400 text-xs pl-2 whitespace-nowrap">فیلتر سریع:</span>
-        <button onclick="filterWorks('all')" class="work-filter active px-4 py-2 rounded-xl bg-teal text-black font-bold whitespace-nowrap">همه کارها</button>
-        <button onclick="filterWorks('industrial')" class="work-filter px-4 py-2 rounded-xl glass-tab text-gray-300 hover:text-white whitespace-nowrap">صنعتی و کارخانجات</button>
-        <button onclick="filterWorks('ai')" class="work-filter px-4 py-2 rounded-xl glass-tab text-gray-300 hover:text-white whitespace-nowrap">هوش مصنوعی و مسکات</button>
-        <button onclick="filterWorks('editing')" class="work-filter px-4 py-2 rounded-xl glass-tab text-gray-300 hover:text-white whitespace-nowrap">تدوین و ریلز</button>
-      </div>
-
-      <!-- App Card Grid (Showcase) -->
-      <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- کارت ۱: پروژه صنعتی -->
-        <div class="work-card glass-app p-5 rounded-2xl group border border-surface-border hover:border-teal/50 transition-all" data-category="industrial">
-          <div class="h-48 rounded-xl bg-gradient-to-br from-surface-card to-black relative overflow-hidden mb-4 border border-surface-border flex items-center justify-center">
-            <span class="text-4xl group-hover:scale-110 transition-transform">🏭</span>
-            <span class="absolute top-3 right-3 badge-orange text-[10px] px-2.5 py-1 rounded-lg font-bold">صنعتی و پهپاد</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2 group-hover:text-teal transition-colors">مستند خط تولید و کارخانجات</h3>
-          <p class="text-gray-400 text-xs leading-relaxed mb-4">تصویربرداری زمینی و هوایی 4K با FPV Drone و اصلاح رنگ متناسب با صنایع پتروشیمی، لوله و پلیمر.</p>
-          <div class="flex items-center justify-between pt-3 border-t border-surface-border text-xs text-gray-400">
-            <span>مدت: ۲ تا ۳ دقیقه</span>
-            <button onclick="switchTab('ticket')" class="text-teal font-semibold hover:underline">درخواست سفارش ←</button>
-          </div>
-        </div>
-
-        <!-- کارت ۲: هوش مصنوعی و مسکات -->
-        <div class="work-card glass-app p-5 rounded-2xl group border border-surface-border hover:border-orange/50 transition-all" data-category="ai">
-          <div class="h-48 rounded-xl bg-gradient-to-br from-surface-card to-black relative overflow-hidden mb-4 border border-surface-border flex items-center justify-center">
-            <span class="text-4xl group-hover:scale-110 transition-transform">🤖</span>
-            <span class="absolute top-3 right-3 badge-teal text-[10px] px-2.5 py-1 rounded-lg font-bold">AI Generative</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2 group-hover:text-orange transition-colors">تلفیق کاراکتر و فیس‌لاک</h3>
-          <p class="text-gray-400 text-xs leading-relaxed mb-4">طراحی مسکات سه‌بعدی ویدیویی، حفظ چهره مدل‌ها (Face-lock) و تولید سناریوهای سورئال با ابزارهای روز.</p>
-          <div class="flex items-center justify-between pt-3 border-t border-surface-border text-xs text-gray-400">
-            <span>رزولوشن: 4K هوشمند</span>
-            <button onclick="switchTab('ticket')" class="text-orange font-semibold hover:underline">درخواست سفارش ←</button>
-          </div>
-        </div>
-
-        <!-- کارت ۳: تدوین ریلز و مارکتینگ -->
-        <div class="work-card glass-app p-5 rounded-2xl group border border-surface-border hover:border-teal/50 transition-all" data-category="editing">
-          <div class="h-48 rounded-xl bg-gradient-to-br from-surface-card to-black relative overflow-hidden mb-4 border border-surface-border flex items-center justify-center">
-            <span class="text-4xl group-hover:scale-110 transition-transform">⚡</span>
-            <span class="absolute top-3 right-3 badge-orange text-[10px] px-2.5 py-1 rounded-lg font-bold">Social Viral</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2 group-hover:text-teal transition-colors">ریلزهای سریع و الگوریتمی</h3>
-          <p class="text-gray-400 text-xs leading-relaxed mb-4">طراحی صدا (Sound Design)، کات‌های ریتمیک، زیرنویس تعاملی و هوک‌های جذاب برای افزایش بازدید اکسپلور.</p>
-          <div class="flex items-center justify-between pt-3 border-t border-surface-border text-xs text-gray-400">
-            <span>تحویل: ۴۸ ساعت</span>
-            <button onclick="switchTab('ticket')" class="text-teal font-semibold hover:underline">درخواست سفارش ←</button>
-          </div>
-        </div>
-
+      <!-- Showreel Video Showcase -->
+      <div class="reel-container" id="showreel">
+        <div class="reel-overlay"></div>
+        <button class="reel-play-btn" id="playReelBtn" aria-label="پخش شوریل">▶</button>
       </div>
     </section>
 
-    <!-- ========== TAB 2: SMART COST & TIME ESTIMATOR ========== -->
-    <section id="tab-calc" class="tab-content hidden space-y-6 animate-fadeIn">
-      <div class="max-w-3xl mx-auto glass-app p-6 sm:p-10 rounded-3xl border border-surface-border">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 rounded-xl bg-orange/20 text-orange flex items-center justify-center text-xl">⚡</div>
-          <div>
-            <h2 class="text-xl sm:text-2xl font-black">ماشین‌حساب هوشمند برآورد پروژه</h2>
-            <p class="text-xs text-gray-400">انتخاب متغیرها و مشاهده آنلاین زمان تحویل و حدود قیمت</p>
-          </div>
+    <!-- 4 Pillars Service Grid -->
+    <section class="services-section">
+      <h2 class="section-title">خدمات تخصصی استودیو کایان</h2>
+      <div class="services-grid">
+        <div class="service-card" data-service="ai-production">
+          <div class="num">01 / AI GENERATION</div>
+          <h4>تولید ویدیوهای کاملاً هوش مصنوعی</h4>
+          <p>ایجاد دنیاها، کاراکترهای واقع‌گرایانه و شات‌های غیرممکن سینمایی بدون نیاز به هزینه‌های سنگین فیلم‌برداری میدانی.</p>
         </div>
-
-        <!-- فرم متغیرها -->
-        <div class="space-y-6">
-          <div>
-            <label class="block text-xs font-semibold text-gray-300 mb-2">نوع مدیا و هدف:</label>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <label class="cursor-pointer">
-                <input type="radio" name="projectType" value="1" checked onchange="calcTotal()" class="peer hidden">
-                <div class="glass-tab p-3 rounded-xl border border-surface-border peer-checked:border-teal peer-checked:bg-teal/10 peer-checked:text-teal text-center text-xs font-bold transition-all">
-                  تیزر صنعتی و پهپاد
-                </div>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="projectType" value="1.3" onchange="calcTotal()" class="peer hidden">
-                <div class="glass-tab p-3 rounded-xl border border-surface-border peer-checked:border-teal peer-checked:bg-teal/10 peer-checked:text-teal text-center text-xs font-bold transition-all">
-                  پروژه تلفیقی با AI
-                </div>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="projectType" value="0.7" onchange="calcTotal()" class="peer hidden">
-                <div class="glass-tab p-3 rounded-xl border border-surface-border peer-checked:border-teal peer-checked:bg-teal/10 peer-checked:text-teal text-center text-xs font-bold transition-all">
-                  تدوین ریلز / شبکه‌ها
-                </div>
-              </label>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-gray-300 mb-2">تعداد ویدیو یا آیتم خروجی: <span id="countDisplay" class="text-orange font-bold">۱ ویدیو</span></label>
-            <input type="range" id="itemCount" min="1" max="10" value="1" oninput="calcTotal()" class="w-full accent-teal bg-surface-cardLight h-2 rounded-lg cursor-pointer">
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-gray-300 mb-2">امکانات ویژه انتخابی:</label>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <label class="glass-tab p-3 rounded-xl border border-surface-border flex items-center gap-2 cursor-pointer hover:bg-surface-cardLight">
-                <input type="checkbox" id="droneAddon" onchange="calcTotal()" class="accent-orange rounded">
-                <span>فیلمبرداری هوایی هلی‌شات (Drone 4K)</span>
-              </label>
-              <label class="glass-tab p-3 rounded-xl border border-surface-border flex items-center gap-2 cursor-pointer hover:bg-surface-cardLight">
-                <input type="checkbox" id="facelockAddon" onchange="calcTotal()" class="accent-orange rounded">
-                <span>تثبیت چهره اختصاصی هوش مصنوعی (Face Lock)</span>
-              </label>
-              <label class="glass-tab p-3 rounded-xl border border-surface-border flex items-center gap-2 cursor-pointer hover:bg-surface-cardLight">
-                <input type="checkbox" id="soundAddon" checked onchange="calcTotal()" class="accent-orange rounded">
-                <span>طراحی صدای اختصاصی و Sound FX</span>
-              </label>
-              <label class="glass-tab p-3 rounded-xl border border-surface-border flex items-center gap-2 cursor-pointer hover:bg-surface-cardLight">
-                <input type="checkbox" id="rushDelivery" onchange="calcTotal()" class="accent-orange rounded">
-                <span>تحویل فوری فورس‌ماژور (کمتر از ۷۲ ساعت)</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- نتیجه برآورد -->
-          <div class="p-5 rounded-2xl bg-surface-card border border-teal/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <span class="text-[11px] text-gray-400 block mb-1">حدود زمان تحویل و شروع:</span>
-              <span id="deliveryDays" class="text-teal font-black text-sm">۴ تا ۷ روز کاری</span>
-            </div>
-            <div class="text-center sm:text-left">
-              <span class="text-[11px] text-gray-400 block mb-1">شاخص برآورد بودجه:</span>
-              <span id="estimatedCost" class="text-orange text-xl sm:text-2xl font-black font-mono">پایه اقتصادی</span>
-            </div>
-          </div>
-
-          <button onclick="applyEstimateToTicket()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-teal to-orange text-black font-black text-xs shadow-lg transition-transform hover:scale-[1.01]">
-            انتقال این مشخصات به فرم ثبت سفارش ←
-          </button>
+        <div class="service-card" data-service="cinematic-ads">
+          <div class="num">02 / BRANDED ADS</div>
+          <h4>تیزرهای تبلیغاتی سینمایی</h4>
+          <p>تولید سناریوهای داستانی عمیق و های‌پرفورمنس برای کمپین‌های تجاری با بالاترین استاندارد رنگ و صداگذاری.</p>
+        </div>
+        <div class="service-card" data-service="motion-vfx">
+          <div class="num">03 / MOTION & VFX</div>
+          <h4>موشن گرافیک و جلوه‌های ویژه</h4>
+          <p>کامپوزیتینگ مدرن، سه‌بعدی‌سازی صنعتی و متحرک‌سازی لوگو و هویت بصری منطبق بر ترندهای ۲۰۲۶.</p>
+        </div>
+        <div class="service-card" data-service="short-form">
+          <div class="num">04 / SOCIAL VIRAL</div>
+          <h4>محتوای شورت‌فرم وایرال (Reels / Shorts)</h4>
+          <p>ویدیوهای ریتمیک، هیجان‌انگیز و قلاب‌دار برای رشد پیج‌های اینستاگرام و یوتیوب با تدوین انفجاری.</p>
         </div>
       </div>
     </section>
 
-    <!-- ========== TAB 3: TICKET DESK & CRM ========== -->
-    <section id="tab-ticket" class="tab-content hidden space-y-6 animate-fadeIn">
-      <div class="max-w-2xl mx-auto glass-app p-6 sm:p-10 rounded-3xl border border-surface-border">
-        
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 rounded-xl bg-teal/20 text-teal flex items-center justify-center text-xl">🎫</div>
-          <div>
-            <h2 class="text-xl sm:text-2xl font-black">میز پذیرش سفارش و صدور تیکت</h2>
-            <p class="text-xs text-gray-400">اطلاعات مستقیم در دیتابیس ابری ثبت و کد پیگیری به شما داده می‌شود</p>
-          </div>
-        </div>
+    <!-- Ticket / Contact Request Desk -->
+    <section class="contact-section" id="orderDesk">
+      <div class="form-box">
+        <h3 style="font-size: 24px; margin-bottom: 8px; color: #fff;">ثبت سفارش و آغاز مشاوره خلاقانه</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">فرم زیر را تکمیل کنید؛ تیم کایان در کمتر از ۳ ساعت پروژه شما را بررسی خواهد کرد.</p>
 
-        <form id="superTicketForm" class="space-y-4">
-          <div>
-            <label class="block text-xs font-semibold text-gray-300 mb-1.5">نام یا عنوان مجموعه شما</label>
-            <input type="text" id="clientName" required class="w-full bg-surface-card border border-surface-border rounded-xl px-4 py-3 text-xs focus:border-teal focus:outline-none text-white" placeholder="مثال: شرکت روناک / علیرضا">
+        <form id="projectTicketForm">
+          <div class="form-group">
+            <label>نام و نام خانوادگی / نام شرکت</label>
+            <input type="text" class="form-input" id="clientName" placeholder="مثال: دانیال کاویانی" required>
           </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-gray-300 mb-1.5">شماره تماس یا تلگرام</label>
-              <input type="text" id="clientContact" required dir="ltr" class="w-full bg-surface-card border border-surface-border rounded-xl px-4 py-3 text-xs text-left focus:border-teal focus:outline-none text-white font-mono" placeholder="0911xxxxxxx">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-gray-300 mb-1.5">دسته‌بندی سفارش</label>
-              <select id="clientCategory" class="w-full bg-surface-card border border-surface-border rounded-xl px-4 py-3 text-xs focus:border-teal focus:outline-none text-gray-300">
-                <option value="Industrial Video">ویدیو و تیزر صنعتی</option>
-                <option value="AI FaceLock">طراحی کاراکتر و AI Face-lock</option>
-                <option value="Reels & Edit">پکیج ریلز و تدوین ماهانه</option>
-                <option value="Drone Cinema">تصویربرداری هوایی اختصاصی</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label>شماره تماس یا آیدی تلگرام</label>
+            <input type="text" class="form-input" id="clientContact" placeholder="09xxxxxxxxx یا @username" required>
           </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-gray-300 mb-1.5">شرح پروژه یا نیازمندی‌ها</label>
-            <textarea id="clientNotes" rows="4" class="w-full bg-surface-card border border-surface-border rounded-xl px-4 py-3 text-xs focus:border-teal focus:outline-none text-white leading-relaxed" placeholder="جزئیات سناریو، تعداد خروجی و هدف نهایی..."></textarea>
+          <div class="form-group">
+            <label>نوع سرویس مورد نظر</label>
+            <select class="form-select" id="serviceType">
+              <option value="AI Video Production">تولید ویدیوی هوش مصنوعی سینمایی</option>
+              <option value="Commercial Ad">تیزر تبلیغاتی تجاری</option>
+              <option value="Short Form & Reels">بسته ویدیوهای ریلز / شبکه‌های اجتماعی</option>
+              <option value="VFX & Motion Design">کامپوزیتینگ و موشن گرافیک صنعتی</option>
+            </select>
           </div>
-
-          <button type="submit" id="ticketSubmitBtn" class="w-full py-4 rounded-xl bg-orange hover:bg-orange-500 text-white font-bold text-xs shadow-lg shadow-orange-glow transition-all flex items-center justify-center gap-2">
-            <span>ثبت نهایی تیکت سفارش</span>
-            <span class="text-sm">✓</span>
-          </button>
+          <div class="form-group">
+            <label>توضیحات و ایده پروژه</label>
+            <textarea class="form-textarea" rows="4" id="projectDetails" placeholder="چند خط درباره ایده، پروداکت یا هدف خود بنویسید..."></textarea>
+          </div>
+          <button type="submit" class="btn-cta" style="width: 100%; border-radius: 12px; padding: 14px;">ارسال مستقیم پروژه به استودیو</button>
+          <div id="formMsg" style="margin-top: 15px; font-size: 13px; text-align: center; display: none;"></div>
         </form>
-
-        <!-- پیام تایید نهایی -->
-        <div id="ticketSuccessMsg" class="hidden mt-6 p-5 rounded-2xl bg-teal/10 border border-teal/30 text-center space-y-2">
-          <div class="text-teal text-xl">🎉</div>
-          <h4 class="text-sm font-bold text-white">تیکت شما با موفقیت در سیستم مرکزی ثبت گردید!</h4>
-          <p class="text-xs text-gray-400">شناسه پیگیری شما: <span id="issuedTicketId" class="text-teal font-mono font-bold"></span></p>
-          <span class="text-[11px] text-gray-500 block">تیم کایان در کمتر از چند ساعت از طریق تلگرام یا تماس هماهنگی را انجام می‌دهد.</span>
-        </div>
-
       </div>
     </section>
-
   </main>
 
-  <!-- ================= MOBILE APP BOTTOM NAVIGATION BAR ================= -->
-  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 glass-app border-t border-surface-border px-6 py-2 flex items-center justify-around">
-    <button onclick="switchTab('feed')" id="m-btn-feed" class="flex flex-col items-center gap-1 text-teal">
-      <span class="text-lg">🎬</span>
-      <span class="text-[10px] font-bold">ویترین</span>
-    </button>
-    <button onclick="switchTab('calc')" id="m-btn-calc" class="flex flex-col items-center gap-1 text-gray-400">
-      <span class="text-lg">⚡</span>
-      <span class="text-[10px] font-medium">محاسبه‌گر</span>
-    </button>
-    <button onclick="switchTab('ticket')" id="m-btn-ticket" class="flex flex-col items-center gap-1 text-gray-400">
-      <span class="text-lg">🎫</span>
-      <span class="text-[10px] font-medium">تیکت سفارش</span>
-    </button>
-  </nav>
+  <footer>
+    <p>© 2026 KAYAN CREATIVE STUDIO. All Rights Reserved. Built with Decoupled Cloudflare Telemetry.</p>
+  </footer>
 
-  <!-- ================= INLINE SCRIPT: APP LOGIC + ZERO-CORS TELEMETRY ================= -->
+  <!-- Telemetry Engine Client -->
   <script>
-    const ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
-    
-    // ۱. مدیریت سشن و Visitor ID
-    let vid = localStorage.getItem('kayan_vid');
-    if (!vid) {
-      vid = 'kapp_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now().toString(36);
-      localStorage.setItem('kayan_vid', vid);
+    const WORKER_URL = "https://kayan-analytics.danialkayan.workers.dev/collect";
+
+    // تولید یا بازیابی شناسه یکتای بازدیدکننده
+    let visitorId = localStorage.getItem('kayan_vid');
+    if (!visitorId) {
+      visitorId = 'usr_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('kayan_vid', visitorId);
     }
 
-    // تایمر فعال سشن
-    let secondsSpent = 0;
-    setInterval(() => {
-      secondsSpent++;
-      const m = String(Math.floor(secondsSpent / 60)).padStart(2, '0');
-      const s = String(secondsSpent % 60).padStart(2, '0');
-      const el = document.getElementById('sessionTimer');
-      if (el) el.innerText = `${m}:${s}`;
-    }, 1000);
-
-    // ۲. ارسال تله‌متری بدون خطای CORS (تکنیک text/plain)
-    function trackEvent(eventType, section, target, details = {}) {
+    // ارسال تله‌متری با مکانیزم Zero-CORS (پشتیبانی پایدار از sendBeacon و keepalive)
+    function track(eventType, details = {}) {
       const payload = {
         event_type: eventType,
-        section: section || 'app',
-        target: target || 'none',
-        details: typeof details === 'object' ? JSON.stringify(details) : String(details),
-        visitor_id: vid,
-        url: window.location.href,
+        visitor_id: visitorId,
+        path: window.location.pathname,
+        viewport: `${window.innerWidth}x${window.innerHeight}`,
         device: /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        details: details
       };
 
-      fetch(ENDPOINT, {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify(payload),
-        keepalive: true
-      }).catch(err => console.debug("Silent telemetry ping"));
-    }
+      const bodyStr = JSON.stringify(payload);
 
-    // لاگ ورود اولیه
-    trackEvent('app_launch', 'home', 'superapp_load', { screen: screen.width + 'x' + screen.height });
-
-    // ۳. مدیریت جابجایی تب‌های سوپراپ
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.getElementById('tab-' + tabId).classList.remove('hidden');
-
-      // ریست استایل دکمه‌ها در دسکتاپ
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.className = 'tab-btn px-4 py-2 rounded-xl text-xs font-bold text-gray-300 hover:text-white transition-all';
-      });
-      const activeDesktop = document.getElementById('btn-tab-' + tabId);
-      if (activeDesktop) {
-        activeDesktop.className = 'tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-teal to-teal-400 text-black shadow-md';
+      if (navigator.sendBeacon) {
+        const blob = new Blob([bodyStr], { type: "text/plain;charset=UTF-8" });
+        navigator.sendBeacon(WORKER_URL, blob);
+      } else {
+        fetch(WORKER_URL, {
+          method: "POST",
+          body: bodyStr,
+          headers: { "Content-Type": "text/plain;charset=UTF-8" },
+          keepalive: true
+        }).catch(() => {});
       }
-
-      // ریست آیکون‌های موبایل
-      ['feed', 'calc', 'ticket'].forEach(id => {
-        const mBtn = document.getElementById('m-btn-' + id);
-        if (mBtn) {
-          if (id === tabId) {
-            mBtn.className = 'flex flex-col items-center gap-1 text-teal';
-            mBtn.querySelector('span:last-child').className = 'text-[10px] font-bold';
-          } else {
-            mBtn.className = 'flex flex-col items-center gap-1 text-gray-400';
-            mBtn.querySelector('span:last-child').className = 'text-[10px] font-medium';
-          }
-        }
-      });
-
-      trackEvent('tab_switch', 'navigation', tabId);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ۴. فیلتر کارهای ویترین
-    function filterWorks(cat) {
-      document.querySelectorAll('.work-filter').forEach(btn => {
-        btn.className = 'work-filter px-4 py-2 rounded-xl glass-tab text-gray-300 hover:text-white whitespace-nowrap';
-      });
-      event.target.className = 'work-filter active px-4 py-2 rounded-xl bg-teal text-black font-bold whitespace-nowrap';
-
-      document.querySelectorAll('.work-card').forEach(card => {
-        if (cat === 'all' || card.getAttribute('data-category') === cat) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-
-      trackEvent('filter_showcase', 'portfolio', cat);
-    }
-
-    // ۵. منطق ماشین‌حساب برآورد هوشمند
-    function calcTotal() {
-      const typeMultiplier = parseFloat(document.querySelector('input[name="projectType"]:checked').value);
-      const count = parseInt(document.getElementById('itemCount').value);
-      document.getElementById('countDisplay').innerText = count + ' ویدیو';
-
-      let baseDays = 3 * count * typeMultiplier;
-      let complexity = 10;
-
-      if (document.getElementById('droneAddon').checked) { baseDays += 1; complexity += 5; }
-      if (document.getElementById('facelockAddon').checked) { baseDays += 2; complexity += 8; }
-      if (document.getElementById('soundAddon').checked) { complexity += 3; }
-      if (document.getElementById('rushDelivery').checked) { baseDays = Math.max(2, Math.round(baseDays * 0.5)); }
-
-      const roundedDays = Math.round(baseDays);
-      document.getElementById('deliveryDays').innerText = `${roundedDays} تا ${roundedDays + 3} روز کاری`;
-
-      let label = "سطح اقتصادی / استاندارد";
-      if (complexity > 22) label = "پکیج کامل پرمیوم & سینمایی";
-      else if (complexity > 16) label = "سطح حرفه‌ای و پیشرفته";
-
-      document.getElementById('estimatedCost').innerText = label;
-    }
-
-    function applyEstimateToTicket() {
-      const selectedType = document.querySelector('input[name="projectType"]:checked').parentElement.innerText.trim();
-      const count = document.getElementById('itemCount').value;
-      const notes = `برآورد انجام شده در اپلیکیشن: پکیج انتخابی ${selectedType} برای ${count} ویدیو به همراه امکانات مد نظر.`;
-      
-      document.getElementById('clientNotes').value = notes;
-      switchTab('ticket');
-    }
-
-    // ۶. ارسال فرم ثبت سفارش به صورت تیکت و ثبت همزمان در تله‌متری
-    document.getElementById('superTicketForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const btn = document.getElementById('ticketSubmitBtn');
-      const name = document.getElementById('clientName').value.trim();
-      const contact = document.getElementById('clientContact').value.trim();
-      const cat = document.getElementById('clientCategory').value;
-      const notes = document.getElementById('clientNotes').value.trim();
-
-      btn.disabled = true;
-      btn.innerText = 'در حال صدور تیکت ابری...';
-
-      const generatedTicketId = 'TCK-' + Math.floor(1000 + Math.random() * 9000);
-
-      trackEvent('ticket_created', 'crm', generatedTicketId, {
-        client: name,
-        contact: contact,
-        category: cat,
-        details: notes
-      });
-
-      setTimeout(() => {
-        document.getElementById('superTicketForm').classList.add('hidden');
-        document.getElementById('issuedTicketId').innerText = generatedTicketId;
-        document.getElementById('ticketSuccessMsg').classList.remove('hidden');
-      }, 700);
+    // لاگ ورود به صفحه
+    window.addEventListener('DOMContentLoaded', () => {
+      track('pageview', { title: document.title, referrer: document.referrer || 'direct' });
     });
+
+    // ردیابی اسکرول عمیق (Scroll Depth: 25%, 50%, 75%, 100%)
+    let scrollDepths = [25, 50, 75, 100];
+    let triggeredDepths = {};
+    window.addEventListener('scroll', () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight <= 0) return;
+      const progress = Math.round((window.scrollY / totalHeight) * 100);
+
+      scrollDepths.forEach(depth => {
+        if (progress >= depth && !triggeredDepths[depth]) {
+          triggeredDepths[depth] = true;
+          track('scroll_depth', { reached: `${depth}%` });
+        }
+      });
+    }, { passive: true });
+
+    // کلیک روی شوریل
+    document.getElementById('playReelBtn').addEventListener('click', () => {
+      track('play_showreel', { status: 'clicked' });
+      alert('شوریل در حال بارگذاری است...');
+    });
+
+    // کلیک روی کارت‌های خدمات
+    document.querySelectorAll('.service-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const service = card.getAttribute('data-service');
+        track('service_click', { service_name: service });
+      });
+    });
+
+    // ثبت تیکت پروژه
+    document.getElementById('projectTicketForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('formMsg');
+      const ticketData = {
+        name: document.getElementById('clientName').value,
+        contact: document.getElementById('clientContact').value,
+        service: document.getElementById('serviceType').value,
+        desc: document.getElementById('projectDetails').value
+      };
+
+      track('ticket_created', ticketData);
+
+      msg.style.display = 'block';
+      msg.style.color = '#00F5D4';
+      msg.innerText = '✓ پروژه شما با موفقیت ثبت گردید. به زودی در تماس خواهیم بود.';
+      document.getElementById('projectTicketForm').reset();
+    });
+
+    function scrollToOrder() {
+      document.getElementById('orderDesk').scrollIntoView({ behavior: 'smooth' });
+      track('cta_click', { button: 'start_project_header' });
+    }
   </script>
 </body>
 </html>
