@@ -1,82 +1,94 @@
 <script>
 (function() {
+  'use strict';
   const ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
-  
-  // تولید یا خواندن Visitor ID
+
+  // تخصیص و نگهداری یکتای شناسه کاربر (Visitor ID)
   let vid = localStorage.getItem('kayan_vid');
   if (!vid) {
-    vid = 'kv_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+    vid = 'kv_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now().toString(36);
     localStorage.setItem('kayan_vid', vid);
   }
 
-  function getDevice() {
+  function getDeviceType() {
     const ua = navigator.userAgent;
-    if (/Mobi|Android/i.test(ua)) return 'Mobile';
-    if (/Tablet|iPad/i.test(ua)) return 'Tablet';
+    if (/iPad|Tablet/i.test(ua)) return 'Tablet';
+    if (/Mobi|Android|iPhone/i.test(ua)) return 'Mobile';
     return 'Desktop';
   }
 
-  function getBrowser() {
+  function getBrowserName() {
     const ua = navigator.userAgent;
-    if (ua.includes('Chrome')) return 'Chrome';
+    if (ua.includes('Edg/')) return 'Edge';
+    if (ua.includes('Chrome') && !ua.includes('Edg/')) return 'Chrome';
     if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari';
     if (ua.includes('Firefox')) return 'Firefox';
-    if (ua.includes('Edge')) return 'Edge';
     return 'Other';
   }
 
-  function getCurrentTab() {
-    const hash = window.location.hash.replace('#', '') || 'home';
-    return hash;
+  function getCurrentSection() {
+    const hash = window.location.hash.replace('#', '').trim();
+    return hash || 'home';
   }
 
-  function sendData(type, target, details = {}) {
+  function sendTelemetry(eventType, targetName, extraDetails = {}) {
     const payload = {
       visitor_id: vid,
-      type: type,
-      target: target,
-      tab: getCurrentTab(),
-      device: getDevice(),
-      browser: getBrowser(),
-      details: details,
+      event_type: eventType,
+      section: getCurrentSection(),
+      target: targetName || '',
+      device: getDeviceType(),
+      browser: getBrowserName(),
+      path: window.location.pathname + window.location.hash,
       url: window.location.href,
-      timestamp: Date.now()
+      details: extraDetails,
+      timestamp: new Date().toISOString()
     };
 
-    const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+    const dataBlob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+
     if (navigator.sendBeacon) {
-      navigator.sendBeacon(ENDPOINT, blob);
+      navigator.sendBeacon(ENDPOINT, dataBlob);
     } else {
       fetch(ENDPOINT, {
         method: 'POST',
-        body: blob,
+        body: dataBlob,
         keepalive: true,
         headers: { 'Content-Type': 'application/json' }
-      }).catch(() => {});
+      }).catch(function() {});
     }
   }
 
-  // ثبت بازدید اولیه صفحه
-  sendData('page_view', document.title || 'Kayan Creative Agency');
+  // ۱. ثبت بازدید اولیه صفحه
+  sendTelemetry('page_view', document.title || 'صفحه اصلی');
 
-  // ردیابی تمام کلیک‌های کاربران روی المان‌ها
+  // ۲. ردیابی هوشمند کلیک‌ها روی المان‌های تعاملی
   document.addEventListener('click', function(e) {
-    const el = e.target.closest('a, button, input, [role="button"], img, .clickable');
-    if (!el) return;
-    
-    let targetName = el.innerText || el.getAttribute('aria-label') || el.id || el.className || el.tagName;
-    targetName = targetName.trim().substring(0, 40);
+    const targetElement = e.target.closest('a, button, input, select, textarea, [role="button"], .clickable');
+    if (!targetElement) return;
 
-    sendData('click', targetName, {
-      tag: el.tagName,
-      id: el.id,
-      className: typeof el.className === 'string' ? el.className : ''
+    let label = targetElement.innerText || 
+                targetElement.getAttribute('aria-label') || 
+                targetElement.getAttribute('title') || 
+                targetElement.id || 
+                targetElement.className || 
+                targetElement.tagName;
+
+    label = String(label).trim().replace(/\s+/g, ' ').slice(0, 50);
+
+    sendTelemetry('click', label, {
+      tag: targetElement.tagName,
+      id: targetElement.id || '',
+      href: targetElement.getAttribute('href') || '',
+      class: typeof targetElement.className === 'string' ? targetElement.className.slice(0, 100) : ''
     });
   }, { passive: true });
 
-  // ردیابی تغییر تب‌ها (Hash Change)
+  // ۳. ردیابی تغییر سکشن‌ها و تب‌ها بر مبنای هشتگ URL
   window.addEventListener('hashchange', function() {
-    sendData('tab_change', getCurrentTab());
-  });
+    sendTelemetry('tab_change', getCurrentSection(), {
+      new_hash: window.location.hash
+    });
+  }, { passive: true });
 })();
 </script>
