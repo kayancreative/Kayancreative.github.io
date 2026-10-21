@@ -8,5 +8,15 @@ window.PORTFOLIO_DATA = [
     "mediaUrl": "assets/portfolio/sample.webp",
     "poster": "",
     "size": "normal"
+  },
+  {
+    "id": "project-mviqoucd-tvmof",
+    "title": "پروژه جدید",
+    "category": "",
+    "client": "",
+    "mediaType": "image",
+    "mediaUrl": "",
+    "poster": "",
+    "size": "normal"
   }
 ];
