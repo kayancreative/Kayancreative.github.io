@@ -1,140 +1,424 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>کایان — Kayan Super App</title>
-<link rel="icon" href="assets/kayan-logo.webp">
-<style>
-:root{
-  --orange:#f97316;--orange2:#fb923c;
-  --bg-dark:#0b0e14;--bg-light:#f2f4f8;
-  --glass-dark:rgba(255,255,255,.06);--glass-light:rgba(255,255,255,.55);
-  --border-dark:rgba(255,255,255,.12);--border-light:rgba(255,255,255,.65);
-  --text-dark:#f1f5f9;--text-light:#1e293b;
-  --muted-dark:#94a3b8;--muted-light:#64748b;
-  --radius:20px;--blur:blur(16px);
-}
-body { background: var(--bg-dark); color: var(--text-dark); font-family: Tahoma, sans-serif; margin: 0; padding: 20px; }
-.glass { background: var(--glass-dark); backdrop-filter: var(--blur); border: 1px solid var(--border-dark); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; }
-button, input, textarea, select { font: inherit; color: inherit; background: transparent; border: 1px solid var(--border-dark); border-radius: 8px; padding: 10px; }
-.btn { background: var(--orange); color: #fff; border: none; cursor: pointer; font-weight: bold; }
-.btn:hover { background: var(--orange2); }
-form { display: flex; flex-direction: column; gap: 12px; max-width: 450px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>استودیو کایان — سامانه‌ی هوشمند ارتباط و تحلیل داده</title>
+  <meta name="theme-color" content="#0b0e14">
+  <link rel="icon" href="assets/kayan-logo.webp">
+  <style>
+    :root {
+      --orange: #f97316;
+      --orange2: #fb923c;
+      --bg: #0b0e14;
+      --panel: #13171f;
+      --glass: rgba(255, 255, 255, 0.05);
+      --glass-hover: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.12);
+      --border-focus: rgba(249, 115, 22, 0.5);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --radius: 16px;
+      --blur: blur(20px);
+      --font: system-ui, -apple-system, "Segoe UI", Roboto, Tahoma, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(249, 115, 22, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(251, 146, 60, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+    }
+
+    header.glass-card {
+      text-align: center;
+      border-bottom: 2px solid rgba(249, 115, 22, 0.3);
+    }
+
+    .brand-tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--orange2);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    p.subtitle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      padding: 4px 12px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      border-radius: 99px;
+      font-size: 12px;
+      color: #4ade80;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 8px #4ade80;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    input, textarea {
+      font: inherit;
+      color: var(--text);
+      background: rgba(10, 12, 16, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--orange);
+      background: rgba(10, 12, 16, 0.85);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .btn {
+      font: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 20px;
+      background: linear-gradient(135deg, var(--orange), var(--orange2));
+      color: #0c0d0f;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+      margin-top: 6px;
+    }
+
+    .btn:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(249, 115, 22, 0.45);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .status-msg {
+      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      display: none;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .status-msg.info {
+      display: block;
+      background: rgba(251, 146, 60, 0.1);
+      border: 1px solid rgba(251, 146, 60, 0.25);
+      color: #fdba74;
+    }
+
+    .status-msg.success {
+      display: block;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+    }
+
+    .status-msg.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    footer a {
+      color: var(--orange2);
+      text-decoration: none;
+    }
+
+    @media (max-width: 520px) {
+      .row { grid-template-columns: 1fr; }
+      .glass-card { padding: 22px 18px; }
+      h1 { font-size: 21px; }
+    }
+  </style>
 </head>
 <body>
 
-<main>
-  <section class="glass">
-    <h1>استودیو خلاق کایان</h1>
-    <p>سامانه جامع تله‌متری و ارتباط با مشتریان</p>
-  </section>
+<div class="container">
+  <header class="glass-card">
+    <div class="brand-tag">Kayan Creative Studio</div>
+    <h1>سامانه یکپارچه کایان</h1>
+    <p class="subtitle">تله‌متری هوشمند و پل ارتباطی مستقیم پروژه‌ها</p>
+    <div class="status-badge">
+      <div class="status-dot"></div>
+      <span>سرویس ارتباطی فعال (Worker Connected)</span>
+    </div>
+  </header>
 
-  <section class="glass">
-    <h2>ارتباط با ما و ثبت تیکت</h2>
-    <form id="contactForm">
-      <input type="text" id="name" placeholder="نام شما" required>
-      <input type="text" id="phone" placeholder="شماره تماس">
-      <input type="email" id="email" placeholder="ایمیل">
-      <input type="text" id="subject" placeholder="موضوع پیام">
-      <textarea id="message" rows="4" placeholder="متن پیام خود را بنویسید..." required></textarea>
-      <button type="submit" class="btn" id="submitBtn">ارسال پیام</button>
+  <main class="glass-card">
+    <h2>ثبت پیام و درخواست مشاوره</h2>
+    <form id="contactForm" novalidate>
+      <div class="row">
+        <div class="form-group">
+          <label for="name">نام و نام‌خانوادگی *</label>
+          <input type="text" id="name" placeholder="مثال: دانیال کایان" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="phone">شماره تماس</label>
+          <input type="tel" id="phone" placeholder="۰۹۱۲..." dir="ltr" autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="email">پست الکترونیکی</label>
+          <input type="email" id="email" placeholder="name@domain.com" dir="ltr" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="subject">موضوع پیام</label>
+          <input type="text" id="subject" placeholder="مثال: مشاوره هوش مصنوعی و ویدیو">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="message">متن پیام *</label>
+        <textarea id="message" rows="4" placeholder="جزئیات درخواست یا پیام خود را بنویسید..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">
+        <span>ارسال پیام و ثبت تیکت</span>
+      </button>
+
+      <div id="formStatus" class="status-msg"></div>
     </form>
-    <p id="formStatus" style="margin-top:10px; font-weight:bold;"></p>
-  </section>
-</main>
+  </main>
+
+  <footer>
+    استودیو خلاق کایان &copy; ۲۰۲۶ — <a href="https://kayan-analytics.danialkayan.workers.dev/admin" target="_blank" rel="noopener">ورود به پنل داشبورد</a>
+  </footer>
+</div>
 
 <script>
 'use strict';
-// مدیریت شناسه یکتا (Visitor ID)
+
+/**
+ * پیکربندی اصلی اندپوینت Cloudflare Worker
+ */
+const API_BASE = 'https://kayan-analytics.danialkayan.workers.dev';
+
+/**
+ * ۱. مدیریت کوکی و شناسه یکتای پایدار (Visitor ID)
+ */
 function getVisitorId() {
   let vid = document.cookie.replace(/(?:(?:^|.*;\s*)kayan_vid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
   if (!vid) {
-    vid = 'usr_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    vid = 'usr_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
     document.cookie = "kayan_vid=" + vid + "; path=/; max-age=31536000; SameSite=Lax";
   }
   return vid;
 }
 
-// ارسال تله‌متری رویدادها به Worker
+/**
+ * ۲. سامانه ارسال تله‌متری رویدادها (Beacon + Keepalive Fallback)
+ */
 function sendTelemetry(eventType, section, details = '') {
-  try {
-    navigator.sendBeacon('/collect', JSON.stringify({
-      visitor_id: getVisitorId(),
-      event_type: eventType,
-      section: section,
-      details: details,
-      path: window.location.pathname,
-      referrer: document.referrer
-    }));
-  } catch (e) {
-    fetch('/collect', {
+  const payload = JSON.stringify({
+    visitor_id: getVisitorId(),
+    event_type: eventType,
+    section: section,
+    details: details,
+    path: window.location.pathname,
+    referrer: document.referrer
+  });
+
+  const url = API_BASE + '/collect';
+  let dispatched = false;
+
+  if (navigator.sendBeacon) {
+    try {
+      const blob = new Blob([payload], { type: 'application/json' });
+      dispatched = navigator.sendBeacon(url, blob);
+    } catch (_) {
+      dispatched = false;
+    }
+  }
+
+  if (!dispatched) {
+    fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        visitor_id: getVisitorId(),
-        event_type: eventType,
-        section: section,
-        details: details,
-        path: window.location.pathname,
-        referrer: document.referrer
-      })
+      body: payload,
+      keepalive: true
     }).catch(() => {});
   }
 }
 
-// ثبت بازدید اولیه صفحه
+// ثبت بازدید اولیه پس از لود صفحه
 window.addEventListener('DOMContentLoaded', () => {
-  sendTelemetry('page_view', 'صفحه اصلی', 'بازدید اولیه صفحه');
+  sendTelemetry('page_view', 'صفحه اصلی', 'ورود به صفحه اصلی فرانت');
 });
 
-// مدیریت ارسال فرم تماس و تیکت
-document.getElementById('contactForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const statusEl = document.getElementById('formStatus');
-  const btn = document.getElementById('submitBtn');
-  
-  const payload = {
-    name: document.getElementById('name').value,
-    phone: document.getElementById('phone').value,
-    email: document.getElementById('email').value,
-    subject: document.getElementById('subject').value,
-    message: document.getElementById('message').value
-  };
+// مانیتورینگ کلیک روی تمام المان‌های تعاملی
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('button, a, input, textarea');
+  if (!el || el.id === 'submitBtn') return;
+  const label = el.innerText.trim().slice(0, 40) || el.placeholder || el.id || el.tagName;
+  sendTelemetry('click_element', 'تعامل کاربر', 'کلیک: ' + label);
+});
 
-  btn.disabled = true;
-  statusEl.style.color = '#fb923c';
-  statusEl.textContent = 'در حال ارسال پیام...';
+/**
+ * ۳. ارسال فرم تماس و ایجاد تیکت جدید
+ */
+const form = document.getElementById('contactForm');
+const statusBox = document.getElementById('formStatus');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const subject = document.getElementById('subject').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  if (!name || !message) {
+    statusBox.className = 'status-msg error';
+    statusBox.textContent = 'لطفاً نام و متن پیام را تکمیل نمایید.';
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = '0.7';
+  statusBox.className = 'status-msg info';
+  statusBox.textContent = 'در حال برقراری ارتباط با سرور و ثبت تیکت...';
 
   try {
-    const res = await fetch('/api/ticket', {
+    const res = await fetch(API_BASE + '/api/ticket', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ name, phone, email, subject, message })
     });
+
     const data = await res.json();
-    
     if (!res.ok) throw new Error(data.error || 'خطا در ثبت پیام');
 
-    statusEl.style.color = '#4ade80';
-    statusEl.textContent = 'پیام شما با موفقیت ارسال شد و در سیستم ثبت گردید!';
-    document.getElementById('contactForm').reset();
-    sendTelemetry('submit_ticket', 'ارتباط با ما', 'شناسه تیکت: ' + (data.ticket_id || 'نامشخص'));
-  } catch (err) {
-    statusEl.style.color = '#f87171';
-    statusEl.textContent = 'خطا: ' + err.message;
-  } finally {
-    btn.disabled = false;
-  }
-});
+    statusBox.className = 'status-msg success';
+    statusBox.innerHTML = `پیام شما با موفقیت ثبت شد!<br>شناسه پیگیری تیکت: <strong>${data.ticket_id}</strong>`;
+    form.reset();
 
-// ثبت کلیک‌های عمومی کاربران برای تله‌متری
-document.addEventListener('click', (e) => {
-  const target = e.target.closest('button, a');
-  if (!target) return;
-  const label = target.innerText.trim().slice(0, 50) || target.id || target.className;
-  sendTelemetry('click_element', 'تعامل کاربر', 'المان: ' + label);
+    sendTelemetry('submit_ticket', 'فرم ارتباط', 'ثبت تیکت موفق: ' + data.ticket_id);
+  } catch (err) {
+    statusBox.className = 'status-msg error';
+    statusBox.textContent = 'خطا در ارسال: ' + (err.message || 'عدم دسترسی به سرور');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+  }
 });
 </script>
 
