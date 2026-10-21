@@ -1,94 +1,51 @@
 <script>
 (function() {
-  'use strict';
   const ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
-
-  // تخصیص و نگهداری یکتای شناسه کاربر (Visitor ID)
+  
   let vid = localStorage.getItem('kayan_vid');
   if (!vid) {
-    vid = 'kv_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now().toString(36);
+    vid = 'kv_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
     localStorage.setItem('kayan_vid', vid);
   }
 
-  function getDeviceType() {
-    const ua = navigator.userAgent;
-    if (/iPad|Tablet/i.test(ua)) return 'Tablet';
-    if (/Mobi|Android|iPhone/i.test(ua)) return 'Mobile';
-    return 'Desktop';
-  }
-
-  function getBrowserName() {
-    const ua = navigator.userAgent;
-    if (ua.includes('Edg/')) return 'Edge';
-    if (ua.includes('Chrome') && !ua.includes('Edg/')) return 'Chrome';
-    if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari';
-    if (ua.includes('Firefox')) return 'Firefox';
-    return 'Other';
-  }
-
-  function getCurrentSection() {
-    const hash = window.location.hash.replace('#', '').trim();
-    return hash || 'home';
-  }
-
-  function sendTelemetry(eventType, targetName, extraDetails = {}) {
+  function sendEvent(eventType, section, target, details = {}) {
     const payload = {
-      visitor_id: vid,
       event_type: eventType,
-      section: getCurrentSection(),
-      target: targetName || '',
-      device: getDeviceType(),
-      browser: getBrowserName(),
-      path: window.location.pathname + window.location.hash,
+      section: section,
+      target: target,
+      details: typeof details === 'object' ? JSON.stringify(details) : details,
+      visitor_id: vid,
       url: window.location.href,
-      details: extraDetails,
+      device: /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
       timestamp: new Date().toISOString()
     };
 
-    const dataBlob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-
     if (navigator.sendBeacon) {
-      navigator.sendBeacon(ENDPOINT, dataBlob);
+      const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+      navigator.sendBeacon(ENDPOINT, blob);
     } else {
       fetch(ENDPOINT, {
         method: 'POST',
-        body: dataBlob,
-        keepalive: true,
-        headers: { 'Content-Type': 'application/json' }
-      }).catch(function() {});
+        mode: 'cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(err => console.error("Telemetry error:", err));
     }
   }
 
-  // ۱. ثبت بازدید اولیه صفحه
-  sendTelemetry('page_view', document.title || 'صفحه اصلی');
+  // ثبت بازدید اولیه
+  sendEvent('page_view', 'hero', 'load', { title: document.title });
 
-  // ۲. ردیابی هوشمند کلیک‌ها روی المان‌های تعاملی
+  // ردیابی کلیک‌ها روی دکمه‌ها و لینک‌ها
   document.addEventListener('click', function(e) {
-    const targetElement = e.target.closest('a, button, input, select, textarea, [role="button"], .clickable');
-    if (!targetElement) return;
-
-    let label = targetElement.innerText || 
-                targetElement.getAttribute('aria-label') || 
-                targetElement.getAttribute('title') || 
-                targetElement.id || 
-                targetElement.className || 
-                targetElement.tagName;
-
-    label = String(label).trim().replace(/\s+/g, ' ').slice(0, 50);
-
-    sendTelemetry('click', label, {
-      tag: targetElement.tagName,
-      id: targetElement.id || '',
-      href: targetElement.getAttribute('href') || '',
-      class: typeof targetElement.className === 'string' ? targetElement.className.slice(0, 100) : ''
-    });
-  }, { passive: true });
-
-  // ۳. ردیابی تغییر سکشن‌ها و تب‌ها بر مبنای هشتگ URL
-  window.addEventListener('hashchange', function() {
-    sendTelemetry('tab_change', getCurrentSection(), {
-      new_hash: window.location.hash
-    });
-  }, { passive: true });
+    const targetEl = e.target.closest('a, button, [data-track]');
+    if (!targetEl) return;
+    
+    const targetName = targetEl.getAttribute('data-track') || targetEl.innerText.trim().substring(0, 30) || targetEl.id || 'unknown_element';
+    const section = targetEl.closest('section, header, footer, nav') ? targetEl.closest('section, header, footer, nav').id || 'general' : 'general';
+    
+    sendEvent('click', section, targetName, { tagName: targetEl.tagName });
+  });
 })();
 </script>
