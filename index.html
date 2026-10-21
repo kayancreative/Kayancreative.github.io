@@ -156,7 +156,7 @@ form textarea{min-height:110px;resize:vertical}
   <!-- CONTACT -->
   <section class="view" id="view-contact">
     <h2 class="section-title" data-i="contactTitle"></h2>
-    <form class="glass" onsubmit="event.preventDefault();alert(t('sentMsg'))">
+    <form class="glass" id="contactForm">
       <input type="text" data-ip="name" required>
       <input type="email" data-ip="email" required>
       <textarea data-ip="message" required></textarea>
@@ -246,7 +246,7 @@ function render(){
   $('#featuresGrid').innerHTML=t('features').map(c=>`<div class="card glass"><div class="card-ico">${SVG_HTML(c.i)}</div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
   $('#servicesGrid').innerHTML=t('services').map(c=>`<div class="card glass"><div class="card-ico">${SVG_HTML(c.i)}</div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
   $('#artGrid').innerHTML=t('art').map(c=>`<div class="card glass"><div class="card-ico">${SVG_HTML(c.i)}</div><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
-  // gallery: abstract SVG art tiles, no photos
+  
   const shapes=['shape','abstract','layers','palette','motion','bolt','brush','globe'];
   $('#galGrid').innerHTML=L.gallery.map((g,n)=>`<div class="gal-item glass" data-cat="${n%3}" data-title="${g}">${SVG_HTML(shapes[n%shapes.length])}<span>${g}</span></div>`).join('');
   $('#filterBar').innerHTML=[['all',t('filterAll')],['0',t('gallery')[0]],['1',t('gallery')[1]],['2',t('gallery')[2]]]
@@ -263,8 +263,20 @@ function go(v){
   document.querySelectorAll('[data-go]').forEach(a=>a.classList.toggle('active',a.dataset.go===v));
   if(location.hash!=='#'+v)location.hash=v;
   window.scrollTo({top:0,behavior:'smooth'});
+
+  // ثبت ردیابی جابه‌جایی تب در معماری SPA
+  if (window.kayanTrackView) {
+    window.kayanTrackView(v);
+  }
 }
-function openLB(el){$('#lbTitle').textContent=el.dataset.title;$('#lbDesc').textContent=t('portfolioTitle')+' — KAYAN';$('#lightbox').classList.add('open')}
+function openLB(el){
+  $('#lbTitle').textContent=el.dataset.title;
+  $('#lbDesc').textContent=t('portfolioTitle')+' — KAYAN';
+  $('#lightbox').classList.add('open');
+  if (window.kayanTrackEvent) {
+    window.kayanTrackEvent('lightbox_open', 'نمایش اثر ' + el.dataset.title);
+  }
+}
 $('#lbClose').onclick=()=>$('#lightbox').classList.remove('open');
 $('#lightbox').onclick=e=>{if(e.target.id==='lightbox')$('#lightbox').classList.remove('open')};
 $('#themeBtn').onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('kayan-theme',document.body.classList.contains('light')?'light':'dark')};
@@ -272,108 +284,95 @@ document.querySelectorAll('#langSwitch button').forEach(b=>b.onclick=()=>{lang=b
 $('#searchBtn').onclick=()=>go('portfolio');
 if(localStorage.getItem('kayan-theme')==='light')document.body.classList.add('light');
 window.addEventListener('hashchange',()=>{const v=location.hash.slice(1);if(VIEWS.includes(v))go(v)});
+
+// هندلر فرم تماس
+$('#contactForm').onsubmit = (e) => {
+  e.preventDefault();
+  if (window.kayanTrackEvent) {
+    window.kayanTrackEvent('contact_submit', 'ارسال موفق پیام در فرم تماس (#contact)');
+  }
+  alert(t('sentMsg'));
+  e.target.reset();
+};
+
 buildStatic();
 render();
 go(VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'home');
 </script>
-<script>
-(function () {
-  const endpoint = 'https://kayan-analytics.danialkayan.workers.dev/collect';
-  const payload = JSON.stringify({
-    type: 'pageview',
-    url: window.location.href,
-    path: window.location.pathname,
-    referrer: document.referrer,
-    title: document.title,
-    language: navigator.language,
-    screen: { width: window.screen.width, height: window.screen.height },
-    timestamp: new Date().toISOString()
-  });
 
-  if (navigator.sendBeacon) {
-    navigator.sendBeacon(endpoint, new Blob([payload], { type: 'application/json' }));
-  } else {
-    fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload,
-      keepalive: true
-    }).catch(function () {});
-  }
-})();
-</script>
-  <script>
+<!-- موتور یکپارچه و بهینه‌شده تلمتری کیان -->
+<script>
 (function() {
   const ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
 
-  let vid = localStorage.getItem('kayan_vid');
-  if (!vid) {
-    vid = 'k_' + Math.random().toString(36).substring(2, 9);
+  // تولید و فیکس کردن شناسه پایدار در LocalStorage و Cookie
+  function getStableVisitorId() {
+    let vid = localStorage.getItem('kayan_vid');
+    if (!vid) {
+      const match = document.cookie.match(/(?:^|; )kayan_vid=([^;]*)/);
+      if (match) vid = decodeURIComponent(match[1]);
+    }
+    if (!vid) {
+      vid = 'k_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+    }
     localStorage.setItem('kayan_vid', vid);
+    document.cookie = `kayan_vid=${vid}; path=/; max-age=31536000; SameSite=Lax`;
+    return vid;
   }
 
-  function sendTelemetry(eventType, sectionName, details = '') {
+  const visitorId = getStableVisitorId();
+
+  function dispatchTelemetry(eventType, sectionName, details = '') {
     const payload = JSON.stringify({
-      visitor_id: vid,
+      visitor_id: visitorId,
       event_type: eventType,
       section: sectionName,
       details: details,
-      path: window.location.pathname + window.location.hash,
+      path: window.location.pathname + (window.location.hash || ''),
       referrer: document.referrer || 'Direct',
       screen: window.innerWidth + 'x' + window.innerHeight
     });
 
-    fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload,
-      keepalive: true
-    }).catch(() => {});
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(ENDPOINT, new Blob([payload], { type: 'application/json' }));
+      } else {
+        fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: payload,
+          keepalive: true
+        }).catch(() => {});
+      }
+    } catch(e) {}
   }
 
-  // ۱. ثبت ورود اولیه به سایت
-  sendTelemetry('page_view', 'ورود به صفحه اصلی');
+  // ۱. ثبت لود اولیه سایت
+  dispatchTelemetry('page_view', 'صفحه اصلی');
 
-  // ۲. ردیابی هوشمند اینکه کاربر به کدام بخش سایت نگاه می‌کند (IntersectionObserver)
-  const trackedSections = document.querySelectorAll('section, header, footer, #contact, #about, #portfolio, #services');
-  const viewedSections = new Set();
+  // ۲. توابع سراسری برای ثبت جابه‌جایی صفحات و اکشن‌ها
+  const sectionFriendlyNames = {
+    'home': 'صفحه اصلی (خانه)',
+    'portfolio': 'نمونه‌کارها و گالری (#portfolio)',
+    'services': 'خدمات ما (#services)',
+    'arthouse': 'خانه هنر (#arthouse)',
+    'contact': 'فرم و بخش تماس (#contact)'
+  };
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id || entry.target.tagName.toLowerCase();
-        const friendlyName = {
-          'contact': 'فرم و بخش تماس (#contact)',
-          'about': 'درباره ما (#about)',
-          'portfolio': 'نمونه کارها (#portfolio)',
-          'services': 'خدمات (#services)',
-          'header': 'هدر بالای سایت',
-          'footer': 'پاورقی (انتهای سایت)'
-        }[id] || ('بخش ' + id);
+  const trackedViews = new Set(['home']);
 
-        // اگر کاربر قبلاً این بخش را ندیده باشد، ارسال کن تا اسپم نشود
-        if (!viewedSections.has(id)) {
-          viewedSections.add(id);
-          sendTelemetry('section_view', friendlyName);
-        }
-      }
-    });
-  }, { threshold: 0.5 }); // وقتی ۵۰٪ آن بخش در دید کاربر آمد
-
-  trackedSections.forEach(s => observer.observe(s));
-
-  // ۳. کلیک روی دکمه‌های خاص یا فرم تماس
-  document.addEventListener('click', function(e) {
-    const target = e.target.closest('a, button');
-    if (target) {
-      const text = target.innerText.trim() || target.getAttribute('href') || 'دکمه ناشناس';
-      if (target.getAttribute('href')?.startsWith('#contact') || target.type === 'submit') {
-        sendTelemetry('click_action', 'کلیک دکمه/فرم', text);
-      }
+  window.kayanTrackView = function(viewId) {
+    const name = sectionFriendlyNames[viewId] || ('بخش ' + viewId);
+    if (!trackedViews.has(viewId)) {
+      trackedViews.add(viewId);
+      dispatchTelemetry('section_view', name);
     }
-  });
+  };
+
+  window.kayanTrackEvent = function(eventType, details) {
+    dispatchTelemetry(eventType, eventType === 'contact_submit' ? 'فرم و بخش تماس (#contact)' : 'تعامل تعاملی', details);
+  };
 })();
 </script>
-
 </body>
 </html>
