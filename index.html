@@ -3,166 +3,536 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kayan Creative Agency • Cinematic AI Video Production</title>
+  <title>Kayan Creative • Creative Director & AI Cinematography</title>
   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #060608;
-      --card-bg: #0e0f14;
-      --accent: #00f0ff;
-      --accent-glow: rgba(0, 240, 255, 0.35);
+      --bg: #0c0d10;
+      --card-bg: #14151b;
+      --primary: #ff5429;
+      --primary-glow: rgba(255, 84, 41, 0.4);
       --text: #ffffff;
-      --muted: #8b8f9e;
+      --text-muted: #8e92a0;
       --border: rgba(255, 255, 255, 0.08);
+      --card-radius: 32px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.6; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
 
-    /* Header */
-    nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 24px 6%; position: fixed; top: 0; width: 100%; z-index: 1000;
-      backdrop-filter: blur(20px); background: rgba(6, 6, 8, 0.7);
-      border-bottom: 1px solid var(--border);
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      padding: 24px;
     }
-    .logo { font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; text-decoration: none; color: #fff; }
-    .logo span { color: var(--accent); }
-    .btn-cta {
-      background: transparent; border: 1px solid var(--accent); color: var(--accent);
-      padding: 10px 24px; border-radius: 40px; font-weight: 600; text-decoration: none;
-      transition: all 0.3s ease; font-size: 0.85rem; letter-spacing: 1px;
-    }
-    .btn-cta:hover { background: var(--accent); color: #000; box-shadow: 0 0 25px var(--accent-glow); }
 
-    /* Hero */
-    .hero {
-      padding: 170px 6% 60px; text-align: center; max-width: 1100px; margin: 0 auto;
+    @media (max-width: 768px) {
+      body { padding: 12px; }
     }
-    .badge {
-      display: inline-block; font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--accent); background: rgba(0, 240, 255, 0.08); border: 1px solid rgba(0, 240, 255, 0.25);
-      padding: 8px 18px; border-radius: 40px; margin-bottom: 24px;
-    }
-    .hero h1 { font-size: clamp(2.8rem, 6.5vw, 4.8rem); font-weight: 900; line-height: 1.1; margin-bottom: 24px; }
-    .hero p { color: var(--muted); font-size: 1.2rem; max-width: 700px; margin: 0 auto 50px; }
 
-    /* Showreel (بخش ویدیوی هدر استودیو ۳۵۱) */
-    .showreel-box {
-      width: 90%; max-width: 1200px; margin: 0 auto 120px;
-      border-radius: 24px; overflow: hidden; border: 1px solid var(--border);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.9); position: relative;
+    .main-wrapper {
+      max-width: 1240px;
+      margin: 0 auto;
     }
-    .showreel-box video { width: 100%; display: block; object-fit: cover; }
 
-    /* Stats Grid */
-    .stats-row {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px; max-width: 1100px; margin: 0 auto 120px; padding: 0 6%;
+    /* ================= Top Banner / Hero Card ================= */
+    .hero-card {
+      position: relative;
+      background: radial-gradient(circle at 45% 35%, #ff521d 0%, #a42805 38%, #2a0b04 65%, #120605 100%);
+      border-radius: var(--card-radius);
+      padding: 32px 48px 48px;
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
     }
-    .stat-card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      padding: 35px 20px; border-radius: 20px; text-align: center;
-    }
-    .stat-card h3 { font-size: 3rem; font-weight: 900; color: var(--accent); margin-bottom: 6px; }
-    .stat-card p { color: var(--muted); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; }
 
-    /* Portfolio Section (رندر شده از دیتابیس) */
-    .portfolio-sec { max-width: 1280px; margin: 0 auto 140px; padding: 0 6%; }
-    .sec-title { margin-bottom: 50px; }
-    .sec-title h4 { color: var(--accent); letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; }
-    .sec-title h2 { font-size: 2.6rem; font-weight: 900; }
+    /* Glass overlay for backdrop aesthetic */
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at bottom right, rgba(0,0,0,0.6) 0%, transparent 60%);
+      pointer-events: none;
+    }
 
-    .grid-container {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 30px;
+    /* Navbar inside Hero */
+    .hero-nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 20px; overflow: hidden; transition: all 0.4s ease;
-      cursor: pointer; position: relative;
-    }
-    .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
-    .card-media { width: 100%; height: 250px; background: #000; overflow: hidden; position: relative; }
-    .card-media img, .card-media video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-    .card:hover .card-media video, .card:hover .card-media img { transform: scale(1.06); }
-    .card-info { padding: 24px; }
-    .tag { font-size: 0.75rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-    .card-info h3 { font-size: 1.3rem; margin: 8px 0 4px; }
-    .client { font-size: 0.85rem; color: var(--muted); }
 
-    /* Footer */
-    footer { border-top: 1px solid var(--border); padding: 80px 6%; text-align: center; background: #040405; }
-    .btn-submit {
-      background: #fff; color: #000; font-weight: 800; padding: 16px 45px;
-      border-radius: 40px; text-decoration: none; display: inline-block;
-      margin-top: 30px; font-size: 1.05rem; transition: all 0.3s;
+    .brand-name {
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.5px;
+      color: #fff;
+      text-decoration: none;
     }
-    .btn-submit:hover { background: var(--accent); box-shadow: 0 0 35px var(--accent-glow); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .btn-pill {
+      background: #ffffff;
+      color: #0c0d10;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 10px 22px;
+      border-radius: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .btn-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-arrow {
+      background: #0c0d10;
+      color: #fff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    /* Hero Core Content */
+    .hero-body {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      margin: 40px 0;
+    }
+
+    .hero-greeting {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: clamp(3.2rem, 7vw, 5.8rem);
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -2px;
+      color: #fff;
+      text-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    /* Center Character/Visual Silhouette */
+    .hero-visual {
+      position: absolute;
+      right: 25%;
+      bottom: -48px;
+      height: 105%;
+      max-height: 520px;
+      z-index: 5;
+      pointer-events: none;
+      filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));
+    }
+
+    .hero-quote {
+      position: relative;
+      z-index: 10;
+      text-align: right;
+      padding-left: 40px;
+    }
+
+    .hero-quote h3 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .hero-quote p {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.6;
+      max-width: 320px;
+      margin-left: auto;
+    }
+
+    /* Hero Sub-Services Footer */
+    .hero-services {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 24px;
+      gap: 16px;
+    }
+
+    .service-slot .idx {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.6);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .service-slot .name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ================= Brands Bar ================= */
+    .brands-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 10px 80px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .brands-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      max-width: 130px;
+      line-height: 1.3;
+    }
+
+    .brands-list {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .brand-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: -0.5px;
+    }
+
+    .brand-icon {
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    /* ================= Section Header ================= */
+    .section-header {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      margin-bottom: 50px;
+      align-items: flex-end;
+    }
+
+    .sec-tag {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .sec-title {
+      font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+    }
+
+    .sec-desc {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-orange {
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px var(--primary-glow);
+      transition: 0.3s;
+    }
+
+    .btn-orange:hover {
+      background: #ff6a42;
+      transform: translateY(-2px);
+    }
+
+    /* ================= Portfolio Rounded Cards ================= */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 100px;
+    }
+
+    .work-card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      position: relative;
+      border: 1px solid var(--border);
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+
+    .work-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 84, 41, 0.4);
+    }
+
+    .work-card img, .work-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: scale 0.5s ease;
+    }
+
+    .work-card:hover img, .work-card:hover video {
+      scale: 1.04;
+    }
+
+    .work-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px;
+      pointer-events: none;
+    }
+
+    .work-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .work-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 4px;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 992px) {
+      .hero-body { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { display: none; }
+      .hero-quote { text-align: left; padding-left: 0; }
+      .hero-quote p { margin-left: 0; }
+      .hero-services { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .section-header { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .hero-card { padding: 24px; min-height: auto; }
+      .nav-links { display: none; }
+      .hero-services { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .brands-bar { justify-content: center; text-align: center; }
+      .brands-list { justify-content: center; }
+    }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="#" class="logo">KAYAN<span>.</span></a>
-    <a href="#contact" class="btn-cta">Start A Project</a>
-  </nav>
+  <div class="main-wrapper">
 
-  <section class="hero">
-    <div class="badge">Next-Gen Creative Powerhouse</div>
-    <h1>Cinematic AI Video & Motion Experience</h1>
-    <p>Empowering forward-thinking brands with impossible AI cinematography, VFX, and viral short-form editing.</p>
-  </section>
+    <!-- Top Glow / Hero Container -->
+    <header class="hero-card">
+      <nav class="hero-nav">
+        <a href="#" class="brand-name">Kayan Creative</a>
+        <div class="nav-links">
+          <a href="#">Home</a>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact" class="btn-pill">
+            Get in touch
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
+      </nav>
 
-  <!-- Showreel Video -->
-  <div class="showreel-box">
-    <video autoplay muted loop playsinline poster="IMG_1017.webp">
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-set-of-plateaus-seen-from-the-sky-in-a-sunset-26070-large.mp4" type="video/mp4">
-    </video>
+      <div class="hero-body">
+        <div>
+          <span class="hero-greeting">Hey, I'm a</span>
+          <h1 class="hero-title">Creative<br>Director</h1>
+        </div>
+
+        <!-- Optional center photo matching the visual style -->
+        <img src="IMG_1017.webp" alt="Creative Silhouette" class="hero-visual" onerror="this.style.display='none'">
+
+        <div class="hero-quote">
+          <h3>Great visuals should feel immersive.</h3>
+          <p>From AI-enhanced cinematography to high-end commercial compositing, I build imagery that captivates and converts.</p>
+        </div>
+      </div>
+
+      <div class="hero-services">
+        <div class="service-slot">
+          <span class="idx">// 01</span>
+          <span class="name">AI Cinematography</span>
+        </div>
+        <div class="service-slot">
+          <span class="idx">// 02</span>
+          <span class="name">Drone & VFX Compositing</span>
+        </div>
+        <div class="service-slot">
+          <span class="idx">// 03</span>
+          <span class="name">Commercial Video</span>
+        </div>
+        <div class="service-slot">
+          <span class="idx">// 04</span>
+          <span class="name">Creative Direction</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Brands / Collaborations Section -->
+    <section class="brands-bar">
+      <div class="brands-label">Trusted by Visionary Brands & Partners</div>
+      <div class="brands-list">
+        <div class="brand-item"><span class="brand-icon"></span> Ronak Polymer</div>
+        <div class="brand-item"><span class="brand-icon"></span> Studio 351</div>
+        <div class="brand-item"><span class="brand-icon"></span> Kling Motion</div>
+        <div class="brand-item"><span class="brand-icon"></span> Horizon VFX</div>
+      </div>
+    </section>
+
+    <!-- Behind the Designs Section -->
+    <section class="section-header" id="about">
+      <div>
+        <span class="sec-tag">Behind the Vision</span>
+        <h2 class="sec-title">Shaping Experiences That Elevate Modern Brands</h2>
+      </div>
+      <div>
+        <p class="sec-desc">A specialized creative studio focused on blending cutting-edge artificial intelligence pipelines with cinematic realism and industrial storytelling.</p>
+        <div class="cta-row">
+          <a href="#contact" class="btn-orange">
+            Let's Build Something
+            <span class="btn-arrow" style="background: rgba(0,0,0,0.2);">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dynamic Portfolio Works (3 Curved Cards) -->
+    <section class="portfolio-grid" id="portfolio-grid" role="region" aria-label="Selected Works">
+      <!-- Fallback static cards matching the screenshot -->
+      <div class="work-card">
+        <img src="IMG_1017.webp" alt="Industrial Project">
+        <div class="work-card-overlay">
+          <span class="work-tag">AI Direction</span>
+          <h4 class="work-title">Industrial Production</h4>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <img src="Capture-.webp" alt="Commercial Concept">
+        <div class="work-card-overlay">
+          <span class="work-tag">Compositing</span>
+          <h4 class="work-title">Cinematic Atmosphere</h4>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <img src="Capture--(2).webp" alt="Product Visual">
+        <div class="work-card-overlay">
+          <span class="work-tag">Product Aesthetics</span>
+          <h4 class="work-title">Minimalist Showcase</h4>
+        </div>
+      </div>
+    </section>
+
   </div>
 
-  <!-- Dynamic Stats -->
-  <div class="stats-row">
-    <div class="stat-card"><h3>10M+</h3><p>Viral Views</p></div>
-    <div class="stat-card"><h3>+70%</h3><p>Engagement Boost</p></div>
-    <div class="stat-card"><h3>3x</h3><p>Faster Delivery</p></div>
-    <div class="stat-card"><h3>100%</h3><p>AI Pipeline</p></div>
-  </div>
-
-  <!-- Portfolio -->
-  <section class="portfolio-sec">
-    <div class="sec-title">
-      <h4>Selected Works</h4>
-      <h2>Featured Productions</h2>
-    </div>
-    <div class="grid-container" id="portfolio-grid"></div>
-  </section>
-
-  <footer id="contact">
-    <h2>Ready to transform your visual storytelling?</h2>
-    <a href="mailto:contact@kayancreative.agency" class="btn-submit">Let's Talk</a>
-  </footer>
-
-  <!-- اسکریپت دیتابیس و رندر خودکار -->
+  <!-- Connected to data.js for automated panel updates -->
   <script src="./data.js"></script>
   <script>
-    const grid = document.getElementById('portfolio-grid');
-    if (window.PORTFOLIO_DATA && grid) {
-      grid.innerHTML = window.PORTFOLIO_DATA.map(item => `
-        <div class="card">
-          <div class="card-media">
-            ${item.mediaType === 'video' ? `
-              <video muted loop playsinline poster="${item.poster}" onmouseover="this.play()" onmouseout="this.pause()">
-                <source src="${item.mediaUrl}" type="video/mp4">
-              </video>
-            ` : `
-              <img src="${item.mediaUrl}" alt="${item.title}">
-            `}
-          </div>
-          <div class="card-info">
-            <span class="tag">${item.category}</span>
-            <h3>${item.title}</h3>
-            <span class="client">${item.client}</span>
+    if (window.PORTFOLIO_DATA && window.PORTFOLIO_DATA.length > 0) {
+      const grid = document.getElementById('portfolio-grid');
+      grid.innerHTML = window.PORTFOLIO_DATA.slice(0, 3).map(item => `
+        <div class="work-card">
+          ${item.mediaType === 'video' ? `
+            <video muted loop playsinline poster="${item.poster || ''}" onmouseover="this.play()" onmouseout="this.pause()">
+              <source src="${item.mediaUrl}" type="video/mp4">
+            </video>
+          ` : `
+            <img src="${item.mediaUrl}" alt="${item.title}">
+          `}
+          <div class="work-card-overlay">
+            <span class="work-tag">${item.category || 'Production'}</span>
+            <h4 class="work-title">${item.title}</h4>
           </div>
         </div>
       `).join('');
