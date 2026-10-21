@@ -2,50 +2,65 @@
 (function() {
   const ENDPOINT = 'https://kayan-analytics.danialkayan.workers.dev/collect';
   
+  // خواندن یا ساخت Visitor ID
   let vid = localStorage.getItem('kayan_vid');
   if (!vid) {
     vid = 'kv_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
     localStorage.setItem('kayan_vid', vid);
   }
 
+  function getDevice() {
+    const ua = navigator.userAgent;
+    if (/Mobi|Android/i.test(ua)) return 'Mobile';
+    if (/Tablet|iPad/i.test(ua)) return 'Tablet';
+    return 'Desktop';
+  }
+
   function sendEvent(eventType, section, target, details = {}) {
     const payload = {
       event_type: eventType,
-      section: section,
-      target: target,
-      details: typeof details === 'object' ? JSON.stringify(details) : details,
+      type: eventType,
+      section: section || 'general',
+      target: target || 'unknown',
+      details: typeof details === 'object' ? JSON.stringify(details) : String(details),
       visitor_id: vid,
       url: window.location.href,
-      device: /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+      device: getDevice(),
       timestamp: new Date().toISOString()
     };
 
-    if (navigator.sendBeacon) {
-      const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-      navigator.sendBeacon(ENDPOINT, blob);
-    } else {
-      fetch(ENDPOINT, {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        keepalive: true
-      }).catch(err => console.error("Telemetry error:", err));
-    }
+    fetch(ENDPOINT, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'omit',
+      headers: {
+        'Content-Type': 'text/plain;charset=UTF-8' // نکته کلیدی: تبدیل به Simple Request برای رفع قطعی نیاز به Preflight
+      },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(function(err) {
+      console.warn("Analytics error:", err);
+    });
   }
 
   // ثبت بازدید اولیه
-  sendEvent('page_view', 'hero', 'load', { title: document.title });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      sendEvent('page_view', 'hero', 'load', { title: document.title });
+    });
+  } else {
+    sendEvent('page_view', 'hero', 'load', { title: document.title });
+  }
 
-  // ردیابی کلیک‌ها روی دکمه‌ها و لینک‌ها
+  // ردیابی هوشمند کلیک‌ها
   document.addEventListener('click', function(e) {
     const targetEl = e.target.closest('a, button, [data-track]');
     if (!targetEl) return;
     
-    const targetName = targetEl.getAttribute('data-track') || targetEl.innerText.trim().substring(0, 30) || targetEl.id || 'unknown_element';
-    const section = targetEl.closest('section, header, footer, nav') ? targetEl.closest('section, header, footer, nav').id || 'general' : 'general';
+    const targetName = targetEl.getAttribute('data-track') || targetEl.innerText.trim().substring(0, 30) || targetEl.id || targetEl.name || 'button';
+    const section = targetEl.closest('section, header, footer, nav') ? (targetEl.closest('section, header, footer, nav').id || targetEl.closest('section, header, footer, nav').tagName.toLowerCase()) : 'general';
     
-    sendEvent('click', section, targetName, { tagName: targetEl.tagName });
+    sendEvent('click', section, targetName, { tag: targetEl.tagName });
   });
 })();
 </script>
