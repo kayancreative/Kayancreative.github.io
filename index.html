@@ -19,7 +19,7 @@
   <style>
     :root {
       --bg: #090a0f;
-      --card-bg: rgba(20, 22, 30, 0.6);
+      --card-bg: rgba(20, 22, 30, 0.65);
       --card-border: rgba(255, 255, 255, 0.12);
       --text: #ffffff;
       --muted: #959ba8;
@@ -34,7 +34,7 @@
 
     [data-theme="light"] {
       --bg: #f5f6fa;
-      --card-bg: rgba(255, 255, 255, 0.8);
+      --card-bg: rgba(255, 255, 255, 0.85);
       --card-border: rgba(0, 0, 0, 0.08);
       --text: #0e1017;
       --muted: #5e6475;
@@ -71,10 +71,10 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.2;
+      opacity: 0.18;
       filter: saturate(1.2) contrast(1.1);
     }
-    [data-theme="light"] .ambient-bg video { opacity: 0.08; }
+    [data-theme="light"] .ambient-bg video { opacity: 0.07; }
 
     .container { max-width: 1240px; margin: 0 auto; }
 
@@ -140,56 +140,59 @@
       border-color: var(--accent);
     }
 
-    /* Hero Section */
-    .hero {
+    /* Hero Section: Full 1920:1080 (16:9) Wide Screen Showcase */
+    .hero-cinematic {
       position: relative;
-      padding: 40px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 36px;
-      align-items: center;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
       overflow: hidden;
+      padding: 12px;
     }
-    .hero-text h1 {
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      line-height: 1.2;
-      font-weight: 800;
-      margin-bottom: 18px;
-      letter-spacing: -1px;
-    }
-    .hero-text p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 520px;
-      margin-bottom: 28px;
-    }
-    .video-hero-box {
+    .video-hero-wrapper {
+      position: relative;
       width: 100%;
-      height: 380px;
-      border-radius: 20px;
+      aspect-ratio: 16 / 9; /* Exact 1920x1080 ratio */
+      border-radius: calc(var(--radius) - 6px);
       overflow: hidden;
-      border: 1px solid var(--card-border);
-      box-shadow: 0 14px 35px rgba(0,0,0,0.45);
       background: #000;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.5);
     }
-    .video-hero-box video {
+    .video-hero-wrapper video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-
+    
+    .hero-info-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      padding: 24px 18px 12px;
+    }
+    .hero-info-text h1 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1.25;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .hero-info-text p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 650px;
+    }
     .btn-action {
       background: var(--accent);
       color: #fff;
-      padding: 12px 28px;
+      padding: 13px 30px;
       border-radius: 40px;
       text-decoration: none;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
       box-shadow: 0 8px 24px var(--accent-glow);
       transition: all .25s ease;
     }
@@ -203,18 +206,18 @@
       display: flex;
       gap: 10px;
       overflow-x: auto;
-      padding-bottom: 20px;
+      padding-bottom: 22px;
       scrollbar-width: none;
     }
     .filters::-webkit-scrollbar { display: none; }
     .filter-btn {
-      padding: 10px 20px;
+      padding: 10px 22px;
       border-radius: 40px;
       border: 1px solid var(--card-border);
       background: var(--card-bg);
       color: var(--muted);
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       cursor: pointer;
       white-space: nowrap;
       transition: all .25s ease;
@@ -225,7 +228,7 @@
       border-color: var(--accent);
     }
 
-    /* Vertical (9:16 reels style) Portfolio Grid */
+    /* Vertical (Reels / 9:16) Portfolio Grid */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -234,18 +237,18 @@
     }
     .card {
       position: relative;
-      aspect-ratio: 9 / 16;
+      aspect-ratio: 9 / 16; /* Clean vertical reels format */
       border-radius: 20px;
       overflow: hidden;
       cursor: pointer;
       border: 1px solid var(--card-border);
-      background: #0d0f14;
+      background: #0c0e14;
       transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
     }
     .card:hover {
       transform: translateY(-6px);
       border-color: var(--accent);
-      box-shadow: 0 16px 32px rgba(0,0,0,0.5);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.55);
     }
     .card video, .card img {
       width: 100%;
@@ -257,20 +260,6 @@
     .card:hover video, .card:hover img {
       transform: scale(1.04);
     }
-    .card-badge {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(0,0,0,0.65);
-      backdrop-filter: blur(8px);
-      padding: 4px 10px;
-      border-radius: 10px;
-      font-size: 0.72rem;
-      color: #fff;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-    html[dir="rtl"] .card-badge { right: auto; left: 12px; }
 
     .card-tag {
       position: absolute;
@@ -352,7 +341,7 @@
       overflow: hidden;
       background: #000;
       border: 1px solid var(--card-border);
-      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.85);
     }
     .modal-box video, .modal-box img {
       width: 100%;
@@ -381,9 +370,8 @@
     .modal-close:hover { background: var(--accent); }
 
     @media(max-width: 900px) {
-      .hero, .contact { grid-template-columns: 1fr; }
-      .video-hero-box { height: 260px; }
-      .hero-text h1 { font-size: 2.2rem; }
+      .hero-info-bar { flex-direction: column; align-items: flex-start; }
+      .contact { grid-template-columns: 1fr; }
       .grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
     }
     @media(max-width: 480px) {
@@ -393,7 +381,7 @@
 </head>
 <body>
 
-  <!-- Background Ambient Video -->
+  <!-- Ambient Blurred Background -->
   <div class="ambient-bg">
     <video autoplay loop muted playsinline src="main/main-background.mp4"></video>
   </div>
@@ -408,13 +396,13 @@
       </a>
 
       <div class="nav-actions">
-        <!-- Theme Switcher -->
+        <!-- Theme Toggle -->
         <button id="themeToggle" class="nav-btn" aria-label="Toggle Theme">
           <span id="themeIcon">🌓</span>
           <span id="themeLabel">حالت روز/شب</span>
         </button>
 
-        <!-- Language Selector -->
+        <!-- Smart Language Switcher -->
         <select id="langSelect" class="lang-select">
           <option value="fa">فارسی</option>
           <option value="en">English</option>
@@ -423,22 +411,25 @@
       </div>
     </header>
 
-    <!-- Main Hero Section -->
-    <section class="hero glass">
-      <div class="hero-text">
-        <h1 data-i18n="heroTitle">خلق داستان‌های ماندگار با هوش مصنوعی و سینما</h1>
-        <p data-i18n="heroDesc">کارگردانی هنری تخصصی، تلفیق جلوه‌های ویژه، تصاویر هوایی و پروداکشن‌های ویدیویی سطح اول برای برندهای پیشرو و صنایع مدرن.</p>
-        <a href="#contact" class="btn-action" data-i18n="ctaContact">همکاری در پروژه ←</a>
-      </div>
-      <div class="video-hero-box">
+    <!-- Top Cinematic Showcase (Full-Width 1920:1080 / 16:9 - kayan.mp4) -->
+    <section class="hero-cinematic glass">
+      <div class="video-hero-wrapper">
         <video autoplay loop muted playsinline src="main/kayan.mp4"></video>
+      </div>
+      <div class="hero-info-bar">
+        <div class="hero-info-text">
+          <h1 data-i18n="heroTitle">خلق داستان‌های ماندگار با هوش مصنوعی و سینما</h1>
+          <p data-i18n="heroDesc">کارگردانی هنری تخصصی، تلفیق جلوه‌های ویژه، تصاویر هوایی و پروداکشن‌های ویدیویی سطح اول برای برندهای پیشرو و صنایع مدرن.</p>
+        </div>
+        <div>
+          <a href="#contact" class="btn-action" data-i18n="ctaContact">همکاری در پروژه ←</a>
+        </div>
       </div>
     </section>
 
     <!-- Category Filters -->
     <div class="filters" id="filters">
       <button class="filter-btn active" data-filter="all" data-i18n="tabAll">همه پروژه‌ها</button>
-      <button class="filter-btn" data-filter="featured" data-i18n="tabFeatured">منتخب ویژه</button>
       <button class="filter-btn" data-filter="Corporate" data-i18n="tabCorp">صنعتی و شرکتی</button>
       <button class="filter-btn" data-filter="jewelry" data-i18n="tabJewel">جواهرات و لوکس</button>
       <button class="filter-btn" data-filter="cafe" data-i18n="tabCafe">کافه و رستوران</button>
@@ -446,7 +437,7 @@
       <button class="filter-btn" data-filter="gym" data-i18n="tabGym">ورزشی و فیتنس</button>
     </div>
 
-    <!-- Vertical Portfolio Grid -->
+    <!-- Vertical 9:16 Reels Grid -->
     <main class="grid" id="grid"></main>
 
     <!-- Executive Contact Section -->
@@ -486,50 +477,42 @@
   </div>
 
   <script>
-    /* Exact Manifest with kayan.mp4 first + Corporate exact filenames & extensions */
+    /* Clean Grid Manifest without kayan.mp4 (only Corporate + categories) */
     const ITEMS = [
-      // 1. Featured Top Hero Video
-      { 
-        category: 'featured', 
-        src: 'main/kayan.mp4', 
-        title: 'Kayan Creative Showcase', 
-        badge: 'FEATURED' 
-      },
+      // Corporate Videos (01 to 05)
+      { category: 'Corporate', src: 'Corporate/Corporate01.mp4', title: 'Corporate Showcase 01' },
+      { category: 'Corporate', src: 'Corporate/Corporate02.mp4', title: 'Corporate Showcase 02' },
+      { category: 'Corporate', src: 'Corporate/Corporate03.mp4', title: 'Corporate Showcase 03' },
+      { category: 'Corporate', src: 'Corporate/Corporate04.mp4', title: 'Corporate Showcase 04' },
+      { category: 'Corporate', src: 'Corporate/Corporate05.mp4', title: 'Corporate Showcase 05' },
 
-      // 2. Corporate Videos (01 to 05)
-      { category: 'Corporate', src: 'Corporate/Corporate01.mp4', title: 'Corporate Cinema 01' },
-      { category: 'Corporate', src: 'Corporate/Corporate02.mp4', title: 'Corporate Cinema 02' },
-      { category: 'Corporate', src: 'Corporate/Corporate03.mp4', title: 'Corporate Cinema 03' },
-      { category: 'Corporate', src: 'Corporate/Corporate04.mp4', title: 'Corporate Cinema 04' },
-      { category: 'Corporate', src: 'Corporate/Corporate05.mp4', title: 'Corporate Cinema 05' },
+      // Corporate Visuals / Images (06 to 11)
+      { category: 'Corporate', src: 'Corporate/Corporate06.jpg', title: 'Corporate Showcase 06' },
+      { category: 'Corporate', src: 'Corporate/Corporate07.jpg', title: 'Corporate Showcase 07' },
+      { category: 'Corporate', src: 'Corporate/Corporate08.jpg', title: 'Corporate Showcase 08' },
+      { category: 'Corporate', src: 'Corporate/Corporate09.jpg', title: 'Corporate Showcase 09' },
+      { category: 'Corporate', src: 'Corporate/Corporate10.jpg', title: 'Corporate Showcase 10' },
+      { category: 'Corporate', src: 'Corporate/Corporate11.jpg', title: 'Corporate Showcase 11' },
 
-      // 3. Corporate Visuals / Images (06 to 11)
-      { category: 'Corporate', src: 'Corporate/Corporate06.jpg', title: 'Corporate Visual 06' },
-      { category: 'Corporate', src: 'Corporate/Corporate07.jpg', title: 'Corporate Visual 07' },
-      { category: 'Corporate', src: 'Corporate/Corporate08.jpg', title: 'Corporate Visual 08' },
-      { category: 'Corporate', src: 'Corporate/Corporate09.jpg', title: 'Corporate Visual 09' },
-      { category: 'Corporate', src: 'Corporate/Corporate10.jpg', title: 'Corporate Visual 10' },
-      { category: 'Corporate', src: 'Corporate/Corporate11.jpg', title: 'Corporate Visual 11' },
-
-      // 4. Medical
+      // Medical
       { category: 'Medical', src: 'Medical/medical-1.mp4', title: 'Medical Production I' },
       { category: 'Medical', src: 'Medical/medical-2.mp4', title: 'Medical Production II' },
 
-      // 5. Cafe & Dining
+      // Cafe & Dining
       { category: 'cafe', src: 'cafe/cafe-1.mp4', title: 'Cafe Ambience I' },
       { category: 'cafe', src: 'cafe/cafe-2.mp4', title: 'Cafe Ambience II' },
       { category: 'cafe', src: 'cafe/cafe-3.mp4', title: 'Cafe Ambience III' },
 
-      // 6. Luxury Jewelry
+      // Luxury Jewelry
       { category: 'jewelry', src: 'jewelry/jewelry-1.mp4', title: 'Luxury Jewelry I' },
       { category: 'jewelry', src: 'jewelry/jewelry-2.mp4', title: 'Luxury Jewelry II' },
       { category: 'jewelry', src: 'jewelry/jewelry-3.mp4', title: 'Luxury Jewelry III' },
 
-      // 7. Fitness
+      // Fitness
       { category: 'gym', src: 'gym.mp4', title: 'Dynamic Fitness Motion' }
     ];
 
-    /* Professional Dictionary */
+    /* Dictionary */
     const I18N = {
       fa: {
         dir: 'rtl',
@@ -538,7 +521,6 @@
         heroDesc: 'کارگردانی هنری تخصصی، تلفیق جلوه‌های ویژه، تصاویر هوایی و پروداکشن‌های ویدیویی سطح اول برای برندهای پیشرو و صنایع مدرن.',
         ctaContact: 'همکاری در پروژه ←',
         tabAll: 'همه پروژه‌ها',
-        tabFeatured: 'منتخب ویژه',
         tabCorp: 'صنعتی و شرکتی',
         tabJewel: 'جواهرات و لوکس',
         tabCafe: 'کافه و رستوران',
@@ -555,7 +537,6 @@
         heroDesc: 'Specialized creative direction, drone cinematography, and AI visual pipelines engineered to elevate modern brands.',
         ctaContact: 'Let’s Collaborate →',
         tabAll: 'All Works',
-        tabFeatured: 'Featured',
         tabCorp: 'Corporate',
         tabJewel: 'Jewelry',
         tabCafe: 'Cafe & Dining',
@@ -572,7 +553,6 @@
         heroDesc: 'إخراج إبداعي متقدم، تصوير سينمائي ومؤثرات بصرية تعزز من تميز العلامات التجارية والمشاريع الرائدة.',
         ctaContact: 'تواصل معنا ←',
         tabAll: 'كافة الأعمال',
-        tabFeatured: 'الأعمال المختارة',
         tabCorp: 'شركات وصناعة',
         tabJewel: 'مجوهرات وفخامة',
         tabCafe: 'مقاهي ومطاعم',
@@ -605,24 +585,15 @@
           media.setAttribute('playsinline', '');
           media.preload = 'metadata';
 
-          // Hover Preview
           card.addEventListener('mouseenter', () => media.play().catch(() => {}));
           card.addEventListener('mouseleave', () => media.pause());
         } else {
           media.loading = 'lazy';
         }
 
-        // Category Tag
         const tag = document.createElement('span');
         tag.className = 'card-tag';
         tag.textContent = item.category.toUpperCase();
-
-        if (item.badge) {
-          const badge = document.createElement('span');
-          badge.className = 'card-badge';
-          badge.textContent = item.badge;
-          card.appendChild(badge);
-        }
 
         card.appendChild(media);
         card.appendChild(tag);
@@ -662,7 +633,7 @@
       if (e.key === 'Escape') closeModal();
     });
 
-    /* Category Filtering */
+    /* Filters Switch */
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -671,7 +642,7 @@
       });
     });
 
-    /* Language & Dir */
+    /* Multilingual Switcher */
     const langSelect = document.getElementById('langSelect');
 
     function applyLanguage(lang) {
