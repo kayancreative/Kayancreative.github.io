@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Kayan Creative — Creative direction, AI cinematography and cinematic visual production." />
+  <title>Kayan Creative • Creative Director & AI Cinematography</title>
+
+  <!-- Brand / SEO Icons (مسیرها را مطابق فایل‌های واقعی خودت تنظیم کن) -->
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/brand/main-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
+  <meta name="theme-color" content="#0c0d10" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0c0d10;
+      --card:#14151b;
+      --text:#ffffff;
+      --muted:#8e92a0;
+      --orange:#ff5429;
+      --line:rgba(255,255,255,.12);
+      --radius:28px;
+
+      /* Glass */
+      --glass-bg: rgba(20, 21, 27, .42);
+      --glass-line: rgba(255,255,255,.14);
+      --blur: 18px;
+
+      /* Layout */
+      --max:1240px;
+    }
+
+    /* Light theme overrides */
+    [data-theme="light"]{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#0c0d10;
+      --muted:#5f6473;
+      --line:rgba(10,12,18,.10);
+
+      --glass-bg: rgba(255,255,255,.60);
+      --glass-line: rgba(10,12,18,.12);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Plus Jakarta Sans',Arial,sans-serif;
+      padding:24px;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit}
+    .main-wrapper{max-width:var(--max);margin:auto}
+
+    /* Video background behind everything (subtle) */
+    .bg-video{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      z-index:-3;
+      opacity:.18;
+      filter:saturate(1.05) contrast(1.05);
+    }
+    .bg-scrim{
+      position:fixed; inset:0;
+      z-index:-2;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,84,41,.14), transparent 55%),
+        radial-gradient(circle at 80% 80%, rgba(255,84,41,.10), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.70));
+      pointer-events:none;
+    }
+    [data-theme="light"] .bg-scrim{
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,84,41,.10), transparent 55%),
+        radial-gradient(circle at 80% 80%, rgba(255,84,41,.08), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.45), rgba(246,247,251,.88));
+    }
+
+    /* Glass card utility */
+    .glass{
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-line);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+    }
+
+    /* HERO */
+    .hero-card{
+      position:relative;
+      min-height:640px;
+      padding:28px 36px 34px;
+      border-radius:32px;
+      overflow:hidden;
+    }
+    .hero-card:after{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(circle at bottom right, rgba(0,0,0,.42), transparent 60%);
+      pointer-events:none;
+    }
+
+    .hero-nav, .hero-body, .hero-services{position:relative; z-index:2}
+
+    .hero-nav{
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none;
+    }
+    .brand img{
+      width:34px; height:34px; border-radius:10px;
+      object-fit:cover;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+    }
+    .brand-name{
+      font-size:1.25rem; font-weight:800; letter-spacing:-.6px;
+    }
+
+    .nav-links{display:flex; align-items:center; gap:16px; flex-wrap:wrap; justify-content:flex-end}
+
+    .nav-links a{
+      text-decoration:none;
+      font-size:.92rem;
+      font-weight:600;
+      color: color-mix(in oklab, var(--text) 84%, transparent);
+      padding:10px 12px;
+      border-radius:14px;
+      transition: .22s ease;
+    }
+    .nav-links a:hover{background: rgba(255,255,255,.06)}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:800;
+      border:1px solid var(--glass-line);
+      background: rgba(255,255,255,.06);
+      transition:.22s ease;
+      user-select:none;
+    }
+    .pill:hover{transform: translateY(-1px)}
+    .pill .dot{
+      width:9px;height:9px;border-radius:50%;
+      background: var(--orange);
+      box-shadow: 0 0 0 6px rgba(255,84,41,.18);
+    }
+
+    .toolbar{
+      display:flex; gap:10px; align-items:center;
+    }
+    .icon-btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:42px; height:42px;
+      border-radius:14px;
+      border:1px solid var(--glass-line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor:pointer;
+      transition:.22s ease;
+    }
+    .icon-btn:hover{transform: translateY(-1px)}
+    .icon-btn:focus{outline:2px solid color-mix(in oklab, var(--orange) 70%, transparent); outline-offset:2px}
+
+    .hero-body{
+      display:grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap:34px;
+      align-items:center;
+      margin:46px 0 34px;
+    }
+    .hero-greeting{
+      display:block; margin-bottom:10px;
+      color: color-mix(in oklab, var(--text) 88%, transparent);
+      font-size:1.02rem;
+      font-weight:700;
+    }
+    .hero-title{
+      font-size: clamp(3.0rem, 7vw, 5.6rem);
+      line-height:.98;
+      letter-spacing:-2px;
+      text-shadow: 0 10px 36px rgba(0,0,0,.28);
+    }
+
+    /* Main hero video (big, top, premium) */
+    .hero-media{
+      border-radius: 26px;
+      overflow:hidden;
+      border:1px solid var(--glass-line);
+      background: rgba(0,0,0,.25);
+      position:relative;
+      min-height: 320px;
+    }
+    .hero-media video{
+      width:100%; height:100%;
+      min-height: 320px;
+      object-fit:cover;
+      display:block;
+    }
+    .hero-media .badge{
+      position:absolute; left:16px; top:16px;
+      padding:10px 12px;
+      border-radius:999px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      font-size:.85rem;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+
+    .hero-quote{
+      text-align:right;
+      padding-left: 12px;
+    }
+    .hero-quote h2{
+      font-size:1.85rem;
+      line-height:1.2;
+      letter-spacing:-.6px;
+      margin-bottom:10px;
+    }
+    .hero-quote p{
+      max-width: 380px;
+      margin-left:auto;
+      color: var(--muted);
+      font-size:1.02rem;
+      line-height:1.7;
+    }
+
+    .hero-services{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+      padding-top:18px;
+      border-top:1px solid var(--glass-line);
+    }
+    .service-slot{
+      padding:14px 14px;
+      border-radius:18px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .service-slot .idx{
+      display:block;
+      margin-bottom:4px;
+      color: color-mix(in oklab, var(--text) 60%, transparent);
+      font-size:.78rem;
+      font-weight:800;
+      letter-spacing:.4px;
+    }
+    .service-slot .name{
+      font-size:.95rem;
+      font-weight:750;
+    }
+
+    /* Sections */
+    .section{
+      margin-top: 28px;
+    }
+    .section-header{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap:40px;
+      align-items:end;
+      margin: 46px 0 26px;
+    }
+    .sec-tag{
+      display:block;
+      margin-bottom:12px;
+      color: var(--orange);
+      font-size:.9rem;
+      font-weight:900;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+    .sec-title{
+      font-size: clamp(2.1rem, 4.4vw, 3.3rem);
+      line-height:1.12;
+      letter-spacing:-1.4px;
+    }
+    .sec-desc{
+      margin-bottom:16px;
+      color: var(--muted);
+      font-size:1.08rem;
+      line-height:1.75;
+    }
+
+    .btn-orange{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 18px;
+      border-radius: 999px;
+      background: var(--orange);
+      color:#fff;
+      text-decoration:none;
+      font-weight:900;
+      box-shadow: 0 14px 34px rgba(255,84,41,.35);
+      transition:.22s ease;
+      border: 0;
+    }
+    .btn-orange:hover{transform: translateY(-1px); filter: brightness(1.03)}
+
+    .portfolio-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      grid-auto-rows: 240px;
+      gap:16px;
+      margin: 0 0 70px;
+    }
+    .portfolio-card{
+      position:relative;
+      overflow:hidden;
+      min-width:0;
+      border-radius: 26px;
+      border:1px solid var(--glass-line);
+      background: rgba(255,255,255,.03);
+      transition: transform .32s ease, border-color .32s ease;
+      cursor:pointer;
+    }
+    .portfolio-card:hover{
+      transform: translateY(-6px);
+      border-color: color-mix(in oklab, var(--orange) 55%, var(--glass-line));
+    }
+    .portfolio-card.normal{grid-column:span 1; grid-row:span 1}
+    .portfolio-card.wide{grid-column:span 2; grid-row:span 1}
+    .portfolio-card.tall{grid-column:span 1; grid-row:span 2}
+    .portfolio-card.large{grid-column:span 2; grid-row:span 2}
+
+    .portfolio-card img,.portfolio-card video{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.0);
+      transition: transform .55s ease;
+    }
+    .portfolio-card:hover img,.portfolio-card:hover video{transform:scale(1.04)}
+
+    .portfolio-card__caption{
+      position:absolute;
+      inset:auto 0 0;
+      padding:32px 18px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,.85));
+      color:#fff;
+      pointer-events:none;
+    }
+    .portfolio-card__caption strong{
+      display:block;
+      font-weight:900;
+      letter-spacing:-.2px;
+    }
+    .portfolio-card__caption small{
+      display:block;
+      margin-top:6px;
+      color: rgba(255,255,255,.78);
+      font-size:.82rem;
+      line-height:1.35;
+    }
+
+    /* Contact */
+    .contact-card{
+      border-radius: 30px;
+      padding: 22px;
+      margin: 18px 0 10px;
+    }
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+      align-items:start;
+    }
+    .contact-title{
+      font-size: 1.55rem;
+      font-weight: 950;
+      letter-spacing: -.6px;
+      margin-bottom: 10px;
+    }
+    .contact-desc{
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.02rem;
+    }
+    .contact-actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .link-btn{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      text-decoration:none;
+      border:1px solid var(--glass-line);
+      background: rgba(255,255,255,.05);
+      font-weight: 850;
+      transition:.22s ease;
+    }
+    .link-btn:hover{transform: translateY(-1px)}
+    .link-btn span{color: var(--muted); font-weight: 750; font-size:.9rem}
+
+    .site-footer{
+      padding: 24px 10px 10px;
+      border-top: 1px solid var(--glass-line);
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      place-items:center;
+      padding: 18px;
+      background: rgba(0,0,0,.62);
+      z-index: 999;
+    }
+    .modal[aria-hidden="false"]{display:grid}
+    .modal-dialog{
+      width:min(1100px, 96vw);
+      border-radius: 26px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(10,12,18,.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 40px 120px rgba(0,0,0,.55);
+    }
+    .modal-bar{
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+      padding: 12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .modal-title{
+      font-weight: 950;
+      letter-spacing: -.3px;
+      font-size: 1rem;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      max-width: 70%;
+    }
+    .modal-close{
+      width:42px;height:42px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      cursor:pointer;
+      font-size: 18px;
+    }
+    .modal-media{
+      background:#000;
+    }
+    .modal-media img,.modal-media video{
+      width:100%;
+      height:min(72vh, 780px);
+      display:block;
+      object-fit:contain;
+      background:#000;
+    }
+
+    @media (max-width: 992px){
+      body{padding:12px}
+      .hero-body, .section-header, .contact-grid{grid-template-columns:1fr}
+      .hero-quote{text-align:left}
+      .hero-quote p{margin-left:0}
+      .portfolio-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .portfolio-card.wide,.portfolio-card.large{grid-column:span 2}
+    }
+    @media (max-width: 700px){
+      .hero-card{min-height:auto; padding:18px}
+      .nav-links a:not(.cta){display:none}
+      .hero-services{grid-template-columns:repeat(2,1fr)}
+      .portfolio-grid{grid-template-columns:1fr; grid-auto-rows:240px}
+      .portfolio-card.normal,.portfolio-card.wide,.portfolio-card.tall,.portfolio-card.large{grid-column:span 1; grid-row:span 1}
+      .hero-title{font-size: clamp(2.6rem, 12vw, 4.2rem)}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background video (glass depth) -->
+  <video class="bg-video" autoplay muted loop playsinline preload="metadata" src="assets/bg/main-background.mp4"></video>
+  <div class="bg-scrim" aria-hidden="true"></div>
+
+  <div class="main-wrapper" id="top">
+
+    <header class="hero-card glass">
+      <nav class="hero-nav">
+        <a href="#top" class="brand" aria-label="Kayan Creative Home">
+          <img src="assets/brand/main-logo.png" alt="Kayan Creative logo">
+          <span class="brand-name" data-i18n="brand">Kayan Creative</span>
+        </a>
+
+        <div class="nav-links" aria-label="Primary">
+          <a href="#top" class="cta" data-i18n="nav_home">Home</a>
+          <a href="#about" data-i18n="nav_about">About</a>
+          <a href="#projects" data-i18n="nav_projects">Projects</a>
+          <a href="#contact" class="pill cta">
+            <span class="dot" aria-hidden="true"></span>
+            <span data-i18n="nav_contact">Get in touch</span>
+          </a>
+        </div>
+
+        <div class="toolbar">
+          <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle theme" title="Theme">
+            ◐
+          </button>
+          <button class="icon-btn" id="langToggle" type="button" aria-label="Change language" title="Language">
+            文
+          </button>
+        </div>
+      </nav>
+
+      <div class="hero-body">
+        <div>
+          <span class="hero-greeting" data-i18n="hero_greeting">Hey, I'm a</span>
+          <h1 class="hero-title" data-i18n="hero_title">Creative<br>Director</h1>
+        </div>
+
+        <div class="hero-media">
+          <span class="badge" data-i18n="hero_badge">Showreel</span>
+          <!-- main-kayan video -->
+          <video autoplay muted loop playsinline preload="metadata" src="assets/hero/main-kayan.mp4"></video>
+        </div>
+
+        <div class="hero-quote">
+          <h2 data-i18n="hero_quote_title">Great visuals should feel immersive.</h2>
+          <p data-i18n="hero_quote_desc">
+            From AI-enhanced cinematography to high-end commercial compositing, I build imagery that captivates and converts.
+          </p>
+        </div>
+      </div>
+
+      <div class="hero-services">
+        <div class="service-slot"><span class="idx">// 01</span><span class="name" data-i18n="s1">AI Cinematography</span></div>
+        <div class="service-slot"><span class="idx">// 02</span><span class="name" data-i18n="s2">Drone &amp; VFX Compositing</span></div>
+        <div class="service-slot"><span class="idx">// 03</span><span class="name" data-i18n="s3">Commercial Video</span></div>
+        <div class="service-slot"><span class="idx">// 04</span><span class="name" data-i18n="s4">Creative Direction</span></div>
+      </div>
+    </header>
+
+    <section class="section" id="about">
+      <div class="section-header">
+        <div>
+          <span class="sec-tag" data-i18n="about_tag">Behind the Vision</span>
+          <h2 class="sec-title" data-i18n="about_title">Shaping Experiences That Elevate Modern Brands</h2>
+        </div>
+        <div>
+          <p class="sec-desc" data-i18n="about_desc">
+            A specialized creative studio focused on blending cutting-edge artificial intelligence pipelines with cinematic realism and industrial storytelling.
+          </p>
+          <a href="#contact" class="btn-orange" data-i18n="about_cta">Let's Build Something</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects" aria-label="Selected works">
+      <div class="section-header">
+        <div>
+          <span class="sec-tag" data-i18n="projects_tag">Selected Works</span>
+          <h2 class="sec-title" data-i18n="projects_title">Minimal. Cinematic. Built to Convert.</h2>
+        </div>
+        <div>
+          <p class="sec-desc" data-i18n="projects_desc">
+            Curated projects across medical, café, corporate, jewelry and fitness visuals.
+          </p>
+        </div>
+      </div>
+
+      <div class="portfolio-grid" id="portfolioGrid"></div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="contact-card glass">
+        <div class="contact-grid">
+          <div>
+            <div class="contact-title" data-i18n="contact_title">Let’s talk about your next visual.</div>
+            <p class="contact-desc" data-i18n="contact_desc">
+              For collaborations and project inquiries, reach out directly. I’m responsive, detail-oriented, and focused on premium execution.
+            </p>
+          </div>
+          <div class="contact-actions">
+            <a class="link-btn" href="tel:+989017486099">
+              <div><strong data-i18n="contact_phone">Phone</strong> <span>09017486099</span></div>
+              <div>→</div>
+            </a>
+
+            <a class="link-btn" href="https://instagram.com/danialkayan" target="_blank" rel="noopener">
+              <div><strong>Instagram</strong> <span>@danialkayan</span></div>
+              <div>→</div>
+            </a>
+
+            <a class="link-btn" href="https://t.me/danialkayan" target="_blank" rel="noopener">
+              <div><strong>Telegram</strong> <span>@danialkayan</span></div>
+              <div>→</div>
+            </a>
+
+            <a class="link-btn" href="https://www.linkedin.com/in/danial-babaei-09bb60445" target="_blank" rel="noopener">
+              <div><strong>LinkedIn</strong> <span>danial-babaei</span></div>
+              <div>→</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <footer class="site-footer">
+        <span data-i18n="footer">Available for selected creative direction and visual production projects.</span>
+      </footer>
+    </section>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="mediaModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-bar">
+        <div class="modal-title" id="modalTitle">Preview</div>
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-media" id="modalMedia"></div>
+    </div>
+  </div>
+
+  <script>
+    // ====== Portfolio data (based on your folder plan) ======
+    // NOTE: paths are placeholders; set them to your real filenames
+    const PORTFOLIO = [
+      // Medical 1-2
+      { titleKey: "p_med_1", categoryKey: "cat_medical", size: "wide",  mediaType: "image", mediaUrl: "assets/portfolio/medical/medical-1.jpg" },
+      { titleKey: "p_med_2", categoryKey: "cat_medical", size: "normal",mediaType: "image", mediaUrl: "assets/portfolio/medical/medical-2.jpg" },
+
+      // Cafe 1-3
+      { titleKey: "p_cafe_1", categoryKey: "cat_cafe", size: "tall",  mediaType: "image", mediaUrl: "assets/portfolio/cafe/cafe-1.jpg" },
+      { titleKey: "p_cafe_2", categoryKey: "cat_cafe", size: "normal",mediaType: "image", mediaUrl: "assets/portfolio/cafe/cafe-2.jpg" },
+      { titleKey: "p_cafe_3", categoryKey: "cat_cafe", size: "normal",mediaType: "image", mediaUrl: "assets/portfolio/cafe/cafe-3.jpg" },
+
+      // Corporate 1-11 (نمونه چندتاش، تو ادامه کامل کن)
+      { titleKey: "p_cor_1", categoryKey: "cat_corporate", size: "large", mediaType: "image", mediaUrl: "assets/portfolio/corporate/corporate-1.jpg" },
+      { titleKey: "p_cor_2", categoryKey: "cat_corporate", size: "normal", mediaType: "image", mediaUrl: "assets/portfolio/corporate/corporate-2.jpg" },
+      { titleKey: "p_cor_3", categoryKey: "cat_corporate", size: "normal", mediaType: "image", mediaUrl: "assets/portfolio/corporate/corporate-3.jpg" },
+      { titleKey: "p_cor_4", categoryKey: "cat_corporate", size: "wide",   mediaType: "image", mediaUrl: "assets/portfolio/corporate/corporate-4.jpg" },
+      { titleKey: "p_cor_5", categoryKey: "cat_corporate", size: "normal", mediaType: "image", mediaUrl: "assets/portfolio/corporate/corporate-5.jpg" },
+
+      // Jewelry 1-3
+      { titleKey: "p_jew_1", categoryKey: "cat_jewelry", size: "wide",  mediaType: "image", mediaUrl: "assets/portfolio/jewelry/jewelry-1.jpg" },
+      { titleKey: "p_jew_2", categoryKey: "cat_jewelry", size: "normal",mediaType: "image", mediaUrl: "assets/portfolio/jewelry/jewelry-2.jpg" },
+      { titleKey: "p_jew_3", categoryKey: "cat_jewelry", size: "normal",mediaType: "image", mediaUrl: "assets/portfolio/jewelry/jewelry-3.jpg" },
+
+      // Gym
+      { titleKey: "p_gym", categoryKey: "cat_gym", size: "tall", mediaType: "image", mediaUrl: "assets/portfolio/gym.jpg" },
+
+      // Extra video outside folders
+      { titleKey: "p_extra_video", categoryKey: "cat_video", size: "wide", mediaType: "video", mediaUrl: "assets/portfolio/extra-video.mp4", poster: "" },
+    ];
+
+    // ====== i18n (FA/AR/EN) with correct human translations ======
+    const I18N = {
+      en: {
+        dir: "ltr",
+        brand: "Kayan Creative",
+        nav_home: "Home",
+        nav_about: "About",
+        nav_projects: "Projects",
+        nav_contact: "Get in touch",
+
+        hero_greeting: "Hey, I'm a",
+        hero_title: "Creative<br>Director",
+        hero_badge: "Showreel",
+        hero_quote_title: "Great visuals should feel immersive.",
+        hero_quote_desc: "From AI‑enhanced cinematography to high‑end commercial compositing, I build imagery that captivates and converts.",
+
+        s1: "AI Cinematography",
+        s2: "Drone & VFX Compositing",
+        s3: "Commercial Video",
+        s4: "Creative Direction",
+
+        about_tag: "Behind the Vision",
+        about_title: "Shaping Experiences That Elevate Modern Brands",
+        about_desc: "A specialized creative studio blending modern AI pipelines with cinematic realism and industrial storytelling.",
+        about_cta: "Let's Build Something",
+
+        projects_tag: "Selected Works",
+        projects_title: "Minimal. Cinematic. Built to Convert.",
+        projects_desc: "Curated projects across medical, café, corporate, jewelry and fitness visuals.",
+
+        contact_title: "Let’s talk about your next visual.",
+        contact_desc: "For collaborations and project inquiries, reach out directly. I’m responsive, detail‑oriented, and focused on premium execution.",
+        contact_phone: "Phone",
+
+        footer: "Available for selected creative direction and visual production projects.",
+
+        cat_medical:"Medical",
+        cat_cafe:"Café",
+        cat_corporate:"Corporate",
+        cat_jewelry:"Jewelry",
+        cat_gym:"Fitness",
+        cat_video:"Video",
+
+        p_med_1:"Medical Project 01",
+        p_med_2:"Medical Project 02",
+        p_cafe_1:"Café Visual 01",
+        p_cafe_2:"Café Visual 02",
+        p_cafe_3:"Café Visual 03",
+        p_cor_1:"Corporate Film 01",
+        p_cor_2:"Corporate Visual 02",
+        p_cor_3:"Corporate Visual 03",
+        p_cor_4:"Corporate Visual 04",
+        p_cor_5:"Corporate Visual 05",
+        p_jew_1:"Jewelry Visual 01",
+        p_jew_2:"Jewelry Visual 02",
+        p_jew_3:"Jewelry Visual 03",
+        p_gym:"Gym Visual",
+        p_extra_video:"Showcase Video"
+      },
+
+      fa: {
+        dir: "rtl",
+        brand: "کایان کریتیو",
+        nav_home: "خانه",
+        nav_about: "درباره",
+        nav_projects: "پروژه‌ها",
+        nav_contact: "ارتباط",
+
+        hero_greeting: "سلام، من",
+        hero_title: "مدیر<br>خلاقیت",
+        hero_badge: "شو‌ریل",
+        hero_quote_title: "تصویر خوب باید «غوطه‌ورکننده» باشد.",
+        hero_quote_desc: "از سینماتوگرافیِ تقویت‌شده با هوش مصنوعی تا کامپوزیت‌های تجاریِ سطح بالا، تصویری می‌سازم که هم جذب کند، هم تبدیل ایجاد کند.",
+
+        s1: "سینماتوگرافی با هوش مصنوعی",
+        s2: "درون و VFX کامپوزیت",
+        s3: "ویدیوهای تبلیغاتی",
+        s4: "کارگردانی خلاق",
+
+        about_tag: "پشت صحنه‌ی دیدگاه",
+        about_title: "ساخت تجربه‌هایی که برندهای مدرن را بالا می‌برد",
+        about_desc: "استودیوی خلاقیت تخصصی با تمرکز بر ترکیب پایپ‌لاین‌های هوش مصنوعی با رئالیسم سینمایی و روایت صنعتی.",
+        about_cta: "شروع کنیم",
+
+        projects_tag: "منتخب کارها",
+        projects_title: "مینیمال. سینمایی. مناسب فروش.",
+        projects_desc: "گلچینی از پروژه‌های پزشکی، کافه، شرکتی، جواهرات و فیتنس.",
+
+        contact_title: "برای پروژه‌ی بعدی‌تان صحبت کنیم.",
+        contact_desc: "برای همکاری و سفارش پروژه، مستقیم پیام بدهید. پاسخ‌گو، دقیق و متعهد به اجرای پریمیوم هستم.",
+        contact_phone: "تماس",
+
+        footer: "برای پروژه‌های منتخب کارگردانی خلاق و تولید تصویر در دسترس هستم.",
+
+        cat_medical:"پزشکی",
+        cat_cafe:"کافه",
+        cat_corporate:"شرکتی",
+        cat_jewelry:"جواهرات",
+        cat_gym:"فیتنس",
+        cat_video:"ویدیو",
+
+        p_med_1:"پروژه پزشکی ۱",
+        p_med_2:"پروژه پزشکی ۲",
+        p_cafe_1:"ویژوال کافه ۱",
+        p_cafe_2:"ویژوال کافه ۲",
+        p_cafe_3:"ویژوال کافه ۳",
+        p_cor_1:"فیلم شرکتی ۱",
+        p_cor_2:"ویژوال شرکتی ۲",
+        p_cor_3:"ویژوال شرکتی ۳",
+        p_cor_4:"ویژوال شرکتی ۴",
+        p_cor_5:"ویژوال شرکتی ۵",
+        p_jew_1:"ویژوال جواهرات ۱",
+        p_jew_2:"ویژوال جواهرات ۲",
+        p_jew_3:"ویژوال جواهرات ۳",
+        p_gym:"ویژوال باشگاه",
+        p_extra_video:"ویدیو نمایش"
+      },
+
+      ar: {
+        dir: "rtl",
+        brand: "كاياَن كريتيف",
+        nav_home: "الرئيسية",
+        nav_about: "نبذة",
+        nav_projects: "الأعمال",
+        nav_contact: "تواصل",
+
+        hero_greeting: "مرحباً، أنا",
+        hero_title: "مدير<br>إبداعي",
+        hero_badge: "عرض",
+        hero_quote_title: "الصورة الرائعة يجب أن تكون غامرة.",
+        hero_quote_desc: "من التصوير السينمائي المعزّز بالذكاء الاصطناعي إلى الكومبوزيت التجاري عالي المستوى، أصنع صوراً تجذب وتحوّل.",
+
+        s1: "تصوير سينمائي بالذكاء الاصطناعي",
+        s2: "درون وكومبوزيت VFX",
+        s3: "فيديو تجاري",
+        s4: "إخراج إبداعي",
+
+        about_tag: "خلف الرؤية",
+        about_title: "صياغة تجارب ترفع العلامات الحديثة",
+        about_desc: "استوديو إبداعي متخصص يمزج مسارات عمل الذكاء الاصطناعي مع واقعية سينمائية وسرد صناعي.",
+        about_cta: "لنبدأ",
+
+        projects_tag: "مختارات",
+        projects_title: "بسيط. سينمائي. مصمم للتحويل.",
+        projects_desc: "أعمال مختارة في الطبي، المقاهي، الشركات، المجوهرات واللياقة.",
+
+        contact_title: "لنتحدث عن مشروعك القادم.",
+        contact_desc: "للتعاون والاستفسارات، تواصل مباشرة. أستجيب بسرعة، ودقيق، ومركّز على تنفيذ فاخر.",
+        contact_phone: "هاتف",
+
+        footer: "متاح لمشاريع مختارة في الإخراج الإبداعي وإنتاج الصورة.",
+
+        cat_medical:"طبي",
+        cat_cafe:"مقهى",
+        cat_corporate:"شركات",
+        cat_jewelry:"مجوهرات",
+        cat_gym:"لياقة",
+        cat_video:"فيديو",
+
+        p_med_1:"مشروع 
