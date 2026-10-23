@@ -2,251 +2,329 @@
 <html lang="fa" dir="rtl" data-theme="dark">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Portfolio • Kayan Creative</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#090a0f;
-      --text:#fff;
-      --muted:#9aa1b0;
-      --accent:#ff5429;
-      --border:rgba(255,255,255,.14);
-      --glass:rgba(18,20,28,.44);
-      --blur:blur(20px);
-      --radius:24px;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      background:transparent;
-      color:var(--text);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Vazirmatn",sans-serif;
+    :root {
+      --bg: #07080b;
+      --card-bg: rgba(18, 20, 29, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --accent: #ff5429;
+      --accent-glow: rgba(255, 84, 41, 0.45);
+      --text: #ffffff;
+      --muted: #8e95a5;
+      --radius: 20px;
     }
 
-    .glass{
-      background:var(--glass);
-      backdrop-filter:var(--blur);
-      -webkit-backdrop-filter:var(--blur);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:0 18px 50px rgba(0,0,0,.28);
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .wrap{
-      padding:14px;
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', 'Vazirmatn', system-ui, sans-serif;
+      min-height: 100vh;
+      padding: 16px 12px 60px;
+      overflow-x: hidden;
     }
 
-    .header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:12px;
-    }
-    .title{
-      font-weight:900;
-      letter-spacing:-.3px;
-      font-size:1.05rem;
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
     }
 
-    /* Filters */
-    .filters{
-      display:flex;
-      gap:10px;
-      overflow-x:auto;
-      padding:8px 2px 14px;
-      scrollbar-width:none;
-    }
-    .filters::-webkit-scrollbar{display:none}
-    .filter-btn{
-      padding:10px 18px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.06);
-      color:var(--muted);
-      font-weight:900;
-      cursor:pointer;
-      white-space:nowrap;
-      transition:transform .22s ease, background .22s ease, border-color .22s ease;
-      will-change:transform;
-      user-select:none;
-    }
-    .filter-btn:hover{transform:translateY(-2px)}
-    .filter-btn.active,.filter-btn:hover{
-      background:rgba(255,84,41,.14);
-      border-color:rgba(255,84,41,.55);
-      color:#fff;
+    /* هدر و تایتل بخش پورتفولیو */
+    .header-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 24px;
+      gap: 8px;
     }
 
-    /* =========================
-       GRID — استاندارد Reels
-       موبایل هم همیشه 2 ستونه
-       ========================= */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr)); /* موبایل: 2تایی */
-      gap:12px;
-      padding-bottom:8px;
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 84, 41, 0.1);
+      border: 1px solid rgba(255, 84, 41, 0.25);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
-    /* تبلت: 3تایی */
-    @media (min-width: 720px){
-      .grid{
-        grid-template-columns:repeat(3, minmax(0,1fr));
-        gap:16px;
+    .title {
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    /* نوار فیلترها (اسکرول نرم در موبایل) */
+    .filter-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding: 4px 6px 12px;
+      scrollbar-width: none;
+    }
+    .filter-wrapper::-webkit-scrollbar { display: none; }
+
+    .filter-nav {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 4px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--muted);
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 18px var(--accent-glow);
+    }
+
+    /* گرید اصلی پورتفولیو — ۲ ستون در موبایل */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* دو ستونه فیکس در موبایل */
+      gap: 12px;
+    }
+
+    @media (min-width: 680px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr); /* ۳ ستونه در تبلت */
+        gap: 16px;
       }
     }
 
-    /* دسکتاپ: 4تایی (منظم‌تر از auto-fill) */
-    @media (min-width: 1100px){
-      .grid{
-        grid-template-columns:repeat(4, minmax(0,1fr));
-        gap:18px;
+    @media (min-width: 1040px) {
+      .gallery-grid {
+        grid-template-columns: repeat(4, 1fr); /* ۴ ستونه در دسکتاپ */
+        gap: 20px;
       }
     }
 
-    .card{
-      position:relative;
-      border-radius:18px;
-      overflow:hidden;
-      cursor:pointer;
-      border:1px solid var(--border);
-      background:#0c0e14;
-      transition:transform .28s ease, border-color .28s ease, box-shadow .28s ease;
-      will-change:transform;
-      isolation:isolate;
+    /* کارت‌های عمودی 9:16 استاندارد ریلز */
+    .reel-card {
+      position: relative;
+      aspect-ratio: 9 / 16;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #0d0f15;
+      border: 1px solid var(--glass-border);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                  border-color 0.35s ease, 
+                  box-shadow 0.35s ease;
+      will-change: transform;
     }
 
-    /* 9:16 always */
-    .card::before{
-      content:"";
-      display:block;
-      padding-top:177.7778%; /* 16/9 = 1.777... => 9:16 = 1.777 height/width */
+    .reel-card:hover {
+      transform: translateY(-6px) scale(1.015);
+      border-color: rgba(255, 84, 41, 0.5);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 20px var(--accent-glow);
     }
 
-    .media{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      transform:scale(1);
-      transition:transform .45s ease;
+    /* مدیا (عکس / ویدئو) */
+    .card-media {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
     }
 
-    .card:hover{
-      transform:translateY(-5px);
-      border-color:rgba(255,84,41,.55);
-      box-shadow:0 18px 38px rgba(0,0,0,.55);
-    }
-    .card:hover .media{transform:scale(1.035)}
-
-    .tag{
-      position:absolute;
-      bottom:10px;
-      left:10px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:.75rem;
-      font-weight:900;
-      color:#fff;
-      background:rgba(0,0,0,.62);
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter:blur(10px);
-      -webkit-backdrop-filter:blur(10px);
-      z-index:2;
-    }
-    html[dir="rtl"] .tag{left:auto; right:10px}
-
-    /* Optional: subtle top gradient for readability */
-    .shade{
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to top, rgba(0,0,0,.32), rgba(0,0,0,0) 52%);
-      z-index:1;
-      pointer-events:none;
+    .reel-card:hover .card-media {
+      transform: scale(1.05);
     }
 
-    /* Modal */
-    .modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.92);
-      backdrop-filter:blur(18px);
-      z-index:1000;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
+    /* گرادینت تاریک برای خوانایی متن‌ها و تگ */
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.85) 100%);
+      pointer-events: none;
+      z-index: 1;
     }
-    .modal.active{display:flex}
-    .modal-box{
-      position:relative;
-      max-width:560px;
-      width:100%;
-      border-radius:22px;
-      overflow:hidden;
-      background:#000;
-      border:1px solid rgba(255,255,255,.14);
-      box-shadow:0 30px 75px rgba(0,0,0,.85);
+
+    /* تگ کتگوری روی کارت */
+    .card-badge {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(14, 16, 22, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.3px;
+      z-index: 2;
     }
-    .modal-box video,.modal-box img{
-      width:100%;
-      max-height:86vh;
-      object-fit:contain;
-      display:block;
-      background:#000;
+
+    /* آیکون پلی کوچک در بالای کارت */
+    .play-indicator {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 2;
     }
-    .close{
-      position:absolute;
-      top:12px;
-      right:12px;
-      width:42px;
-      height:42px;
-      border-radius:50%;
-      background:rgba(0,0,0,.65);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.10);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      transition:transform .2s ease, background .2s ease;
-      z-index:10;
-      user-select:none;
+    .play-indicator svg {
+      width: 12px;
+      height: 12px;
+      fill: #fff;
+      margin-left: 1px;
     }
-    .close:hover{background:rgba(255,84,41,.18); transform:translateY(-2px)}
+
+    /* مودال تمام صفحه شیک */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 4, 6, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-viewport {
+      position: relative;
+      width: 100%;
+      max-width: 440px; /* سایز متناسب برای پرده ریلز عمودی */
+      aspect-ratio: 9 / 16;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9);
+      transform: scale(0.94);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .modal-backdrop.open .modal-viewport {
+      transform: scale(1);
+    }
+
+    .modal-viewport video, .modal-viewport img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .btn-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-close:hover {
+      background: var(--accent);
+      transform: rotate(90deg);
+    }
   </style>
 </head>
 
 <body>
-  <section class="wrap glass">
-    <div class="header">
-      <div class="title">Portfolio</div>
+  <div class="container">
+    <div class="header-bar">
+      <div class="badge-pill">Reels & Showcases</div>
+      <h2 class="title">نمونه آثار سینمایی و تبلیغاتی</h2>
     </div>
 
-    <nav class="filters" id="filters" aria-label="Portfolio filters">
-      <button class="filter-btn active" data-filter="all" type="button">All</button>
-      <button class="filter-btn" data-filter="Corporate" type="button">Corporate</button>
-      <button class="filter-btn" data-filter="jewelry" type="button">Jewelry</button>
-      <button class="filter-btn" data-filter="cafe" type="button">Cafe</button>
-      <button class="filter-btn" data-filter="Medical" type="button">Medical</button>
-      <button class="filter-btn" data-filter="gym" type="button">Gym</button>
-    </nav>
+    <!-- منوی فیلتر کپسولی -->
+    <div class="filter-wrapper">
+      <nav class="filter-nav" id="filterNav" aria-label="Portfolio Category Filters">
+        <button class="filter-btn active" data-filter="all" type="button">همه</button>
+        <button class="filter-btn" data-filter="Corporate" type="button">شرکتی (Corporate)</button>
+        <button class="filter-btn" data-filter="jewelry" type="button">طلا و جواهرات</button>
+        <button class="filter-btn" data-filter="cafe" type="button">کافه و رستوران</button>
+        <button class="filter-btn" data-filter="Medical" type="button">پزشکی</button>
+        <button class="filter-btn" data-filter="gym" type="button">باشگاه و ورزشی</button>
+      </nav>
+    </div>
 
-    <main class="grid" id="grid" aria-label="Portfolio grid"></main>
-  </section>
+    <!-- شبکه منظم ۲ ستونه در موبایل و عمودی 9:16 -->
+    <main class="gallery-grid" id="galleryGrid"></main>
+  </div>
 
-  <div class="modal" id="modal" role="dialog" aria-modal="true">
-    <div class="modal-box">
-      <button class="close" id="modalClose" aria-label="Close">✕</button>
-      <div id="modalTarget"></div>
+  <!-- مودال نمایش تمام صفحه ویدئو/عکس -->
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true">
+    <div class="modal-viewport">
+      <button class="btn-close" id="btnCloseModal" aria-label="بستن">✕</button>
+      <div id="modalContent" style="width:100%;height:100%;"></div>
     </div>
   </div>
 
   <script>
-    /* FILES (همان ساختار قبلی شما) */
     const ITEMS = [
       { category: 'Corporate', src: 'Corporate/Corporate01.mp4', title: 'Corporate 01' },
       { category: 'Corporate', src: 'Corporate/Corporate02.mp4', title: 'Corporate 02' },
@@ -271,118 +349,135 @@
       { category: 'Medical', src: 'Medical/Medical 01.mp4', title: 'Medical 01' },
       { category: 'Medical', src: 'Medical/Medical 02.mp4', title: 'Medical 02' },
 
-      { category: 'gym', src: 'gym.mp4', title: 'Gym' }
+      { category: 'gym', src: 'gym.mp4', title: 'Gym Showcase' }
     ];
 
-    const grid = document.getElementById('grid');
+    const galleryGrid = document.getElementById('galleryGrid');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalContent = document.getElementById('modalContent');
+    const btnCloseModal = document.getElementById('btnCloseModal');
 
-    function isVideo(src){
+    function isVideo(src) {
       const s = String(src).toLowerCase();
       return s.endsWith('.mp4') || s.endsWith('.webm') || s.endsWith('.mov');
     }
 
-    function renderGallery(filter='all'){
-      grid.innerHTML = '';
-      const list = (filter === 'all') ? ITEMS : ITEMS.filter(x => x.category === filter);
+    function renderGrid(filter = 'all') {
+      galleryGrid.innerHTML = '';
+      const list = filter === 'all' ? ITEMS : ITEMS.filter(item => item.category === filter);
 
       list.forEach(item => {
+        const isVid = isVideo(item.src);
         const card = document.createElement('article');
-        card.className = 'card';
-        card.setAttribute('role','button');
-        card.setAttribute('tabindex','0');
-        card.setAttribute('aria-label', item.title);
+        card.className = 'reel-card';
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
 
-        const shade = document.createElement('div');
-        shade.className = 'shade';
-
-        const tag = document.createElement('span');
-        tag.className = 'tag';
-        tag.textContent = item.category.toUpperCase();
-
-        const mediaEl = document.createElement(isVideo(item.src) ? 'video' : 'img');
-        mediaEl.className = 'media';
-        mediaEl.src = item.src;
-
-        if (mediaEl.tagName.toLowerCase() === 'video'){
+        let mediaEl;
+        if (isVid) {
+          mediaEl = document.createElement('video');
+          mediaEl.className = 'card-media';
+          mediaEl.src = item.src;
           mediaEl.muted = true;
           mediaEl.loop = true;
           mediaEl.playsInline = true;
           mediaEl.preload = 'metadata';
-          // نکته: روی موبایل autoplay داخل grid اغلب مطلوب نیست؛ مودال برای پخش اصلی است.
         } else {
+          mediaEl = document.createElement('img');
+          mediaEl.className = 'card-media';
+          mediaEl.src = item.src;
           mediaEl.loading = 'lazy';
-          mediaEl.decoding = 'async';
+        }
+
+        const overlay = document.createElement('div');
+        overlay.className = 'card-overlay';
+
+        const badge = document.createElement('span');
+        badge.className = 'card-badge';
+        badge.textContent = item.category;
+
+        if (isVid) {
+          const playIndicator = document.createElement('div');
+          playIndicator.className = 'play-indicator';
+          playIndicator.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+          card.appendChild(playIndicator);
         }
 
         card.appendChild(mediaEl);
-        card.appendChild(shade);
-        card.appendChild(tag);
+        card.appendChild(overlay);
+        card.appendChild(badge);
 
-        const open = () => openModal(item);
-        card.addEventListener('click', open);
-        card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') open(); });
-
-        // Desktop hover preview (اختیاری و سبک)
-        card.addEventListener('mouseenter', ()=>{
-          if (mediaEl.tagName.toLowerCase()==='video'){
-            mediaEl.play().catch(()=>{});
-          }
+        // هاور برای پخش پیش‌نمایش در دسکتاپ
+        card.addEventListener('mouseenter', () => {
+          if (isVid) mediaEl.play().catch(() => {});
         });
-        card.addEventListener('mouseleave', ()=>{
-          if (mediaEl.tagName.toLowerCase()==='video'){
+        card.addEventListener('mouseleave', () => {
+          if (isVid) {
             mediaEl.pause();
             mediaEl.currentTime = 0;
           }
         });
 
-        grid.appendChild(card);
+        // باز شدن مودال
+        const triggerOpen = () => openModal(item);
+        card.addEventListener('click', triggerOpen);
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') triggerOpen();
+        });
+
+        galleryGrid.appendChild(card);
       });
     }
 
-    /* Modal */
-    const modal = document.getElementById('modal');
-    const modalTarget = document.getElementById('modalTarget');
-    const modalClose = document.getElementById('modalClose');
-
-    function openModal(item){
-      modalTarget.innerHTML = '';
-      const el = document.createElement(isVideo(item.src) ? 'video' : 'img');
-      el.src = item.src;
-
-      if (el.tagName.toLowerCase()==='video'){
-        el.controls = true;
-        el.autoplay = true;
-        el.playsInline = true;
+    function openModal(item) {
+      modalContent.innerHTML = '';
+      const isVid = isVideo(item.src);
+      
+      if (isVid) {
+        const vid = document.createElement('video');
+        vid.src = item.src;
+        vid.controls = true;
+        vid.autoplay = true;
+        vid.playsInline = true;
+        vid.loop = true;
+        modalContent.appendChild(vid);
       } else {
-        el.loading = 'eager';
+        const img = document.createElement('img');
+        img.src = item.src;
+        modalContent.appendChild(img);
       }
 
-      modalTarget.appendChild(el);
-      modal.classList.add('active');
+      modalBackdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
 
-    function closeModal(){
-      modalTarget.innerHTML = '';
-      modal.classList.remove('active');
+    function closeModal() {
+      modalBackdrop.classList.remove('open');
       document.body.style.overflow = '';
+      setTimeout(() => {
+        modalContent.innerHTML = '';
+      }, 300);
     }
 
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
+    btnCloseModal.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalBackdrop.classList.contains('open')) closeModal();
+    });
 
-    /* Filters */
-    document.querySelectorAll('.filter-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    // مدیریت تب‌های فیلتر
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        renderGallery(btn.dataset.filter);
+        renderGrid(btn.dataset.filter);
       });
     });
 
-    /* Init */
-    renderGallery('all');
+    // بارگذاری اولیه
+    renderGrid('all');
   </script>
 </body>
 </html>
