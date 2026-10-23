@@ -227,7 +227,7 @@
       color:var(--accent);
     }
 
-    /* Portfolio Grid (4 -> 3 -> 2) */
+    /* Portfolio Grid (4 cols -> 3 cols -> 2 cols) */
     .grid{
       display:grid;
       grid-template-columns:repeat(4, 1fr);
@@ -244,6 +244,9 @@
       background:#0c0e14;
       transition:transform .32s cubic-bezier(0.2, 0.8, 0.2, 1), border-color .32s ease, box-shadow .32s ease;
       will-change:transform;
+    }
+    .card.hidden{
+      display:none !important;
     }
     .card:hover{
       transform:translateY(-6px);
@@ -372,7 +375,7 @@
     }
     .close:hover{background:rgba(255,84,41,.18); transform:translateY(-2px)}
 
-    /* Responsive Queries */
+    /* Responsive Breakpoints */
     @media(max-width:1024px){
       .grid{
         grid-template-columns:repeat(3, 1fr);
@@ -402,7 +405,7 @@
       .nav-links{display:none}
     }
 
-    /* Mobile screens: Maintain 2 columns */
+    /* Mobile screens: 2 columns */
     @media(max-width:640px){
       body{padding:10px}
       .grid{
@@ -477,8 +480,100 @@
         <button class="filter-btn" data-filter="gym">Gym</button>
       </div>
 
-      <!-- Main Grid with all cards -->
-      <main class="grid" id="grid" aria-label="Portfolio Grid"></main>
+      <!-- MAIN PORTFOLIO GRID WITH ALL 20 HARDCODED ITEMS -->
+      <main class="grid" id="grid" aria-label="Portfolio Grid">
+        
+        <!-- Corporate 01-11 -->
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate01.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="Corporate/Corporate01.mp4"></video>
+          <span class="tag">CORPORATE</span>
+        </div>
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate02.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="Corporate/Corporate02.mp4"></video>
+          <span class="tag">CORPORATE</span>
+        </div>
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate03.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="Corporate/Corporate03.mp4"></video>
+          <span class="tag">CORPORATE</span>
+        </div>
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate04.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="Corporate/Corporate04.mp4"></video>
+          <span class="tag">CORPORATE</span>
+        </div>
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate05.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="Corporate/Corporate05.mp4"></video>
+          <span class="tag">CORPORATE</span>
+        </div>
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate06.jpg" data-type="img">
+          <img loading="lazy" src="Corporate/Corporate06.jpg" alt="Corporate 06">
+          <span class="tag">CORPORATE</span>
+        </div>
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate07.jpg" data-type="img">
+          <img loading="lazy" src="Corporate/Corporate07.jpg" alt="Corporate 07">
+          <span class="tag">CORPORATE</span>
+        </div>
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate08.jpg" data-type="img">
+          <img loading="lazy" src="Corporate/Corporate08.jpg" alt="Corporate 08">
+          <span class="tag">CORPORATE</span>
+        </div>
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate09.jpg" data-type="img">
+          <img loading="lazy" src="Corporate/Corporate09.jpg" alt="Corporate 09">
+          <span class="tag">CORPORATE</span>
+        </div>
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate10.jpg" data-type="img">
+          <img loading="lazy" src="Corporate/Corporate10.jpg" alt="Corporate 10">
+          <span class="tag">CORPORATE</span>
+        </div>
+        <div class="card" data-category="Corporate" data-src="Corporate/Corporate11.jpg" data-type="img">
+          <img loading="lazy" src="Corporate/Corporate11.jpg" alt="Corporate 11">
+          <span class="tag">CORPORATE</span>
+        </div>
+
+        <!-- Jewelry 01-03 -->
+        <div class="card" data-category="jewelry" data-src="jewelry/jewelry01.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="jewelry/jewelry01.mp4"></video>
+          <span class="tag">JEWELRY</span>
+        </div>
+        <div class="card" data-category="jewelry" data-src="jewelry/jewelry02.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="jewelry/jewelry02.mp4"></video>
+          <span class="tag">JEWELRY</span>
+        </div>
+        <div class="card" data-category="jewelry" data-src="jewelry/jewelry03.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="jewelry/jewelry03.mp4"></video>
+          <span class="tag">JEWELRY</span>
+        </div>
+
+        <!-- Cafe 01-03 -->
+        <div class="card" data-category="cafe" data-src="cafe/cafe01.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="cafe/cafe01.mp4"></video>
+          <span class="tag">CAFE</span>
+        </div>
+        <div class="card" data-category="cafe" data-src="cafe/cafe02.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="cafe/cafe02.mp4"></video>
+          <span class="tag">CAFE</span>
+        </div>
+        <div class="card" data-category="cafe" data-src="cafe/cafe03.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="cafe/cafe03.mp4"></video>
+          <span class="tag">CAFE</span>
+        </div>
+
+        <!-- Medical 01-02 -->
+        <div class="card" data-category="Medical" data-src="Medical/Medical 01.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="Medical/Medical 01.mp4"></video>
+          <span class="tag">MEDICAL</span>
+        </div>
+        <div class="card" data-category="Medical" data-src="Medical/Medical 02.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="Medical/Medical 02.mp4"></video>
+          <span class="tag">MEDICAL</span>
+        </div>
+
+        <!-- Gym 01 -->
+        <div class="card" data-category="gym" data-src="gym.mp4" data-type="video">
+          <video muted loop playsinline preload="metadata" src="gym.mp4"></video>
+          <span class="tag">GYM</span>
+        </div>
+
+      </main>
     </section>
 
     <!-- About Section -->
@@ -552,41 +647,6 @@
   </div>
 
   <script>
-    /* ==============================================
-       EXACT & COMPLETE PORTFOLIO LIST (ALL 20 ITEMS)
-       ============================================== */
-    const ITEMS = [
-      // Corporate (11 items)
-      { category: 'Corporate', src: 'Corporate/Corporate01.mp4', title: 'Corporate 01' },
-      { category: 'Corporate', src: 'Corporate/Corporate02.mp4', title: 'Corporate 02' },
-      { category: 'Corporate', src: 'Corporate/Corporate03.mp4', title: 'Corporate 03' },
-      { category: 'Corporate', src: 'Corporate/Corporate04.mp4', title: 'Corporate 04' },
-      { category: 'Corporate', src: 'Corporate/Corporate05.mp4', title: 'Corporate 05' },
-      { category: 'Corporate', src: 'Corporate/Corporate06.jpg', title: 'Corporate 06' },
-      { category: 'Corporate', src: 'Corporate/Corporate07.jpg', title: 'Corporate 07' },
-      { category: 'Corporate', src: 'Corporate/Corporate08.jpg', title: 'Corporate 08' },
-      { category: 'Corporate', src: 'Corporate/Corporate09.jpg', title: 'Corporate 09' },
-      { category: 'Corporate', src: 'Corporate/Corporate10.jpg', title: 'Corporate 10' },
-      { category: 'Corporate', src: 'Corporate/Corporate11.jpg', title: 'Corporate 11' },
-
-      // jewelry (3 items)
-      { category: 'jewelry', src: 'jewelry/jewelry01.mp4', title: 'Jewelry 01' },
-      { category: 'jewelry', src: 'jewelry/jewelry02.mp4', title: 'Jewelry 02' },
-      { category: 'jewelry', src: 'jewelry/jewelry03.mp4', title: 'Jewelry 03' },
-
-      // cafe (3 items)
-      { category: 'cafe', src: 'cafe/cafe01.mp4', title: 'Cafe 01' },
-      { category: 'cafe', src: 'cafe/cafe02.mp4', title: 'Cafe 02' },
-      { category: 'cafe', src: 'cafe/cafe03.mp4', title: 'Cafe 03' },
-
-      // Medical (2 items - exact path preserved)
-      { category: 'Medical', src: 'Medical/Medical 01.mp4', title: 'Medical 01' },
-      { category: 'Medical', src: 'Medical/Medical 02.mp4', title: 'Medical 02' },
-
-      // gym (1 item)
-      { category: 'gym', src: 'gym.mp4', title: 'Gym' }
-    ];
-
     /* =========================
        i18n Dictionary
        ========================= */
@@ -671,93 +731,4 @@
       }
     };
 
-    /* =========================
-       Grid Render Engine
-       ========================= */
-    const grid = document.getElementById('grid');
-
-    function renderGallery(filter='all'){
-      grid.innerHTML='';
-      const list = filter==='all' ? ITEMS : ITEMS.filter(x => x.category===filter);
-
-      list.forEach(item=>{
-        const card=document.createElement('div');
-        card.className='card';
-
-        const isVideo = item.src.toLowerCase().endsWith('.mp4') || item.src.toLowerCase().endsWith('.webm');
-        const media=document.createElement(isVideo?'video':'img');
-        media.src=item.src;
-
-        if(isVideo){
-          media.muted=true; 
-          media.loop=true; 
-          media.playsInline=true;
-          media.preload='metadata';
-          card.addEventListener('mouseenter', ()=>media.play().catch(()=>{}));
-          card.addEventListener('mouseleave', ()=>media.pause());
-        } else {
-          media.loading='lazy';
-        }
-
-        const tag=document.createElement('span');
-        tag.className='tag';
-        tag.textContent=item.category.toUpperCase();
-
-        card.appendChild(media);
-        card.appendChild(tag);
-        card.addEventListener('click', ()=>openModal(item));
-        grid.appendChild(card);
-      });
-    }
-
-    /* =========================
-       Modal Controls
-       ========================= */
-    const modal=document.getElementById('modal');
-    const modalTarget=document.getElementById('modalTarget');
-    const modalClose=document.getElementById('modalClose');
-
-    function openModal(item){
-      modalTarget.innerHTML='';
-      const isVideo = item.src.toLowerCase().endsWith('.mp4') || item.src.toLowerCase().endsWith('.webm');
-      const el=document.createElement(isVideo?'video':'img');
-      el.src=item.src;
-      if(isVideo){ el.controls=true; el.autoplay=true; }
-      modalTarget.appendChild(el);
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal(){
-      modalTarget.innerHTML='';
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
-
-    /* =========================
-       Filtering Logic
-       ========================= */
-    document.querySelectorAll('.filter-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        renderGallery(btn.dataset.filter);
-      });
-    });
-
-    /* =========================
-       Theme System
-       ========================= */
-    const themeToggle=document.getElementById('themeToggle');
-    function applyTheme(theme){
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('kayan_theme', theme);
-    }
-    function smartTheme(){
-      const saved=localStorage.getItem('kayan_theme');
-      if(saved) return saved;
-      return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    }
-    themeToggle.addEventListene
+    /* ===
