@@ -1,734 +1,581 @@
 <!doctype html>
-<html lang="fa" dir="rtl" data-theme="dark">
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kayan Creative • کارگردانی هنری و سینماتوگرافی هوش مصنوعی</title>
-  <meta name="description" content="Kayan Creative — Creative Direction, AI Cinematography, and High-End Commercial Visuals.">
-
-  <!-- Icon / SEO / PWA basic -->
-  <meta name="theme-color" content="#0a0b0e">
-  <link rel="icon" type="image/png" href="main/logo.png">
-  <link rel="apple-touch-icon" href="main/logo.png">
-  <meta property="og:image" content="main/logo.png">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kayan Creative — AI Cinematography & Creative Direction</title>
+  <meta name="description" content="Kayan Creative — AI cinematography, creative direction, and visual storytelling." />
 
   <style>
     :root{
-      --bg:#090a0f;
-      --text:#fff;
-      --muted:#9aa1b0;
-      --accent:#ff5429;
-      --accent2:#ff6a42;
-      --border:rgba(255,255,255,.14);
-      --glass:rgba(18,20,28,.44);
-      --blur:blur(20px);
-      --radius:24px;
-      --font-en:'Plus Jakarta Sans',sans-serif;
-      --font-fa:'Vazirmatn',sans-serif;
+      --bg: #070A10;
+      --card: rgba(255,255,255,.08);
+      --card2: rgba(255,255,255,.12);
+      --text: #EAF0FF;
+      --muted: rgba(234,240,255,.72);
+      --border: rgba(255,255,255,.14);
+      --shadow: 0 16px 60px rgba(0,0,0,.45);
+      --accent: #7C5CFF;
+      --accent2:#21D4FD;
+      --glass: rgba(255,255,255,.10);
+      --glass2: rgba(255,255,255,.06);
+      --radius: 18px;
+      --max: 1180px;
+      --gap: 18px;
+      --navH: 70px;
     }
+
     [data-theme="light"]{
-      --bg:#f5f6fa;
-      --text:#0e1017;
-      --muted:#586074;
-      --border:rgba(0,0,0,.09);
-      --glass:rgba(255,255,255,.6);
+      --bg: #F6F7FB;
+      --card: rgba(10,18,36,.06);
+      --card2: rgba(10,18,36,.10);
+      --text: #0B1220;
+      --muted: rgba(11,18,32,.72);
+      --border: rgba(10,18,36,.16);
+      --shadow: 0 14px 40px rgba(10,18,36,.14);
+      --glass: rgba(255,255,255,.72);
+      --glass2: rgba(255,255,255,.54);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
     body{
-      background:var(--bg);
-      color:var(--text);
-      font-family:var(--font-fa);
-      padding:16px;
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Arabic", "Noto Sans", sans-serif;
+      background: radial-gradient(1200px 700px at 10% -20%, rgba(124,92,255,.25), transparent 60%),
+                  radial-gradient(900px 600px at 100% 0%, rgba(33,212,253,.16), transparent 60%),
+                  var(--bg);
+      color: var(--text);
       overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;
-    }
-    html[lang="en"] body{font-family:var(--font-en)}
-    .container{max-width:1240px;margin:0 auto}
-
-    /* Ambient background */
-    .ambient-bg{
-      position:fixed; inset:0; z-index:-2; pointer-events:none; overflow:hidden;
-    }
-    .ambient-bg video{
-      width:100%; height:100%; object-fit:cover;
-      opacity:.16; filter:saturate(1.15) contrast(1.1);
-    }
-    [data-theme="light"] .ambient-bg video{opacity:.07}
-
-    /* Glass system */
-    .glass{
-      background:var(--glass);
-      backdrop-filter:var(--blur);
-      -webkit-backdrop-filter:var(--blur);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:0 18px 50px rgba(0,0,0,.28);
-    }
-    .glass-soft{
-      background:rgba(255,255,255,.07);
-      border:1px solid rgba(255,255,255,.16);
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-      border-radius:18px;
-    }
-    [data-theme="light"] .glass-soft{
-      background:rgba(0,0,0,.03);
-      border-color:rgba(0,0,0,.08);
     }
 
-    /* Navbar */
-    header.nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 24px; margin-bottom:18px;
+    a{ color: inherit; text-decoration:none; }
+    .container{ max-width: var(--max); margin:0 auto; padding: 0 18px; }
+
+    /* Top Nav */
+    .nav{
+      position: sticky;
+      top:0;
+      z-index: 50;
+      height: var(--navH);
+      backdrop-filter: blur(12px);
+      background: linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,0));
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    [data-theme="light"] .nav{
+      background: linear-gradient(to bottom, rgba(246,247,251,.92), rgba(246,247,251,.45));
+      border-bottom: 1px solid rgba(10,18,36,.10);
+    }
+    .nav-inner{
+      height: 100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
     }
     .brand{
-      display:flex; align-items:center; gap:12px;
-      text-decoration:none; color:var(--text);
-      font-weight:900; letter-spacing:-.3px;
+      display:flex; align-items:center; gap:10px;
+      font-weight: 800;
+      letter-spacing:.2px;
     }
-    .brand img{
-      width:42px;height:42px;border-radius:14px;object-fit:cover;
-      box-shadow:0 10px 25px rgba(0,0,0,.35);
+    .dot{
+      width: 12px; height:12px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 6px rgba(124,92,255,.18);
     }
-    .nav-links{
-      display:flex; align-items:center; gap:20px;
-    }
-    .nav-link{
-      color:var(--muted);
-      text-decoration:none;
-      font-weight:700;
-      font-size:.9rem;
-      transition:color .2s ease;
-    }
-    .nav-link:hover{color:var(--accent)}
-
-    .nav-actions{display:flex; align-items:center; gap:10px}
-    .chip, select{
-      background:rgba(255,255,255,.06);
+    .nav-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .btn{
       border:1px solid var(--border);
-      color:var(--text);
-      padding:8px 14px;
-      border-radius:999px;
+      background: linear-gradient(180deg, var(--glass), var(--glass2));
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
       cursor:pointer;
-      font:inherit;
-      font-size:.88rem;
-      transition:transform .22s ease, background .22s ease, border-color .22s ease;
-      will-change:transform;
+      display:inline-flex; align-items:center; gap:8px;
       user-select:none;
     }
-    [data-theme="light"] .chip,[data-theme="light"] select{background:rgba(0,0,0,.04)}
-    .chip:hover, select:hover{
-      background:rgba(255,84,41,.18);
-      border-color:rgba(255,84,41,.45);
-      transform:translateY(-2px);
-    }
+    .btn.small{ padding: 8px 10px; font-size: 14px; box-shadow:none; }
+    .btn.ghost{ box-shadow:none; background: transparent; }
+    .btn:active{ transform: translateY(1px); }
 
-    /* Hero cinematic */
+    /* Hero */
     .hero{
-      padding:12px;
-      margin-bottom:24px;
-      position:relative;
+      position: relative;
+      padding: 26px 0 24px;
     }
-    .hero-stage{
-      position:relative;
-      width:100%;
-      aspect-ratio:16/9;
-      border-radius:calc(var(--radius) - 6px);
-      overflow:hidden;
-      background:#000;
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow:0 22px 60px rgba(0,0,0,.55);
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: var(--gap);
+      align-items: stretch;
     }
-    .hero-stage video{width:100%;height:100%;object-fit:cover;display:block}
 
-    /* Hero overlay card */
+    .hero-video{
+      position: relative;
+      border-radius: var(--radius);
+      overflow:hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      min-height: 420px;
+      background: rgba(255,255,255,.06);
+    }
+    .hero-video video{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      filter: contrast(1.05) saturate(1.05);
+    }
+
+    /* Glass overlay card */
     .hero-overlay{
       position:absolute;
-      top:18px;
-      right:18px;
-      width:min(480px, calc(100% - 36px));
-      padding:22px;
-      border-radius:20px;
-      backdrop-filter:blur(20px);
-      -webkit-backdrop-filter:blur(20px);
-      background:rgba(10,10,14,.55);
-      border:1px solid rgba(255,255,255,.18);
-      box-shadow:0 18px 40px rgba(0,0,0,.45);
-      transition:transform .2s ease, opacity .2s ease;
-      will-change:transform;
-      z-index:2;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+      backdrop-filter: blur(14px);
+      padding: 14px 14px;
     }
     [data-theme="light"] .hero-overlay{
-      background:rgba(255,255,255,.78);
-    }
-    html[dir="ltr"] .hero-overlay{left:18px; right:auto}
-
-    .kicker{
-      color:var(--accent);
-      font-weight:800;
-      letter-spacing:.6px;
-      font-size:.8rem;
-      text-transform:uppercase;
-      margin-bottom:8px;
-    }
-    .h-title{
-      font-weight:900;
-      line-height:1.3;
-      letter-spacing:-.4px;
-      font-size:clamp(1.25rem, 2.3vw, 2.1rem);
-      margin-bottom:10px;
-    }
-    .h-desc{opacity:.85; font-size:.95rem; line-height:1.75; margin-bottom:14px}
-
-    /* Autotype */
-    .autotype{
-      font-weight:800;
-      display:inline-block;
-      min-height:1.3em;
-      white-space:nowrap;
-      border-left:2px solid var(--accent);
-      padding-left:10px;
-      color:var(--text);
-    }
-    html[dir="rtl"] .autotype{
-      border-left:none;
-      border-right:2px solid var(--accent);
-      padding-left:0; padding-right:10px;
+      border: 1px solid rgba(10,18,36,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.62));
     }
 
-    /* Filters */
-    .filters{display:flex; gap:10px; overflow-x:auto; padding:8px 2px 18px; scrollbar-width:none}
-    .filters::-webkit-scrollbar{display:none}
-    .filter-btn{
-      padding:10px 20px;
-      border-radius:999px;
+    .hero-side{
+      border-radius: var(--radius);
       border:1px solid var(--border);
-      background:rgba(255,255,255,.06);
-      color:var(--muted);
-      font-weight:800;
-      font-size:.88rem;
-      cursor:pointer;
-      transition:transform .22s ease, background .22s ease, border-color .22s ease, color .22s ease;
-      will-change:transform;
-      white-space:nowrap;
-    }
-    [data-theme="light"] .filter-btn{background:rgba(0,0,0,.04)}
-    .filter-btn:hover{transform:translateY(-2px)}
-    .filter-btn.active,.filter-btn:hover{
-      background:rgba(255,84,41,.16);
-      border-color:rgba(255,84,41,.6);
-      color:var(--accent);
+      background: linear-gradient(180deg, var(--glass), var(--glass2));
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height: 420px;
     }
 
-    /* Portfolio Grid (4 cols -> 3 cols -> 2 cols) */
-    .grid{
+    h1{ margin: 0 0 10px; font-size: clamp(22px, 2.2vw, 34px); line-height:1.2; }
+    p{ margin:0 0 10px; color: var(--muted); line-height:1.75; }
+    .pillrow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+    .pill{
+      font-size: 13px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+    }
+
+    .typewrap{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .type-title{ font-weight:800; }
+    .typewriter{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border: 1px dashed rgba(255,255,255,.22);
+      border-radius: 12px;
+      padding: 8px 10px;
+      min-height: 38px;
+      background: rgba(0,0,0,.18);
+    }
+    [data-theme="light"] .typewriter{ background: rgba(10,18,36,.06); border-color: rgba(10,18,36,.18); }
+
+    .section{
+      padding: 22px 0;
+    }
+    .section h2{
+      margin:0 0 10px;
+      font-size: 20px;
+    }
+
+    .cards{
       display:grid;
-      grid-template-columns:repeat(4, 1fr);
-      gap:18px;
-      margin-bottom:48px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap);
     }
     .card{
-      position:relative;
-      aspect-ratio:9/16;
-      border-radius:18px;
-      overflow:hidden;
-      cursor:pointer;
       border:1px solid var(--border);
-      background:#0c0e14;
-      transition:transform .32s cubic-bezier(0.2, 0.8, 0.2, 1), border-color .32s ease, box-shadow .32s ease;
-      will-change:transform;
-    }
-    .card.hidden{
-      display:none !important;
-    }
-    .card:hover{
-      transform:translateY(-6px);
-      border-color:rgba(255,84,41,.65);
-      box-shadow:0 16px 36px rgba(255,84,41,.2);
-    }
-    .card video,.card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease}
-    .card:hover video,.card:hover img{transform:scale(1.04)}
-    .tag{
-      position:absolute;
-      bottom:10px;
-      left:10px;
-      padding:5px 12px;
-      border-radius:999px;
-      font-size:.72rem;
-      font-weight:800;
-      color:#fff;
-      background:rgba(0,0,0,.68);
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter:blur(8px);
-      -webkit-backdrop-filter:blur(8px);
-      letter-spacing:.4px;
-    }
-    html[dir="rtl"] .tag{left:auto; right:10px}
-
-    /* Content sections: About & Contact */
-    .content-section{
-      padding:36px;
-      margin-bottom:24px;
-    }
-    .section-header{
-      margin-bottom:16px;
-    }
-    .section-tag{
-      display:inline-block;
-      color:var(--accent);
-      font-weight:800;
-      font-size:.82rem;
-      text-transform:uppercase;
-      letter-spacing:1px;
-      margin-bottom:6px;
-    }
-    .section-title{
-      font-size:clamp(1.35rem, 2vw, 1.9rem);
-      font-weight:900;
-    }
-    .section-body{
-      font-size:1rem;
-      line-height:1.9;
-      color:var(--muted);
-      max-width:980px;
+      background: linear-gradient(180deg, var(--glass), var(--glass2));
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
     }
 
-    /* Social Contact Cards */
-    .social-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
-      gap:16px;
-      margin-top:22px;
-    }
-    .social-card{
-      display:flex;
-      align-items:center;
-      gap:16px;
-      padding:16px 20px;
-      border-radius:18px;
-      text-decoration:none;
-      color:var(--text);
-      background:rgba(255,255,255,.04);
+    /* SPA page container */
+    .page-shell{
       border:1px solid var(--border);
-      transition:transform .25s ease, border-color .25s ease, background .25s ease;
-    }
-    [data-theme="light"] .social-card{background:rgba(0,0,0,.03)}
-    .social-card:hover{
-      transform:translateY(-3px);
-      border-color:var(--accent);
-      background:rgba(255,84,41,.12);
-    }
-    .social-icon{
-      width:44px;
-      height:44px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:12px;
-      background:rgba(255,255,255,.08);
-      color:var(--text);
-      flex-shrink:0;
-    }
-    .social-info h4{font-size:1rem; font-weight:800; margin-bottom:2px}
-    .social-info span{font-size:.85rem; color:var(--muted); direction:ltr; display:inline-block}
-
-    /* Modal */
-    .modal{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.92);
-      backdrop-filter:blur(18px);
-      z-index:1000;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-    }
-    .modal.active{display:flex}
-    .modal-box{
-      position:relative;
-      max-width:520px;
-      width:100%;
-      border-radius:22px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--glass), var(--glass2));
+      box-shadow: var(--shadow);
       overflow:hidden;
-      background:#000;
-      border:1px solid rgba(255,255,255,.14);
-      box-shadow:0 30px 75px rgba(0,0,0,.85);
     }
-    .modal-box video,.modal-box img{width:100%;max-height:86vh;object-fit:contain;display:block}
-    .close{
-      position:absolute; top:14px; right:14px;
-      width:42px;height:42px;border-radius:50%;
-      background:rgba(0,0,0,.65);
-      color:#fff;border:1px solid rgba(255,255,255,.10);
-      cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      transition:transform .2s ease, background .2s ease;
-      will-change:transform;
-      z-index:10;
+    .page-shell-header{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding: 14px 14px;
+      border-bottom: 1px solid var(--border);
     }
-    .close:hover{background:rgba(255,84,41,.18); transform:translateY(-2px)}
-
-    /* Responsive Breakpoints */
-    @media(max-width:1024px){
-      .grid{
-        grid-template-columns:repeat(3, 1fr);
-        gap:14px;
-      }
+    .page-shell-body{
+      padding: 14px 14px;
     }
 
-    /* Tablet & Mobile: Move Overlay below the Video */
-    @media(max-width:860px){
-      .hero{
-        display:flex;
-        flex-direction:column;
-        gap:16px;
-        padding:12px;
-      }
-      .hero-stage{
-        aspect-ratio:16/9;
-      }
+    /* Mobile responsiveness fixes */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero-video, .hero-side{ min-height: 360px; }
+      .cards{ grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Important: prevent overlay overlapping video on small screens */
+    @media (max-width: 560px){
+      .hero-video{ min-height: auto; }
       .hero-overlay{
-        position:static;
-        width:100%;
-        margin-top:0;
-        transform:none !important;
-        opacity:1 !important;
-        box-shadow:none;
+        position: static; /* key fix */
+        margin-top: 12px;
       }
-      .nav-links{display:none}
-    }
-
-    /* Mobile screens: 2 columns */
-    @media(max-width:640px){
-      body{padding:10px}
-      .grid{
-        grid-template-columns:repeat(2, 1fr);
-        gap:10px;
-      }
-      .card{border-radius:14px}
-      .tag{font-size:.65rem; padding:4px 8px; bottom:6px; right:6px}
-      html[dir="ltr"] .tag{left:6px; right:auto}
-      .content-section{padding:22px 16px}
-      .social-grid{grid-template-columns:1fr}
+      .hero-video{ border-radius: var(--radius); }
+      .cards{ grid-template-columns: 1fr; }
+      .nav-actions{ gap:8px; }
     }
   </style>
 </head>
 
-<body>
-  <!-- Ambient Video -->
-  <div class="ambient-bg">
-    <video autoplay loop muted playsinline src="main/background.mp4"></video>
-  </div>
+<body data-theme="dark">
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <div class="brand" role="banner" aria-label="Kayan Creative">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Kayan Creative</span>
+        </div>
 
-  <div class="container">
-    <!-- Navbar -->
-    <header class="nav glass" id="top">
-      <a class="brand" href="#top" aria-label="Home">
-        <img src="main/logo.png" alt="Kayan Creative Logo">
-        <span>Kayan Creative</span>
-      </a>
+        <div class="nav-actions">
+          <button class="btn small" id="btnHome" type="button" data-i18n="nav_home">خانه</button>
+          <button class="btn small" id="btnPortfolio" type="button" data-i18n="nav_portfolio">نمونه‌کارها</button>
 
-      <nav class="nav-links">
-        <a href="#portfolio" class="nav-link" data-i18n="navPortfolio">نمونه‌کارها</a>
-        <a href="#about" class="nav-link" data-i18n="navAbout">درباره ما</a>
-        <a href="#contact" class="nav-link" data-i18n="navContact">ارتباط با من</a>
-      </nav>
+          <button class="btn small ghost" id="toggleTheme" type="button" aria-label="Toggle theme">
+            <span data-i18n="nav_theme">شب/روز</span>
+          </button>
 
-      <div class="nav-actions">
-        <button class="chip" id="themeToggle" type="button" data-i18n="themeLabel">حالت روز/شب</button>
-        <select id="langSelect" aria-label="Language">
-          <option value="fa">فارسی</option>
-          <option value="en">English</option>
-          <option value="ar">العربية</option>
-        </select>
-      </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero glass">
-      <div class="hero-stage">
-        <video autoplay loop muted playsinline src="main/kayan.mp4"></video>
-      </div>
-
-      <div class="hero-overlay" id="heroOverlay">
-        <div class="kicker" data-i18n="heroKicker">سینماتوگرافی هوش مصنوعی / کارگردانی هنری</div>
-        <div class="h-title" data-i18n="heroTitle">خلق داستان‌های ماندگار با هوش مصنوعی و سینما</div>
-        <div class="h-desc" data-i18n="heroDesc">کارگردانی هنری تخصصی، تلفیق جلوه‌های ویژه، تصاویر هوایی و پروداکشن‌های سطح اول برای برندهای پیشرو.</div>
-
-        <div class="glass-soft" style="padding:12px 14px;">
-          <div style="font-weight:900; opacity:.85; font-size:.85rem; margin-bottom:6px;" data-i18n="autoTypeLabel">تمرکز تخصصی:</div>
-          <div class="autotype" id="autoType"></div>
+          <button class="btn small ghost" id="toggleLang" type="button" aria-label="Toggle language">
+            <span data-i18n="nav_lang">زبان</span>
+          </button>
         </div>
       </div>
-    </section>
-
-    <!-- Portfolio Filters & Grid -->
-    <section id="portfolio">
-      <div class="filters" id="filters">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="Corporate">Corporate</button>
-        <button class="filter-btn" data-filter="jewelry">Jewelry</button>
-        <button class="filter-btn" data-filter="cafe">Cafe</button>
-        <button class="filter-btn" data-filter="Medical">Medical</button>
-        <button class="filter-btn" data-filter="gym">Gym</button>
-      </div>
-
-      <!-- MAIN PORTFOLIO GRID WITH ALL 20 HARDCODED ITEMS -->
-      <main class="grid" id="grid" aria-label="Portfolio Grid">
-        
-        <!-- Corporate 01-11 -->
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate01.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="Corporate/Corporate01.mp4"></video>
-          <span class="tag">CORPORATE</span>
-        </div>
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate02.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="Corporate/Corporate02.mp4"></video>
-          <span class="tag">CORPORATE</span>
-        </div>
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate03.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="Corporate/Corporate03.mp4"></video>
-          <span class="tag">CORPORATE</span>
-        </div>
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate04.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="Corporate/Corporate04.mp4"></video>
-          <span class="tag">CORPORATE</span>
-        </div>
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate05.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="Corporate/Corporate05.mp4"></video>
-          <span class="tag">CORPORATE</span>
-        </div>
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate06.jpg" data-type="img">
-          <img loading="lazy" src="Corporate/Corporate06.jpg" alt="Corporate 06">
-          <span class="tag">CORPORATE</span>
-        </div>
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate07.jpg" data-type="img">
-          <img loading="lazy" src="Corporate/Corporate07.jpg" alt="Corporate 07">
-          <span class="tag">CORPORATE</span>
-        </div>
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate08.jpg" data-type="img">
-          <img loading="lazy" src="Corporate/Corporate08.jpg" alt="Corporate 08">
-          <span class="tag">CORPORATE</span>
-        </div>
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate09.jpg" data-type="img">
-          <img loading="lazy" src="Corporate/Corporate09.jpg" alt="Corporate 09">
-          <span class="tag">CORPORATE</span>
-        </div>
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate10.jpg" data-type="img">
-          <img loading="lazy" src="Corporate/Corporate10.jpg" alt="Corporate 10">
-          <span class="tag">CORPORATE</span>
-        </div>
-        <div class="card" data-category="Corporate" data-src="Corporate/Corporate11.jpg" data-type="img">
-          <img loading="lazy" src="Corporate/Corporate11.jpg" alt="Corporate 11">
-          <span class="tag">CORPORATE</span>
-        </div>
-
-        <!-- Jewelry 01-03 -->
-        <div class="card" data-category="jewelry" data-src="jewelry/jewelry01.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="jewelry/jewelry01.mp4"></video>
-          <span class="tag">JEWELRY</span>
-        </div>
-        <div class="card" data-category="jewelry" data-src="jewelry/jewelry02.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="jewelry/jewelry02.mp4"></video>
-          <span class="tag">JEWELRY</span>
-        </div>
-        <div class="card" data-category="jewelry" data-src="jewelry/jewelry03.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="jewelry/jewelry03.mp4"></video>
-          <span class="tag">JEWELRY</span>
-        </div>
-
-        <!-- Cafe 01-03 -->
-        <div class="card" data-category="cafe" data-src="cafe/cafe01.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="cafe/cafe01.mp4"></video>
-          <span class="tag">CAFE</span>
-        </div>
-        <div class="card" data-category="cafe" data-src="cafe/cafe02.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="cafe/cafe02.mp4"></video>
-          <span class="tag">CAFE</span>
-        </div>
-        <div class="card" data-category="cafe" data-src="cafe/cafe03.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="cafe/cafe03.mp4"></video>
-          <span class="tag">CAFE</span>
-        </div>
-
-        <!-- Medical 01-02 -->
-        <div class="card" data-category="Medical" data-src="Medical/Medical 01.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="Medical/Medical 01.mp4"></video>
-          <span class="tag">MEDICAL</span>
-        </div>
-        <div class="card" data-category="Medical" data-src="Medical/Medical 02.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="Medical/Medical 02.mp4"></video>
-          <span class="tag">MEDICAL</span>
-        </div>
-
-        <!-- Gym 01 -->
-        <div class="card" data-category="gym" data-src="gym.mp4" data-type="video">
-          <video muted loop playsinline preload="metadata" src="gym.mp4"></video>
-          <span class="tag">GYM</span>
-        </div>
-
-      </main>
-    </section>
-
-    <!-- About Section -->
-    <section class="content-section glass" id="about">
-      <div class="section-header">
-        <span class="section-tag" data-i18n="aboutTag">درباره استودیو</span>
-        <h2 class="section-title" data-i18n="aboutTitle">داستان، تکنولوژی و ظرافت سینمایی</h2>
-      </div>
-      <div class="section-body" data-i18n="aboutContent">
-        ما در کایان کریتیو (Kayan Creative)، مرز بین واقعیت فیزیکی و تخیل بصری را از بین برده‌ایم. با تکیه بر سال‌ها تجربه در تدوین استراتژیک، تصویربرداری سینمایی و پیشرفته‌ترین متدهای تلفیقی هوش مصنوعی (AI Cinematography)، کانسپت‌های انتزاعی برندها را تبدیل به تجربه‌ای بصری، اثرگذار و در کلاس جهانی می‌کنیم. از خطوط تولید مدرن صنعتی تا لوکس‌ترین جزئیات تجاری، هدف ما تزریق روح سینما به بدنه تبلیغات معاصر است.
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="content-section glass" id="contact">
-      <div class="section-header">
-        <span class="section-tag" data-i18n="contactTag">ارتباط مستقیم</span>
-        <h2 class="section-title" data-i18n="contactTitle">شروع یک همکاری متمایز</h2>
-      </div>
-      <p class="section-body" data-i18n="contactDesc">برای مشاوره هنری، سفارش پروژه‌های سینمایی و برندینگ هوش مصنوعی از طریق درگاه‌های مستقیم زیر در ارتباط باشید:</p>
-      
-      <div class="social-grid">
-        <!-- Telegram -->
-        <a href="https://t.me/danialkayan" target="_blank" rel="noopener noreferrer" class="social-card">
-          <div class="social-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
-            </svg>
-          </div>
-          <div class="social-info">
-            <h4 data-i18n="tgTitle">تلگرام</h4>
-            <span>@danialkayan</span>
-          </div>
-        </a>
-
-        <!-- Instagram -->
-        <a href="https://instagram.com/danialkayan" target="_blank" rel="noopener noreferrer" class="social-card">
-          <div class="social-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-            </svg>
-          </div>
-          <div class="social-info">
-            <h4 data-i18n="igTitle">اینستاگرام</h4>
-            <span>@danialkayan</span>
-          </div>
-        </a>
-
-        <!-- LinkedIn -->
-        <a href="https://linkedin.com/in/danialkayan" target="_blank" rel="noopener noreferrer" class="social-card">
-          <div class="social-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-            </svg>
-          </div>
-          <div class="social-info">
-            <h4 data-i18n="liTitle">لینکدین</h4>
-            <span>Danial Kayan</span>
-          </div>
-        </a>
-      </div>
-    </section>
-  </div>
-
-  <!-- Modal Viewport -->
-  <div class="modal" id="modal" role="dialog" aria-modal="true">
-    <div class="modal-box">
-      <button class="close" id="modalClose" aria-label="Close">✕</button>
-      <div id="modalTarget"></div>
     </div>
-  </div>
+  </header>
+
+  <!-- HERO -->
+  <main class="hero">
+    <div class="container">
+      <div id="homeView">
+        <div class="hero-grid">
+          <div class="hero-video">
+            <video autoplay muted loop playsinline>
+              <!-- جایگزین کن با ویدئوی خودت -->
+              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
+            </video>
+
+            <div class="hero-overlay">
+              <div class="typewrap">
+                <div class="type-title" data-i18n="hero_type_title">در حال ساخت:</div>
+                <div class="typewriter" id="typewriter" aria-live="polite"></div>
+              </div>
+              <p style="margin-top:10px" data-i18n="hero_sub">
+                کارگردانی خلاق، سینماتوگرافی AI و روایت بصری برای برندها و کسب‌وکارها.
+              </p>
+            </div>
+          </div>
+
+          <aside class="hero-side">
+            <div>
+              <h1 data-i18n="hero_title">AI Cinematography & Creative Direction</h1>
+              <p data-i18n="hero_desc">
+                از ایده تا خروجی نهایی: کانسپت، استوری، تولید محتوای تبلیغاتی، ویدئو، و پکیج شبکه‌های اجتماعی.
+              </p>
+
+              <div class="pillrow" aria-label="Capabilities">
+                <span class="pill">AI Video</span>
+                <span class="pill">Compositing</span>
+                <span class="pill">Brand Story</span>
+                <span class="pill">Ads</span>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+              <a class="btn" href="https://t.me/danialkayan" target="_blank" rel="noopener">Telegram</a>
+              <a class="btn" href="https://instagram.com/danialkayan" target="_blank" rel="noopener">Instagram</a>
+              <a class="btn" href="https://linkedin.com/in/danialkayan" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </aside>
+        </div>
+
+        <section class="section">
+          <h2 data-i18n="about_title">درباره ما</h2>
+          <div class="card">
+            <p data-i18n="about_text">
+              Kayan Creative یک تیم چابک برای تولید محتوای تبلیغاتی و سینمایی با تمرکز بر AI است؛ از ایده‌پردازی تا اجرای دقیق.
+            </p>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 data-i18n="contact_title">ارتباط</h2>
+          <div class="cards">
+            <div class="card">
+              <strong>Telegram</strong>
+              <p style="margin-top:8px"><a href="https://t.me/danialkayan" target="_blank" rel="noopener">@danialkayan</a></p>
+            </div>
+            <div class="card">
+              <strong>Instagram</strong>
+              <p style="margin-top:8px"><a href="https://instagram.com/danialkayan" target="_blank" rel="noopener">@danialkayan</a></p>
+            </div>
+            <div class="card">
+              <strong>LinkedIn</strong>
+              <p style="margin-top:8px"><a href="https://linkedin.com/in/danialkayan" target="_blank" rel="noopener">/in/danialkayan</a></p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- PORTFOLIO VIEW (loaded dynamically; no new tab) -->
+      <div id="portfolioView" style="display:none;">
+        <section class="section">
+          <div class="page-shell">
+            <div class="page-shell-header">
+              <div style="font-weight:800" data-i18n="portfolio_title">نمونه‌کارها</div>
+              <button class="btn small" id="btnBack" type="button" data-i18n="btn_back">بازگشت</button>
+            </div>
+            <div class="page-shell-body" id="portfolioMount">
+              <!-- portfolio.html injects here -->
+              <div class="card" style="box-shadow:none;" data-i18n="loading">در حال بارگذاری...</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    </div>
+  </main>
 
   <script>
-    /* =========================
-       i18n Dictionary
-       ========================= */
+    /* ---------------------------
+      i18n dictionaries
+    ----------------------------*/
     const I18N = {
       fa: {
-        dir: 'rtl',
-        themeLabel: 'حالت روز/شب',
-        navPortfolio: 'نمونه‌کارها',
-        navAbout: 'درباره ما',
-        navContact: 'ارتباط با من',
-        heroKicker: 'سینماتوگرافی هوش مصنوعی / کارگردانی هنری',
-        heroTitle: 'خلق داستان‌های ماندگار با هوش مصنوعی و سینما',
-        heroDesc: 'کارگردانی هنری تخصصی، تلفیق جلوه‌های ویژه، تصاویر هوایی و پروداکشن‌های سطح اول برای برندهای پیشرو.',
-        autoTypeLabel: 'تمرکز تخصصی:',
-        typeLines: [
-          'کارگردانی هنری (Creative Direction)',
-          'سینماتوگرافی و روایت تبلیغاتی',
-          'AI Rendering / Compositing',
-          'VFX / 3D / Motion Design'
-        ],
-        aboutTag: 'درباره استودیو',
-        aboutTitle: 'داستان، تکنولوژی و ظرافت سینمایی',
-        aboutContent: 'ما در کایان کریتیو (Kayan Creative)، مرز بین واقعیت فیزیکی و تخیل بصری را از بین برده‌ایم. با تکیه بر سال‌ها تجربه در تدوین استراتژیک، تصویربرداری سینمایی و پیشرفته‌ترین متدهای تلفیقی هوش مصنوعی (AI Cinematography)، کانسپت‌های انتزاعی برندها را تبدیل به تجربه‌ای بصری، اثرگذار و در کلاس جهانی می‌کنیم. از خطوط تولید مدرن صنعتی تا لوکس‌ترین جزئیات تجاری، هدف ما تزریق روح سینما به بدنه تبلیغات معاصر است.',
-        contactTag: 'ارتباط مستقیم',
-        contactTitle: 'شروع یک همکاری متمایز',
-        contactDesc: 'برای مشاوره هنری، سفارش پروژه‌های سینمایی و برندینگ هوش مصنوعی از طریق درگاه‌های مستقیم زیر در ارتباط باشید:',
-        tgTitle: 'تلگرام',
-        igTitle: 'اینستاگرام',
-        liTitle: 'لینکدین'
+        nav_home: "خانه",
+        nav_portfolio: "نمونه‌کارها",
+        nav_theme: "شب/روز",
+        nav_lang: "زبان",
+        hero_type_title: "در حال ساخت:",
+        hero_sub: "کارگردانی خلاق، سینماتوگرافی AI و روایت بصری برای برندها و کسب‌وکارها.",
+        hero_title: "AI Cinematography & Creative Direction",
+        hero_desc: "از ایده تا خروجی نهایی: کانسپت، استوری، تولید محتوای تبلیغاتی، ویدئو، و پکیج شبکه‌های اجتماعی.",
+        about_title: "درباره ما",
+        about_text: "Kayan Creative یک تیم چابک برای تولید محتوای تبلیغاتی و سینمایی با تمرکز بر AI است؛ از ایده‌پردازی تا اجرای دقیق.",
+        contact_title: "ارتباط",
+        portfolio_title: "نمونه‌کارها",
+        btn_back: "بازگشت",
+        loading: "در حال بارگذاری..."
       },
       en: {
-        dir: 'ltr',
-        themeLabel: 'Theme',
-        navPortfolio: 'Portfolio',
-        navAbout: 'About Us',
-        navContact: 'Contact',
-        heroKicker: 'AI CINEMATOGRAPHY / CREATIVE DIRECTION',
-        heroTitle: 'Crafting Cinematic Realism Powered by AI',
-        heroDesc: 'High-end creative direction, aerial cinematography, and AI-driven pipelines for modern brands.',
-        autoTypeLabel: 'Specialization:',
-        typeLines: [
-          'Creative Direction & Visual Identity',
-          'Cinematic Commercial Storytelling',
-          'AI Compositing & Rendering',
-          'VFX / 3D / Motion Design'
-        ],
-        aboutTag: 'ABOUT STUDIO',
-        aboutTitle: 'Story, Technology & Cinematic Precision',
-        aboutContent: 'At Kayan Creative, we blur the line between physical reality and visual imagination. Leveraging years of deep expertise in commercial editing, aerial cinematography, and state-of-the-art AI generation pipelines, we transform abstract brand identities into high-impact, global-standard visual narratives.',
-        contactTag: 'GET IN TOUCH',
-        contactTitle: 'Let’s Create Something Iconic',
-        contactDesc: 'Available for creative direction, cinematic commercials, and AI production pipelines via direct channels:',
-        tgTitle: 'Telegram',
-        igTitle: 'Instagram',
-        liTitle: 'LinkedIn'
+        nav_home: "Home",
+        nav_portfolio: "Portfolio",
+        nav_theme: "Theme",
+        nav_lang: "Language",
+        hero_type_title: "Building:",
+        hero_sub: "Creative direction, AI cinematography, and visual storytelling for brands.",
+        hero_title: "AI Cinematography & Creative Direction",
+        hero_desc: "From concept to delivery: scripts, ads, video production, and social media packs.",
+        about_title: "About Us",
+        about_text: "Kayan Creative is a nimble team focused on AI-powered cinematic advertising—from ideation to execution.",
+        contact_title: "Contact",
+        portfolio_title: "Portfolio",
+        btn_back: "Back",
+        loading: "Loading..."
       },
       ar: {
-        dir: 'rtl',
-        themeLabel: 'المظهر',
-        navPortfolio: 'الأعمال',
-        navAbout: 'من نحن',
-        navContact: 'تواصل معي',
-        heroKicker: 'تصوير سينمائي بالذكاء الاصطناعي / إخراج إبداعي',
-        heroTitle: 'صناعة الإبهار البصري بالذكاء الاصطناعي والسینما',
-        heroDesc: 'إخراج بصري متقدم، تصوير جوي، وأنظمة إنتاج ذكية لصناعة محتوى احترافي للعلامات التجارية.',
-        autoTypeLabel: 'مجال التركيز:',
-        typeLines: [
-          'إخراج إبداعي وهوية بصرية',
-          'سرد إعلاني سينمائي',
-          'دمج ورندر بالذكاء الاصطناعي',
-          'مؤثرات بصرية / ثلاثي الأبعاد / موشن'
-        ],
-        aboutTag: 'عن الاستوديو',
-        aboutTitle: 'القصة، التكنولوجيا والدقة السينمائية',
-        aboutContent: 'في كايان كرييتف (Kayan Creative)، نمزج بين الواقع والابتكار الرقمي. بالاعتماد على خبرتنا في المونتاج السينمائي وتقنيات الذكاء الاصطناعي الحديثة، نحول الأفكار المعقدة إلى أعمال بصرية ملهمة ذات طابع سينمائي عالمي.',
-        contactTag: 'تواصل مباشر',
-        contactTitle: 'لنبدأ التعاون الإبداعي',
-        contactDesc: 'للاستشارات الفنية وإنتاج الإعلانات السينمائية والذكاء الاصطناعي، تواصل عبر القنوات التالية:',
-        tgTitle: 'تيليجرام',
-        igTitle: 'إنستغرام',
-        liTitle: 'لينكد إن'
+        nav_home: "الرئيسية",
+        nav_portfolio: "الأعمال",
+        nav_theme: "المظهر",
+        nav_lang: "اللغة",
+        hero_type_title: "قيد الإنشاء:",
+        hero_sub: "إخراج إبداعي وتصوير سينمائي بالذكاء الاصطناعي وسرد بصري للعلامات التجارية.",
+        hero_title: "تصوير سينمائي بالذكاء الاصطناعي وإخراج إبداعي",
+        hero_desc: "من الفكرة إلى التسليم: سكربت، إعلانات، إنتاج فيديو، وباقات السوشيال.",
+        about_title: "من نحن",
+        about_text: "Kayan Creative فريق مرن لصناعة محتوى سينمائي وإعلاني مدعوم بالذكاء الاصطناعي.",
+        contact_title: "تواصل",
+        portfolio_title: "الأعمال",
+        btn_back: "رجوع",
+        loading: "جار التحميل..."
       }
     };
 
-    /* ===
+    const LANGS = ["fa","en","ar"];
+    const RTL_LANGS = new Set(["fa","ar"]);
+
+    function getState(){
+      return {
+        theme: localStorage.getItem("kc_theme") || "dark",
+        lang: localStorage.getItem("kc_lang") || "fa",
+      };
+    }
+    function setTheme(theme){
+      document.body.setAttribute("data-theme", theme);
+      localStorage.setItem("kc_theme", theme);
+    }
+    function setLang(lang){
+      document.documentElement.lang = lang;
+      document.documentElement.dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
+      localStorage.setItem("kc_lang", lang);
+      applyI18n();
+      // also notify injected portfolio page to re-translate if needed
+      document.dispatchEvent(new CustomEvent("kc:lang", { detail: { lang } }));
+    }
+    function applyI18n(){
+      const { lang } = getState();
+      const dict = I18N[lang] || I18N.fa;
+      document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const key = el.getAttribute("data-i18n");
+        if(dict[key]) el.textContent = dict[key];
+      });
+    }
+
+    /* ---------------------------
+      SPA navigation (no new tab)
+    ----------------------------*/
+    const homeView = document.getElementById("homeView");
+    const portfolioView = document.getElementById("portfolioView");
+    const portfolioMount = document.getElementById("portfolioMount");
+
+    async function openPortfolio(){
+      homeView.style.display = "none";
+      portfolioView.style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // load once, then keep DOM (so filters remain fast)
+      if(!portfolioMount.dataset.loaded){
+        const res = await fetch("./portfolio.html", { cache: "no-store" });
+        const html = await res.text();
+        portfolioMount.innerHTML = html;
+        portfolioMount.dataset.loaded = "1";
+
+        // init portfolio scripts that are embedded inside portfolio.html
+        // (they will run because we inject as HTML; but if script tags don't execute in some browsers,
+        // we include a small executor below:)
+        executeInjectedScripts(portfolioMount);
+      }
+
+      // re-apply i18n after mount
+      applyI18n();
+      document.dispatchEvent(new CustomEvent("kc:theme", { detail: { theme: getState().theme } }));
+      document.dispatchEvent(new CustomEvent("kc:lang", { detail: { lang: getState().lang } }));
+    }
+
+    function openHome(){
+      portfolioView.style.display = "none";
+      homeView.style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ensures inline scripts inside injected HTML execute
+    function executeInjectedScripts(root){
+      const scripts = Array.from(root.querySelectorAll("script"));
+      scripts.forEach(old=>{
+        const s = document.createElement("script");
+        if(old.type) s.type = old.type;
+        s.textContent = old.textContent;
+        old.replaceWith(s);
+      });
+    }
+
+    /* ---------------------------
+      Typewriter (always writing)
+    ----------------------------*/
+    const typeEl = document.getElementById("typewriter");
+    const TYPE_LINES = {
+      fa: ["تیزر تبلیغاتی", "ویدئوی محصول", "استوری اینستاگرام", "کمپین برندینگ", "AI Cinematic Shot"],
+      en: ["Ad teaser", "Product video", "Instagram story", "Brand campaign", "AI cinematic shot"],
+      ar: ["إعلان تشويقي", "فيديو منتج", "ستوري إنستغرام", "حملة علامة", "لقطة سينمائية بالذكاء"]
+    };
+
+    let tw = { lineIndex:0, charIndex:0, deleting:false, lastTs:0 };
+
+    function typewriterTick(ts){
+      const { lang } = getState();
+      const lines = TYPE_LINES[lang] || TYPE_LINES.fa;
+
+      const speedType = 32;
+      const speedDelete = 18;
+      const pauseAfterType = 900;
+      const pauseAfterDelete = 250;
+
+      if(!tw.lastTs) tw.lastTs = ts;
+      const dt = ts - tw.lastTs;
+
+      const full = lines[tw.lineIndex % lines.length];
+      let text = full.slice(0, tw.charIndex);
+
+      typeEl.textContent = text + (Math.floor(ts/500)%2 ? "▍" : "");
+
+      let step = tw.deleting ? speedDelete : speedType;
+      if(dt < step) return requestAnimationFrame(typewriterTick);
+      tw.lastTs = ts;
+
+      if(!tw.deleting){
+        if(tw.charIndex < full.length){
+          tw.charIndex++;
+        }else{
+          // pause then delete
+          tw.deleting = true;
+          tw.lastTs = ts + pauseAfterType;
+        }
+      }else{
+        if(tw.charIndex > 0){
+          tw.charIndex--;
+        }else{
+          tw.deleting = false;
+          tw.lineIndex++;
+          tw.lastTs = ts + pauseAfterDelete;
+        }
+      }
+      requestAnimationFrame(typewriterTick);
+    }
+
+    /* ---------------------------
+      Wire up UI
+    ----------------------------*/
+    document.getElementById("btnPortfolio").addEventListener("click", openPortfolio);
+    document.getElementById("btnHome").addEventListener("click", openHome);
+    document.getElementById("btnBack").addEventListener("click", openHome);
+
+    document.getElementById("toggleTheme").addEventListener("click", ()=>{
+      const { theme } = getState();
+      const next = theme === "dark" ? "light" : "dark";
+      setTheme(next);
+      document.dispatchEvent(new CustomEvent("kc:theme", { detail: { theme: next } }));
+    });
+
+    document.getElementById("toggleLang").addEventListener("click", ()=>{
+      const { lang } = getState();
+      const idx = LANGS.indexOf(lang);
+      const next = LANGS[(idx + 1) % LANGS.length];
+      setLang(next);
+    });
+
+    // init
+    (function init(){
+      const st = getState();
+      setTheme(st.theme);
+      setLang(st.lang);
+      applyI18n();
+      requestAnimationFrame(typewriterTick);
+    })();
+  </script>
+</body>
+</html>
