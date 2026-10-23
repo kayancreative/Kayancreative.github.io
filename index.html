@@ -1,47 +1,643 @@
-<!-- در انتهای فایل index.html قبل از بسته شدن </body> -->
-<script src="portfolio-data.js"></script>
-<script>
-  function renderPortfolio(filter = 'all') {
-    const gridContainer = document.getElementById('grid');
-    if (!gridContainer || !window.PORTFOLIO_ITEMS) return;
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kayan Creative • کارگردانی هنری و سینماتوگرافی هوش مصنوعی</title>
+  <meta name="description" content="Kayan Creative — Creative Direction, AI Cinematography, and High-End Commercial Visuals.">
 
-    gridContainer.innerHTML = '';
+  <!-- Icon / SEO / PWA basic -->
+  <meta name="theme-color" content="#0a0b0e">
+  <link rel="icon" type="image/png" href="main/logo.png">
+  <link rel="apple-touch-icon" href="main/logo.png">
+  <meta property="og:image" content="main/logo.png">
 
-    const filtered = filter === 'all' 
-      ? window.PORTFOLIO_ITEMS 
-      : window.PORTFOLIO_ITEMS.filter(item => item.category === filter);
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-    filtered.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.setAttribute('data-category', item.category);
+  <style>
+    :root{
+      --bg:#090a0f;
+      --text:#fff;
+      --muted:#9aa1b0;
+      --accent:#ff5429;
+      --accent2:#ff6a42;
+      --border:rgba(255,255,255,.14);
+      --glass:rgba(18,20,28,.44);
+      --blur:blur(20px);
+      --radius:24px;
+      --font-en:'Plus Jakarta Sans',sans-serif;
+      --font-fa:'Vazirmatn',sans-serif;
+    }
+    [data-theme="light"]{
+      --bg:#f5f6fa;
+      --text:#0e1017;
+      --muted:#586074;
+      --border:rgba(0,0,0,.09);
+      --glass:rgba(255,255,255,.6);
+    }
 
-      card.innerHTML = `
-        <div class="card-media">
-          ${item.type === 'video' 
-            ? `<video src="${item.src}" poster="${item.poster || ''}" muted loop playsinline></video>`
-            : `<img src="${item.src}" alt="${item.title}" loading="lazy" />`
-          }
-          <span class="badge">${item.tag}</span>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:var(--font-fa);
+      padding:16px;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
+    html[lang="en"] body{font-family:var(--font-en)}
+    .container{max-width:1240px;margin:0 auto}
+
+    /* Ambient background */
+    .ambient-bg{
+      position:fixed; inset:0; z-index:-2; pointer-events:none; overflow:hidden;
+    }
+    .ambient-bg video{
+      width:100%; height:100%; object-fit:cover;
+      opacity:.16; filter:saturate(1.15) contrast(1.1);
+    }
+    [data-theme="light"] .ambient-bg video{opacity:.07}
+
+    /* glass system */
+    .glass{
+      background:var(--glass);
+      backdrop-filter:var(--blur);
+      -webkit-backdrop-filter:var(--blur);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:0 18px 50px rgba(0,0,0,.28);
+    }
+    .glass-soft{
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.16);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      border-radius:18px;
+    }
+    [data-theme="light"] .glass-soft{
+      background:rgba(0,0,0,.03);
+      border-color:rgba(0,0,0,.08);
+    }
+
+    /* navbar */
+    header.nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 24px; margin-bottom:18px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none; color:var(--text);
+      font-weight:900; letter-spacing:-.3px;
+    }
+    .brand img{
+      width:42px;height:42px;border-radius:14px;object-fit:cover;
+      box-shadow:0 10px 25px rgba(0,0,0,.35);
+    }
+
+    .nav-actions{display:flex; align-items:center; gap:10px}
+    .chip, select{
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:8px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      font:inherit;
+      font-size:.88rem;
+      transition:transform .22s ease, background .22s ease, border-color .22s ease;
+      will-change:transform;
+      user-select:none;
+    }
+    [data-theme="light"] .chip,[data-theme="light"] select{background:rgba(0,0,0,.04)}
+    .chip:hover, select:hover{
+      background:rgba(255,84,41,.18);
+      border-color:rgba(255,84,41,.45);
+      transform:translateY(-2px);
+    }
+
+    /* hero cinematic */
+    .hero{padding:12px;margin-bottom:18px}
+    .hero-stage{
+      position:relative;
+      width:100%;
+      aspect-ratio:16/9;
+      border-radius:calc(var(--radius) - 6px);
+      overflow:hidden;
+      background:#000;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:0 22px 60px rgba(0,0,0,.55);
+    }
+    .hero-stage video{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* glass morph title box (right side - flips by dir) */
+    .hero-overlay{
+      position:absolute;
+      top:18px;
+      right:18px;
+      width:min(480px, calc(100% - 36px));
+      padding:18px;
+      border-radius:20px;
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      background:rgba(10,10,14,.38);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 18px 40px rgba(0,0,0,.35);
+      transition:transform .2s ease, opacity .2s ease;
+      will-change:transform;
+    }
+    html[dir="ltr"] .hero-overlay{left:18px; right:auto}
+
+    .kicker{
+      opacity:.78;
+      font-weight:800;
+      letter-spacing:.6px;
+      font-size:.78rem;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .h-title{
+      font-weight:900;
+      line-height:1.25;
+      letter-spacing:-.4px;
+      font-size:clamp(1.25rem, 2.4vw, 2.1rem);
+      margin-bottom:10px;
+    }
+    .h-desc{opacity:.82; font-size:.98rem; line-height:1.75; margin-bottom:12px}
+
+    /* autotype */
+    .autotype{
+      font-weight:900;
+      display:inline-block;
+      min-height:1.3em;
+      white-space:nowrap;
+      border-left:2px solid rgba(255,255,255,.75);
+      padding-left:10px;
+    }
+    html[dir="rtl"] .autotype{
+      border-left:none;
+      border-right:2px solid rgba(255,255,255,.75);
+      padding-left:0; padding-right:10px;
+    }
+
+    /* Filters & grid (keep vertical 9:16) */
+    .filters{display:flex; gap:10px; overflow-x:auto; padding:8px 2px 16px; scrollbar-width:none}
+    .filters::-webkit-scrollbar{display:none}
+    .filter-btn{
+      padding:10px 20px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.06);
+      color:var(--muted);
+      font-weight:900;
+      cursor:pointer;
+      transition:transform .22s ease, background .22s ease, border-color .22s ease;
+      will-change:transform;
+      white-space:nowrap;
+    }
+    [data-theme="light"] .filter-btn{background:rgba(0,0,0,.04)}
+    .filter-btn:hover{transform:translateY(-2px)}
+    .filter-btn.active,.filter-btn:hover{
+      background:rgba(255,84,41,.14);
+      border-color:rgba(255,84,41,.55);
+      color:#fff;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+      gap:20px;
+      margin-bottom:56px;
+    }
+    .card{
+      position:relative;
+      aspect-ratio:9/16;
+      border-radius:20px;
+      overflow:hidden;
+      cursor:pointer;
+      border:1px solid var(--border);
+      background:#0c0e14;
+      transition:transform .32s ease, border-color .32s ease, box-shadow .32s ease;
+      will-change:transform;
+    }
+    .card:hover{
+      transform:translateY(-6px);
+      border-color:rgba(255,84,41,.55);
+      box-shadow:0 18px 38px rgba(0,0,0,.55);
+    }
+    .card video,.card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease}
+    .card:hover video,.card:hover img{transform:scale(1.035)}
+    .tag{
+      position:absolute;
+      bottom:12px;
+      left:12px;
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:900;
+      color:#fff;
+      background:rgba(0,0,0,.62);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+    html[dir="rtl"] .tag{left:auto; right:12px}
+
+    /* modal */
+    .modal{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.92);
+      backdrop-filter:blur(18px);
+      z-index:1000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+    .modal.active{display:flex}
+    .modal-box{
+      position:relative;
+      max-width:520px;
+      width:100%;
+      border-radius:22px;
+      overflow:hidden;
+      background:#000;
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 30px 75px rgba(0,0,0,.85);
+    }
+    .modal-box video,.modal-box img{width:100%;max-height:86vh;object-fit:contain;display:block}
+    .close{
+      position:absolute; top:14px; right:14px;
+      width:42px;height:42px;border-radius:50%;
+      background:rgba(0,0,0,.65);
+      color:#fff;border:1px solid rgba(255,255,255,.10);
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:transform .2s ease, background .2s ease;
+      will-change:transform;
+      z-index:10;
+    }
+    .close:hover{background:rgba(255,84,41,.18); transform:translateY(-2px)}
+
+    @media(max-width:900px){
+      .grid{grid-template-columns:repeat(2,1fr);gap:14px}
+    }
+    @media(max-width:520px){
+      .grid{grid-template-columns:1fr}
+      .hero-overlay{top:12px; left:12px; right:12px; width:auto}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background video -->
+  <div class="ambient-bg">
+    <video autoplay loop muted playsinline src="main/background.mp4"></video>
+  </div>
+
+  <div class="container">
+    <header class="nav glass" id="top">
+      <a class="brand" href="#top" aria-label="Home">
+        <img src="main/logo.png" alt="Kayan Creative Logo">
+        <span>Kayan Creative</span>
+      </a>
+
+      <div class="nav-actions">
+        <button class="chip" id="themeToggle" type="button" data-i18n="themeLabel">حالت روز/شب</button>
+        <select id="langSelect" aria-label="Language">
+          <option value="fa">فارسی</option>
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero glass">
+      <div class="hero-stage">
+        <video autoplay loop muted playsinline src="main/kayan.mp4"></video>
+
+        <div class="hero-overlay" id="heroOverlay">
+          <div class="kicker" data-i18n="heroKicker">سینماتوگرافی هوش مصنوعی / کارگردانی هنری</div>
+          <div class="h-title" data-i18n="heroTitle">خلق داستان‌های ماندگار با هوش مصنوعی و سینما</div>
+          <div class="h-desc" data-i18n="heroDesc">کارگردانی هنری تخصصی، تلفیق جلوه‌های ویژه، تصاویر هوایی و پروداکشن‌های سطح اول برای برندهای پیشرو.</div>
+
+          <div class="glass-soft" style="padding:12px 14px;">
+            <div style="font-weight:900; opacity:.85; margin-bottom:6px;" data-i18n="autoTypeLabel">تمرکز تخصصی:</div>
+            <div class="autotype" id="autoType"></div>
+          </div>
         </div>
-        <div class="card-meta">
-          <h3 class="card-title">${item.title}</h3>
-        </div>
-      `;
+      </div>
+    </section>
 
-      // کنترل هوشمند پخش ویدیو در موبایل/هاور
-      const video = card.querySelector('video');
-      if (video) {
-        card.addEventListener('mouseenter', () => video.play().catch(() => {}));
-        card.addEventListener('mouseleave', () => video.pause());
+    <!-- Filters -->
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="Corporate">Corporate</button>
+      <button class="filter-btn" data-filter="jewelry">Jewelry</button>
+      <button class="filter-btn" data-filter="cafe">Cafe</button>
+      <button class="filter-btn" data-filter="Medical">Medical</button>
+      <button class="filter-btn" data-filter="gym">Gym</button>
+    </div>
+
+    <main class="grid" id="grid" aria-label="Portfolio Grid"></main>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button class="close" id="modalClose" aria-label="Close">✕</button>
+      <div id="modalTarget"></div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================
+       FILES (fixed exactly)
+       ========================= */
+    const ITEMS = [
+      // Corporate
+      { category: 'Corporate', src: 'Corporate/Corporate01.mp4', title: 'Corporate 01' },
+      { category: 'Corporate', src: 'Corporate/Corporate02.mp4', title: 'Corporate 02' },
+      { category: 'Corporate', src: 'Corporate/Corporate03.mp4', title: 'Corporate 03' },
+      { category: 'Corporate', src: 'Corporate/Corporate04.mp4', title: 'Corporate 04' },
+      { category: 'Corporate', src: 'Corporate/Corporate05.mp4', title: 'Corporate 05' },
+      { category: 'Corporate', src: 'Corporate/Corporate06.jpg', title: 'Corporate 06' },
+      { category: 'Corporate', src: 'Corporate/Corporate07.jpg', title: 'Corporate 07' },
+      { category: 'Corporate', src: 'Corporate/Corporate08.jpg', title: 'Corporate 08' },
+      { category: 'Corporate', src: 'Corporate/Corporate09.jpg', title: 'Corporate 09' },
+      { category: 'Corporate', src: 'Corporate/Corporate10.jpg', title: 'Corporate 10' },
+      { category: 'Corporate', src: 'Corporate/Corporate11.jpg', title: 'Corporate 11' },
+
+      // jewelry (as requested)
+      { category: 'jewelry', src: 'jewelry/jewelry01.mp4', title: 'Jewelry 01' },
+      { category: 'jewelry', src: 'jewelry/jewelry02.mp4', title: 'Jewelry 02' },
+      { category: 'jewelry', src: 'jewelry/jewelry03.mp4', title: 'Jewelry 03' },
+
+      // cafe (as requested)
+      { category: 'cafe', src: 'cafe/cafe01.mp4', title: 'Cafe 01' },
+      { category: 'cafe', src: 'cafe/cafe02.mp4', title: 'Cafe 02' },
+      { category: 'cafe', src: 'cafe/cafe03.mp4', title: 'Cafe 03' },
+
+      // Medical (spaces preserved exactly)
+      { category: 'Medical', src: 'Medical/Medical 01.mp4', title: 'Medical 01' },
+      { category: 'Medical', src: 'Medical/Medical 02.mp4', title: 'Medical 02' },
+
+      // gym
+      { category: 'gym', src: 'gym.mp4', title: 'Gym' }
+    ];
+
+    /* =========================
+       i18n (hero text + autotype)
+       ========================= */
+    const I18N = {
+      fa: {
+        dir: 'rtl',
+        themeLabel: 'حالت روز/شب',
+        heroKicker: 'سینماتوگرافی هوش مصنوعی / کارگردانی هنری',
+        heroTitle: 'خلق داستان‌های ماندگار با هوش مصنوعی و سینما',
+        heroDesc: 'کارگردانی هنری تخصصی، تلفیق جلوه‌های ویژه، تصاویر هوایی و پروداکشن‌های سطح اول برای برندهای پیشرو.',
+        autoTypeLabel: 'تمرکز تخصصی:',
+        typeLines: [
+          'کارگردانی هنری (Creative Direction)',
+          'سینماتوگرافی و روایت تبلیغاتی',
+          'AI Rendering / Compositing',
+          'VFX / 3D / Motion Design'
+        ]
+      },
+      en: {
+        dir: 'ltr',
+        themeLabel: 'Theme',
+        heroKicker: 'AI CINEMATOGRAPHY / CREATIVE DIRECTION',
+        heroTitle: 'Crafting Cinematic Realism Powered by AI',
+        heroDesc: 'High-end creative direction, aerial cinematography, and AI-driven pipelines for modern brands.',
+        autoTypeLabel: 'Specialization:',
+        typeLines: [
+          'Creative Direction & Visual Identity',
+          'Cinematic Commercial Storytelling',
+          'AI Compositing & Rendering',
+          'VFX / 3D / Motion Design'
+        ]
+      },
+      ar: {
+        dir: 'rtl',
+        themeLabel: 'المظهر',
+        heroKicker: 'تصوير سينمائي بالذكاء الاصطناعي / إخراج إبداعي',
+        heroTitle: 'صناعة الإبهار البصري بالذكاء الاصطناعي والسينما',
+        heroDesc: 'إخراج بصري متقدم، تصوير جوي، وأنظمة إنتاج ذكية لصناعة محتوى احترافي للعلامات التجارية.',
+        autoTypeLabel: 'مجال التركيز:',
+        typeLines: [
+          'إخراج إبداعي وهوية بصرية',
+          'سرد إعلاني سينمائي',
+          'دمج ورندر بالذكاء الاصطناعي',
+          'مؤثرات بصرية / ثلاثي الأبعاد / موشن'
+        ]
       }
+    };
 
-      gridContainer.appendChild(card);
+    /* =========================
+       Render grid + hover play
+       ========================= */
+    const grid = document.getElementById('grid');
+
+    function renderGallery(filter='all'){
+      grid.innerHTML='';
+      const list = filter==='all' ? ITEMS : ITEMS.filter(x => x.category===filter);
+
+      list.forEach(item=>{
+        const card=document.createElement('div');
+        card.className='card';
+
+        const isVideo = item.src.toLowerCase().endsWith('.mp4') || item.src.toLowerCase().endsWith('.webm');
+        const media=document.createElement(isVideo?'video':'img');
+        media.src=item.src;
+
+        if(isVideo){
+          media.muted=true; media.loop=true; media.playsInline=true;
+          media.preload='metadata';
+          card.addEventListener('mouseenter', ()=>media.play().catch(()=>{}));
+          card.addEventListener('mouseleave', ()=>media.pause());
+        } else {
+          media.loading='lazy';
+        }
+
+        const tag=document.createElement('span');
+        tag.className='tag';
+        tag.textContent=item.category.toUpperCase();
+
+        card.appendChild(media);
+        card.appendChild(tag);
+        card.addEventListener('click', ()=>openModal(item));
+        grid.appendChild(card);
+      })
+    }
+
+    /* =========================
+       Modal
+       ========================= */
+    const modal=document.getElementById('modal');
+    const modalTarget=document.getElementById('modalTarget');
+    const modalClose=document.getElementById('modalClose');
+
+    function openModal(item){
+      modalTarget.innerHTML='';
+      const isVideo = item.src.toLowerCase().endsWith('.mp4') || item.src.toLowerCase().endsWith('.webm');
+      const el=document.createElement(isVideo?'video':'img');
+      el.src=item.src;
+      if(isVideo){ el.controls=true; el.autoplay=true; }
+      modalTarget.appendChild(el);
+      modal.classList.add('active');
+    }
+    function closeModal(){
+      modalTarget.innerHTML='';
+      modal.classList.remove('active');
+    }
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+
+    /* =========================
+       Filters
+       ========================= */
+    document.querySelectorAll('.filter-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        renderGallery(btn.dataset.filter);
+      })
     });
-  }
 
-  // اجرای اولیه
-  document.addEventListener('DOMContentLoaded', () => {
-    renderPortfolio('all');
-  });
-</script>
+    /* =========================
+       Theme detection
+       ========================= */
+    const themeToggle=document.getElementById('themeToggle');
+    function applyTheme(theme){
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('kayan_theme', theme);
+    }
+    function smartTheme(){
+      const saved=localStorage.getItem('kayan_theme');
+      if(saved) return saved;
+      return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    themeToggle.addEventListener('click', ()=>{
+      const cur=document.documentElement.getAttribute('data-theme');
+      applyTheme(cur==='dark'?'light':'dark');
+    });
+
+    /* =========================
+       Language detection + apply
+       ========================= */
+    const langSelect=document.getElementById('langSelect');
+
+    function applyLanguage(lang){
+      const dict=I18N[lang] || I18N.fa;
+      document.documentElement.lang=lang;
+      document.documentElement.dir=dict.dir;
+      langSelect.value=lang;
+      localStorage.setItem('kayan_lang', lang);
+
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key=el.getAttribute('data-i18n');
+        if(dict[key]) el.textContent=dict[key];
+      });
+
+      startAutoType(dict.typeLines);
+    }
+    function smartLocale(){
+      const saved=localStorage.getItem('kayan_lang');
+      if(saved && I18N[saved]) return saved;
+      const nav=(navigator.language||'').toLowerCase();
+      if(nav.startsWith('ar')) return 'ar';
+      if(nav.startsWith('fa')) return 'fa';
+      if(nav.startsWith('en')) return 'en';
+      return 'fa';
+    }
+    langSelect.addEventListener('change', (e)=>applyLanguage(e.target.value));
+
+    /* =========================
+       AutoType (smooth)
+       ========================= */
+    const autoTypeEl=document.getElementById('autoType');
+    let typeTimer=null;
+
+    function startAutoType(lines){
+      if(!autoTypeEl) return;
+      if(typeTimer) clearTimeout(typeTimer);
+      autoTypeEl.textContent='';
+
+      let lineIndex=0, charIndex=0, deleting=false;
+
+      const typeSpeed=26;
+      const deleteSpeed=18;
+      const holdTime=950;
+      const betweenLines=420;
+
+      const tick=()=>{
+        const line=lines[lineIndex] || '';
+        if(!deleting){
+          charIndex++;
+          autoTypeEl.textContent=line.slice(0,charIndex);
+          if(charIndex>=line.length){
+            deleting=true;
+            typeTimer=setTimeout(tick, holdTime);
+            return;
+          }
+          typeTimer=setTimeout(tick, typeSpeed);
+        } else {
+          charIndex--;
+          autoTypeEl.textContent=line.slice(0,Math.max(0,charIndex));
+          if(charIndex<=0){
+            deleting=false;
+            lineIndex=(lineIndex+1)%lines.length;
+            typeTimer=setTimeout(tick, betweenLines);
+            return;
+          }
+          typeTimer=setTimeout(tick, deleteSpeed);
+        }
+      }
+      tick();
+    }
+
+    /* =========================
+       Mouse gravitate (more motion)
+       ========================= */
+    function gravitate(el, strength=7){
+      const onMove=(e)=>{
+        const r=el.getBoundingClientRect();
+        const cx=r.left + r.width/2;
+        const cy=r.top + r.height/2;
+        const dx=(e.clientX - cx)/(r.width/2);
+        const dy=(e.clientY - cy)/(r.height/2);
+        const tx=Math.max(-1,Math.min(1,dx))*strength;
+        const ty=Math.max(-1,Math.min(1,dy))*strength;
+        el.style.transform=`translate(${tx}px, ${ty}px)`;
+      };
+      const onLeave=()=>{ el.style.transform='translate(0px,0px)'; };
+      el.addEventListener('mousemove', onMove);
+      el.addEventListener('mouseleave', onLeave);
+    }
+    document.querySelectorAll('.chip, select, .filter-btn').forEach(el=>gravitate(el, 7));
+
+    /* =========================
+       Subtle overlay morph on scroll
+       ========================= */
+    const heroOverlay=document.getElementById('heroOverlay');
+    window.addEventListener('scroll', ()=>{
+      if(!heroOverlay) return;
+      const y=Math.min(180, window.scrollY);
+      const t=y/180;
+      heroOverlay.style.transform=`translateY(${t * -10}px) scale(${1 - t*0.03})`;
+      heroOverlay.style.opacity=`${1 - t*0.15}`;
+    }, {passive:true});
+
+    /* INIT */
+    applyTheme(smartTheme());
+    applyLanguage(smartLocale());
+    renderGallery('all');
+  </script>
+</body>
+</html>
