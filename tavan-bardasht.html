@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>آناتومی ۳D تعاملی کمباین برنج (شالی‌کار)</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      user-select: none;
+    }
+    body {
+      background-color: #080d14;
+      color: #e2e8f0;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    .header-bar {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      left: 24px;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+    .brand {
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(163, 230, 53, 0.25);
+      padding: 12px 22px;
+      border-radius: 14px;
+      pointer-events: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .brand h1 {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: #a3e635; /* رنگ سبز لیمویی شاخص دستگاه */
+      letter-spacing: -0.5px;
+    }
+    .brand span {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+    .controls-nav {
+      display: flex;
+      gap: 10px;
+      pointer-events: auto;
+    }
+    .btn {
+      background: rgba(15, 23, 42, 0.85);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 10px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    }
+    .btn:hover {
+      background: #84cc16;
+      color: #0f172a;
+      border-color: #a3e635;
+      transform: translateY(-2px);
+    }
+    .btn.active {
+      background: #84cc16;
+      color: #0f172a;
+      box-shadow: 0 0 18px rgba(163, 230, 53, 0.6);
+      border-color: #a3e635;
+    }
+
+    .info-panel {
+      position: absolute;
+      top: 92px;
+      right: 24px;
+      width: 350px;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(20px);
+      border-radius: 18px;
+      padding: 22px;
+      z-index: 10;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.55);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(163, 230, 53, 0.15);
+      color: #a3e635;
+      border: 1px solid rgba(163, 230, 53, 0.35);
+      font-weight: 700;
+    }
+    .part-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+    .part-en-title {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: -6px;
+      font-family: monospace;
+      direction: ltr;
+      text-align: right;
+    }
+    .section-title {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 4px;
+    }
+    .part-desc, .part-maintenance {
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: #cbd5e1;
+    }
+    .part-maintenance {
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.08);
+      border-right: 3px solid #fbbf24;
+      padding: 8px 12px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .parts-sidebar {
+      position: absolute;
+      top: 92px;
+      left: 24px;
+      max-height: calc(100vh - 130px);
+      width: 220px;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      border-radius: 16px;
+      padding: 14px;
+      z-index: 10;
+      overflow-y: auto;
+    }
+    .parts-sidebar h3 {
+      font-size: 0.82rem;
+      color: #a3e635;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .part-item-btn {
+      display: block;
+      width: 100%;
+      text-align: right;
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 4px;
+    }
+    .part-item-btn:hover {
+      background: rgba(255, 255, 255, 0.07);
+      color: #a3e635;
+    }
+    .part-item-btn.selected {
+      background: rgba(163, 230, 53, 0.2);
+      color: #a3e635;
+      font-weight: 700;
+      border-right: 3px solid #a3e635;
+    }
+
+    .hint-bar {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      padding: 7px 20px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      pointer-events: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <div class="brand">
+      <h1>آناتومی کمباین برنج شالی‌کار (Crawler Combine)</h1>
+      <span>سیستم بررسی قطعات و کالبدشکافی مکانیکی مدل شنی‌دار</span>
+    </div>
+    <div class="controls-nav">
+      <button class="btn" id="explodeBtn" onclick="toggleExplodedView()">💥 کالبدشکافی قطعات (Exploded)</button>
+      <button class="btn" onclick="resetCamera()">🔄 زاویه اولیه</button>
+    </div>
+  </div>
+
+  <div class="parts-sidebar">
+    <h3>اجزای کمباین شالی</h3>
+    <div id="partsList"></div>
+  </div>
+
+  <div class="info-panel" id="infoPanel">
+    <span class="badge" id="partSystem">سیستم برش و هدایت ساقه‌ها</span>
+    <h2 class="part-title" id="partTitle">هدر شالی‌کار و چرخ‌فلک فنردار</h2>
+    <div class="part-en-title" id="partEnTitle">Paddy Header & Spring-Tine Reel</div>
+    <div class="section-title">کارکرد و مشخصات فنی</div>
+    <p class="part-desc" id="partDesc">مجهز به انگشتی‌های فنری کشیده و دماغه مخروطی جانبی برای بلند کردن ساقه‌های خوابیده و مرطوب شالی بدون ریزش دانه.</p>
+    <div class="section-title">سرویس و نگهداری تخصصی</div>
+    <p class="part-maintenance" id="partMaintenance">گریس‌کاری روزانه پین‌های مفصل هدر، رفع گرفتگی گل‌ولای از دماغه جانبی و چک کردن لقی تیغه‌های رفت و برگشتی.</p>
+  </div>
+
+  <div class="hint-bar">
+    🖱️ برای چرخش: کلیک و درگ | زوم: اسکرول | فوکوس و مشخصات: کلیک روی قطعات
+  </div>
+
+  <div id="canvas-container"></div>
+
+  <script>
+    // --- اطلاعات تخصصی منطبق بر کمباین تصویر ارسالی ---
+    const partsData = {
+      header: {
+        name: "هدر شالی و چرخ‌فلک فنردار",
+        en: "Paddy Header & Spring-Tine Reel",
+        system: "سیستم برش و هدایت محصول",
+        desc: "طراحی شده با انگشتی‌های فنری الاستیک (Spring Tines) و جداکننده‌های مثلثی کناری (Dividers)؛ وظیفه این بخش بلند کردن خوشه‌های خوابیده برنج و برش تمیز در نزدیکی سطح گل است.",
+        maintenance: "تمیزکاری روزانه تیغه‌ها از رشته‌های فیبری ساقه برنج و گریس‌کاری بیرینگ‌های دو سر میل‌لنگ تیغه.",
+        targetPos: { x: 0, y: 0.8, z: 3.4 }
+      },
+      feeder: {
+        name: "کانال بالابر و گردگیر میانی",
+        en: "Feeder House & Dust Blower",
+        system: "سیستم انتقال محصول",
+        desc: "کانال انتقال زاویه‌دار مجهز به زنجیر دندانه‌دار و فن مکنده‌ی گرد و غبار کاه تا ساقه برنج بدون انسداد وارد خرمن‌کوب محوری شود.",
+        maintenance: "تنظیم کشش یکنواخت زنجیرهای کانوایر چپ و راست و چک کردن عدم سایش صفحه فلزی کف کانال.",
+        targetPos: { x: 0, y: 1.4, z: 2.1 }
+      },
+      tracks: {
+        name: "سیستم حرکتی شنی لاستیکی (Crawler Tracks)",
+        en: "Rubber Crawler Undercarriage",
+        system: "سیستم پیشروی و تعلیق باتلاقی",
+        desc: "مهم‌ترین تفاوت این کمباین؛ شنی‌های پهن با آج‌های عمیق (Lugs) که فشار وزنی کمباین بر زمین شالیزار را بسیار کاهش داده و مانع از فرورفتن در لجن عمیق می‌شوند.",
+        maintenance: "تست کشش شنی از طریق گریس‌خور تنظیم‌کننده هرزگرد و شستشوی کامل گل و لای گیرکرده بین غلتک‌ها پس از پایان کار.",
+        targetPos: { x: 0, y: 0.45, z: 0.2 }
+      },
+      canopyCab: {
+        name: "ایستگاه اپراتور و سایبان آیرودینامیک",
+        en: "Operator Station & Canopy Roof",
+        system: "سیستم کنترل و ارگونومی",
+        desc: "فضای باز کاری با دید مستقیم ۳۶۰ درجه به مزرعه، مجهز به گارد محافظ فلزی زرد، صندلی ضد ارتعاش هیدرولیکی، جوی‌استیک کنترل هیدرولیک هدر و سایبان فایبرگلاس.",
+        maintenance: "چک کردن سیم‌کشی سوئیچ‌های فرمان هیدرولیک و سلامت فیلتر هوای نمایشگرهای پنل فرمان.",
+        targetPos: { x: 0, y: 2.7, z: 1.3 }
+      },
+      threshingDrum: {
+        name: "سیلندر کوبنده محوری (Axial-Flow Rotor)",
+        en: "Axial-Flow Threshing Drum",
+        system: "سیستم کوبش و جداسازی دانه",
+        desc: "استوانه مجهز به میخ‌ها یا دندانه‌های خاردار که خوشه‌های مرطوب شالی را در حین دوران محوری می‌چرخاند و دانه‌ها را از ساقه‌های چسبنده جدا می‌کند.",
+        maintenance: "تنظیم فاصله گریتینگ ضدکوبنده بسته به رطوبت خوشه و بالانس دوره‌ای درام برای جلوگیری از لرزش.",
+        targetPos: { x: 0.2, y: 1.8, z: 0.3 }
+      },
+      engine: {
+        name: "موتور دیزل توربو و رادیاتور تقویت‌شده",
+        en: "Heavy-Duty Diesel Engine",
+        system: "پیشرانه و انتقال قدرت",
+        desc: "موتور دیزلی ۴ سیلندر با گشتاور بالا در دور پایین به همراه پروانه معکوس‌کننده برای تمیز کردن توری رادیاتور از کاه و سبوس برنج.",
+        maintenance: "بررسی چندباره توری محافظ رادیاتور حین کار روزانه جهت جلوگیری از جوش آوردن ناشی از ذرات معلق سبوس.",
+        targetPos: { x: 0, y: 2.1, z: -1.3 }
+      },
+      grainTank: {
+        name: "مخزن دانه و مارپیچ تخلیه بالا",
+        en: "Paddy Grain Tank & Unloading Auger",
+        system: "سیستم انباشت و تخلیه شلتوک",
+        desc: "مخزن فشرده حمل شلتوک برنج به همراه لوله تخلیه هیدرولیک که شلتوک را مستقیماً به کیسه‌ها یا تریلر حاشیه کرت منتقل می‌کند.",
+        maintenance: "تخلیه کامل دانه‌های ته‌نشین‌شده مرطوب در پایان روز برای پیشگیری از زنگ‌زدگی مارپیچ حلزونی.",
+        targetPos: { x: -0.7, y: 1.9, z: 0.4 }
+      }
+    };
+
+    let scene, camera, renderer, controls;
+    let partsGroup = new THREE.Group();
+    let meshToKey = new Map();
+    let exploded = false;
+    let interactiveMeshes = [];
+    let selectedMesh = null;
+    let hoveredMesh = null;
+
+    // بردارهای جابه‌جایی در زمان کالبدشکافی (انفجار قطعات)
+    const explodedOffsets = {
+      header:        { x: 0, y: -0.6, z: 2.4 },
+      feeder:        { x: 0, y: 0.4,  z: 1.4 },
+      tracks:        { x: 0, y: -0.7, z: 0 },
+      canopyCab:     { x: 0, y: 1.4,  z: 1.2 },
+      threshingDrum: { x: 1.4, y: 0.3, z: 0.2 },
+      engine:        { x: 0, y: 0.8,  z: -1.6 },
+      grainTank:     { x: -1.5, y: 0.6, z: 0.2 }
+    };
+
+    function init() {
+      const container = document.getElementById('canvas-container');
+
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0a0f18);
+      scene.fog = new THREE.FogExp2(0x0a0f18, 0.032);
+
+      camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(6.8, 3.8, 7.2);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      container.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2 + 0.01;
+      controls.minDistance = 2.5;
+      controls.maxDistance = 20;
+      controls.target.set(0, 1.4, 0.5);
+
+      setupLighting();
+      setupGround();
+      buildCombineModel();
+      populateSidebar();
+
+      window.addEventListener('resize', onWindowResize);
+      window.addEventListener('pointermove', onPointerMove);
+      window.addEventListener('click', onClick);
+
+      animate();
+    }
+
+    function setupLighting() {
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+
+      const sunLight = new THREE.DirectionalLight(0xfffaed, 1.3);
+      sunLight.position.set(8, 14, 8);
+      sunLight.castShadow = true;
+      sunLight.shadow.mapSize.width = 2048;
+      sunLight.shadow.mapSize.height = 2048;
+      scene.add(sunLight);
+
+      const limeAccent = new THREE.DirectionalLight(0xa3e635, 0.7);
+      limeAccent.position.set(-8, 6, -8);
+      scene.add(limeAccent);
+    }
+
+    function setupGround() {
+      const grid = new THREE.GridHelper(30, 30, 0xa3e635, 0x1e293b);
+      grid.position.y = 0;
+      scene.add(grid);
+
+      const floor = new THREE.Mesh(
+        new THREE.PlaneGeometry(60, 60),
+        new THREE.MeshStandardMaterial({ color: 0x070b10, roughness: 0.95 })
+      );
+      floor.rotation.x = -Math.PI / 2;
+      floor.receiveShadow = true;
+      scene.add(floor);
+    }
+
+    // --- ساخت دقیق قطعات بر اساس عکس ارسالی کایان ---
+    function buildCombineModel() {
+      scene.add(partsGroup);
+
+      // متریال‌های منطبق بر عکس:
+      // رنگ سبز لیمویی شاخص بدنه بارچین‌کار (Barchinkar Yellow-Green)
+      const matLimeBody = new THREE.MeshStandardMaterial({ color: 0xb5dc38, roughness: 0.38, metalness: 0.25 });
+      const matDarkSteel = new THREE.MeshStandardMaterial({ color: 0x22262a, roughness: 0.5, metalness: 0.7 });
+      const matTrackRubber = new THREE.MeshStandardMaterial({ color: 0x15171a, roughness: 0.85, metalness: 0.05 });
+      const matYellowRail = new THREE.MeshStandardMaterial({ color: 0xeab308, roughness: 0.4, metalness: 0.3 });
+      const matCanopy = new THREE.MeshStandardMaterial({ color: 0xded8c8, roughness: 0.3, metalness: 0.1 }); // رنگ کرم/سفید سقف در عکس
+
+      function registerPart(group, key) {
+        group.userData = { key: key, originPos: group.position.clone() };
+        group.traverse(child => {
+          if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+            child.userData = { parentKey: key };
+            meshToKey.set(child, key);
+            interactiveMeshes.push(child);
+          }
+        });
+        partsGroup.add(group);
+      }
+
+      // ۱. هدر با دماغه مثلثی و چرخ‌فلک شانه‌ای مخصوص برنج
+      const headerGrp = new THREE.Group();
+      headerGrp.position.set(0, 0.65, 3.0);
+      const bed = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.35, 1.1), matLimeBody.clone());
+      // دماغه‌های مثلثی کناری که در تصویر شاخص هستند
+      const divL = new THREE.Mesh(new THREE.ConeGeometry(0.35, 1.2, 4), matLimeBody.clone());
+      divL.rotation.x = Math.PI / 2;
+      divL.position.set(1.5, 0.1, 0.4);
+      const divR = divL.clone();
+      divR.position.set(-1.5, 0.1, 0.4);
+      // چرخ فلک (Reel) چندضلعی مشکی
+      const reelFrame = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 2.9, 6, 1, true), matDarkSteel.clone());
+      reelFrame.rotation.z = Math.PI / 2;
+      reelFrame.position.set(0, 0.4, 0.2);
+      headerGrp.add(bed, divL, divR, reelFrame);
+      registerPart(headerGrp, 'header');
+
+      // ۲. کانال تغذیه (Feeder)
+      const feederGrp = new THREE.Group();
+      feederGrp.position.set(0, 1.1, 1.9);
+      const feederMesh = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.7, 1.4), matDarkSteel.clone());
+      feederMesh.rotation.x = -0.35;
+      feederGrp.add(feederMesh);
+      registerPart(feederGrp, 'feeder');
+
+      // ۳. سیستم شنی (Rubber Crawler Tracks)
+      const trackGrp = new THREE.Group();
+      trackGrp.position.set(0, 0.45, 0.3);
+
+      function createCrawler(xPos) {
+        const trk = new THREE.Group();
+        // تسمه شنی با مقطع مستطیلی گرد
+        const belt = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.55, 3.2), matTrackRubber.clone());
+        trk.add(belt);
+        // غلتک‌های داخل شنی (Rollers)
+        for (let z = -1.2; z <= 1.2; z += 0.6) {
+          const roller = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.52, 16), matDarkSteel.clone());
+          roller.rotation.z = Math.PI / 2;
+          roller.position.set(0, -0.05, z);
+          trk.add(roller);
+        }
+        trk.position.x = xPos;
+        return trk;
+      }
+      trackGrp.add(createCrawler(1.05));
+      trackGrp.add(createCrawler(-1.05));
+      registerPart(trackGrp, 'tracks');
+
+      // ۴. ایستگاه اپراتور با نرده زرد و سایبان سفید/کرم (مطابق عکس)
+      const cabGrp = new THREE.Group();
+      cabGrp.position.set(-0.35, 2.1, 1.3);
+      // صندلی
+      const seat = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.6, 0.55), matDarkSteel.clone());
+      // ستون‌ها و سایبان منحنی سقف
+      const roof = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 1.1, 0.15, 16), matCanopy);
+      roof.scale.set(1.2, 1, 1.4);
+      roof.position.set(0.1, 1.4, -0.2);
+      // پایه‌های نگهدارنده سقف
+      const pole1 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.4), matYellowRail);
+      pole1.position.set(0.6, 0.7, -0.6);
+      const pole2 = pole1.clone();
+      pole2.position.set(-0.4, 0.7, -0.6);
+      // نرده محافظ زرد رنگ جلوی راننده
+      const railing = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.8, 0.8), matYellowRail);
+      railing.position.set(0.5, 0.2, 0.2);
+      cabGrp.add(seat, roof, pole1, pole2, railing);
+      registerPart(cabGrp, 'canopyCab');
+
+      // ۵. درام کوبنده محوری برنج (Axial Threshing Rotor)
+      const drumGrp = new THREE.Group();
+      drumGrp.position.set(0.2, 1.6, 0.3);
+      const rotor = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.48, 2.2, 20), matYellowRail.clone());
+      rotor.rotation.x = Math.PI / 2; // سیلندر محوری در راستای طولی کمباین
+      const drumHousing = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.1, 2.3), matLimeBody.clone());
+      drumGrp.add(rotor, drumHousing);
+      registerPart(drumGrp, 'threshingDrum');
+
+      // ۶. موتور عقب و فیلتر هوای مرتفع
+      const engGrp = new THREE.Group();
+      engGrp.position.set(0, 1.6, -1.3);
+      const engineBox = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.2, 1.4), matLimeBody.clone());
+      // محفظه فیلتر هوا با ورودی قارچی بالای موتور (در عکس پیداست)
+      const airSnorkel = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 1.0), matDarkSteel.clone());
+      airSnorkel.position.set(0.4, 0.9, -0.2);
+      const airCap = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.12, 0.15), matDarkSteel.clone());
+      airCap.position.set(0.4, 1.4, -0.2);
+      engGrp.add(engineBox, airSnorkel, airCap);
+      registerPart(engGrp, 'engine');
+
+      // ۷. مخزن شلتوک و سیستم تخلیه
+      const tankGrp = new THREE.Group();
+      tankGrp.position.set(-0.65, 1.6, 0.2);
+      const tankBox = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.3, 1.9), matLimeBody.clone());
+      // لوله تخلیه غلات
+      const auger = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 2.6), matYellowRail.clone());
+      auger.rotation.x = Math.PI / 2;
+      auger.position.set(-0.4, 0.7, -0.4);
+      tankGrp.add(tankBox, auger);
+      registerPart(tankGrp, 'grainTank');
+    }
+
+    function populateSidebar() {
+      const list = document.getElementById('partsList');
+      list.innerHTML = '';
+      for (const [key, data] of Object.entries(partsData)) {
+        const btn = document.createElement('button');
+        btn.className = 'part-item-btn';
+        btn.id = 'btn-' + key;
+        btn.textContent = data.name;
+        btn.onclick = () => selectPartByKey(key);
+        list.appendChild(btn);
+      }
+    }
+
+    function toggleExplodedView() {
+      exploded = !exploded;
+      const btn = document.getElementById('explodeBtn');
+      btn.classList.toggle('active', exploded);
+      btn.textContent = exploded ? "🧩 تجمیع اجزا (Collapse)" : "💥 کالبدشکافی قطعات (Exploded)";
+
+      partsGroup.children.forEach(group => {
+        const key = group.userData.key;
+        if (!key) return;
+
+        const origin = group.userData.originPos;
+        const offset = explodedOffsets[key] || { x: 0, y: 0, z: 0 };
+
+        const targetX = exploded ? origin.x + offset.x : origin.x;
+        const targetY = exploded ? origin.y + offset.y : origin.y;
+        const targetZ = exploded ? origin.z + offset.z : origin.z;
+
+        new TWEEN.Tween(group.position)
+          .to({ x: targetX, y: targetY, z: targetZ }, 1100)
+          .easing(TWEEN.Easing.Cubic.Out)
+          .start();
+      });
+    }
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    function onPointerMove(event) {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(interactiveMeshes);
+
+      if (intersects.length > 0) {
+        const hit = intersects[0].object;
+        if (hoveredMesh !== hit) {
+          clearHover();
+          hoveredMesh = hit;
+          if (hoveredMesh !== selectedMesh && hoveredMesh.material.emissive) {
+            hoveredMesh.material.emissive.setHex(0x27272a);
+          }
+          document.body.style.cursor = 'pointer';
+        }
+      } else {
+        clearHover();
+        document.body.style.cursor = 'default';
+      }
+    }
+
+    function clearHover() {
+      if (hoveredMesh && hoveredMesh !== selectedMesh) {
+        if (hoveredMesh.material.emissive) hoveredMesh.material.emissive.setHex(0x000000);
+        hoveredMesh = null;
+      }
+    }
+
+    function onClick(event) {
+      if (event.clientY < 80 || event.clientX > window.innerWidth - 380 || event.clientX < 240) return;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(interactiveMeshes);
+
+      if (intersects.length > 0) {
+        const hit = intersects[0].object;
+        const key = hit.userData.parentKey;
+        if (key) selectPartByKey(key, hit);
+      }
+    }
+
+    function selectPartByKey(key, specificMesh = null) {
+      const data = partsData[key];
+      if (!data) return;
+
+      if (selectedMesh && selectedMesh.material.emissive) {
+        selectedMesh.material.emissive.setHex(0x000000);
+      }
+
+      if (!specificMesh) {
+        const grp = partsGroup.children.find(g => g.userData.key === key);
+        if (grp) {
+          grp.traverse(c => {
+            if (!specificMesh && c.isMesh) specificMesh = c;
+          });
+        }
+      }
+      selectedMesh = specificMesh;
+      if (selectedMesh && selectedMesh.material.emissive) {
+        selectedMesh.material.emissive.setHex(0x65a30d); // هایلایت لیمویی نئونی
+      }
+
+      document.querySelectorAll('.part-item-btn').forEach(b => b.classList.remove('selected'));
+      const activeBtn = document.getElementById('btn-' + key);
+      if (activeBtn) activeBtn.classList.add('selected');
+
+      document.getElementById('partTitle').textContent = data.name;
+      document.getElementById('partEnTitle').textContent = data.en;
+      document.getElementById('partSystem').textContent = data.system;
+      document.getElementById('partDesc').textContent = data.desc;
+      document.getElementById('partMaintenance').textContent = data.maintenance;
+
+      const targetPos = data.targetPos;
+      new TWEEN.Tween(controls.target)
+        .to({ x: targetPos.x, y: targetPos.y, z: targetPos.z }, 850)
+        .easing(TWEEN.Easing.Cubic.Out)
+        .start();
+
+      new TWEEN.Tween(camera.position)
+        .to({
+          x: targetPos.x + 2.8,
+          y: targetPos.y + 1.6,
+          z: targetPos.z + 3.2
+        }, 950)
+        .easing(TWEEN.Easing.Cubic.Out)
+        .start();
+    }
+
+    function resetCamera() {
+      new TWEEN.Tween(controls.target)
+        .to({ x: 0, y: 1.4, z: 0.5 }, 800)
+        .easing(TWEEN.Easing.Cubic.Out)
+        .start();
+
+      new TWEEN.Tween(camera.position)
+        .to({ x: 6.8, y: 3.8, z: 7.2 }, 900)
+        .easing(TWEEN.Easing.Cubic.Out)
+        .start();
+
+      if (selectedMesh && selectedMesh.material.emissive) {
+        selectedMesh.material.emissive.setHex(0x000000);
+        selectedMesh = null;
+      }
+      document.querySelectorAll('.part-item-btn').forEach(b => b.classList.remove('selected'));
+    }
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      TWEEN.update();
+      controls.update();
+
+      if (!controls.state || controls.state === -1) {
+        partsGroup.rotation.y += 0.0006;
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
