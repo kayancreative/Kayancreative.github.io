@@ -1,40 +1,41 @@
 <!doctype html>
-<html lang="fa" dir="rtl" data-theme="dark">
+<html lang="fa" dir="rtl" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kayan Creative • کارگردانی هنری و سینماتوگرافی هوش مصنوعی</title>
-  <meta name="description" content="Kayan Creative — Creative Direction, AI Cinematography, and High-End Commercial Visuals.">
-
-  <meta name="theme-color" content="#0a0b0e">
+  <meta name="description" content="Kayan Creative — استودیوی کارگردانی هنری، سینماتوگرافی هوش مصنوعی و پروداکشن بصری تجاری.">
+  <meta name="theme-color" content="#f5f6fa">
   <link rel="icon" type="image/png" href="main/logo.png">
   <link rel="apple-touch-icon" href="main/logo.png">
   <meta property="og:image" content="main/logo.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#090a0f;
-      --text:#fff;
-      --muted:#9aa1b0;
-      --accent:#ff5429;
-      --accent2:#ff6a42;
-      --border:rgba(255,255,255,.14);
-      --glass:rgba(18,20,28,.44);
-      --blur:blur(20px);
-      --radius:24px;
-      --font-en:'Plus Jakarta Sans',sans-serif;
-      --font-fa:'Vazirmatn',sans-serif;
-    }
-    [data-theme="light"]{
       --bg:#f5f6fa;
       --text:#0e1017;
-      --muted:#586074;
-      --border:rgba(0,0,0,.09);
-      --glass:rgba(255,255,255,.6);
+      --muted:#4f576b;
+      --accent:#ff5429;
+      --accent2:#ff6a42;
+      --border:rgba(0,0,0,.08);
+      --glass:rgba(255,255,255,.62);
+      --blur:blur(22px);
+      --radius:22px;
+      --font-en:'Plus Jakarta Sans',sans-serif;
+      --font-fa:'Vazirmatn',sans-serif;
+      --elev:0 18px 45px rgba(14,16,23,.07);
+    }
+    [data-theme="dark"]{
+      --bg:#0c0e13;
+      --text:#f4f6fb;
+      --muted:#9ba5ba;
+      --border:rgba(255,255,255,.10);
+      --glass:rgba(20,24,32,.30);
+      --elev:0 18px 45px rgba(0,0,0,.35);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -46,6 +47,8 @@
       padding:16px;
       overflow-x:hidden;
       -webkit-font-smoothing:antialiased;
+      line-height:1.75;
+      font-size:15px;
     }
     html[lang="en"] body{font-family:var(--font-en)}
     .container{max-width:1240px;margin:0 auto}
@@ -55,9 +58,9 @@
     }
     .ambient-bg video{
       width:100%; height:100%; object-fit:cover;
-      opacity:.16; filter:saturate(1.15) contrast(1.1);
+      opacity:.07; filter:saturate(1.05) contrast(1.05);
     }
-    [data-theme="light"] .ambient-bg video{opacity:.07}
+    [data-theme="dark"] .ambient-bg video{opacity:.14}
 
     .glass{
       background:var(--glass);
@@ -65,18 +68,18 @@
       -webkit-backdrop-filter:var(--blur);
       border:1px solid var(--border);
       border-radius:var(--radius);
-      box-shadow:0 18px 50px rgba(0,0,0,.28);
+      box-shadow:var(--elev);
     }
     .glass-soft{
-      background:rgba(255,255,255,.07);
-      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.68);
+      border:1px solid rgba(0,0,0,.06);
       backdrop-filter:blur(18px);
       -webkit-backdrop-filter:blur(18px);
-      border-radius:18px;
+      border-radius:16px;
     }
-    [data-theme="light"] .glass-soft{
-      background:rgba(0,0,0,.03);
-      border-color:rgba(0,0,0,.08);
+    [data-theme="dark"] .glass-soft{
+      background:rgba(20,24,32,.40);
+      border-color:rgba(255,255,255,.12);
     }
 
     header.nav{
@@ -87,142 +90,159 @@
     .brand{
       display:flex; align-items:center; gap:12px;
       text-decoration:none; color:var(--text);
-      font-weight:900; letter-spacing:-.3px;
+      font-weight:800; letter-spacing:-.3px;
       min-width:0;
     }
     .brand img{
-      width:42px;height:42px;border-radius:14px;object-fit:cover;
-      box-shadow:0 10px 25px rgba(0,0,0,.35);
+      width:40px;height:40px;border-radius:12px;object-fit:cover;
+      box-shadow:0 8px 20px rgba(0,0,0,.08);
       flex:0 0 auto;
     }
     .brand span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 
     .nav-actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
     .chip, select{
-      background:rgba(255,255,255,.06);
+      background:rgba(255,255,255,.75);
       border:1px solid var(--border);
       color:var(--text);
-      padding:8px 14px;
+      padding:8px 16px;
       border-radius:999px;
       cursor:pointer;
       font:inherit;
-      font-size:.88rem;
+      font-size:.85rem;
+      font-weight:600;
       transition:transform .22s ease, background .22s ease, border-color .22s ease;
-      will-change:transform;
       user-select:none;
     }
-    [data-theme="light"] .chip,[data-theme="light"] select{background:rgba(0,0,0,.04)}
+    [data-theme="dark"] .chip,[data-theme="dark"] select{
+      background:rgba(20,24,32,.55);
+    }
     .chip:hover, select:hover{
-      background:rgba(255,84,41,.18);
+      background:rgba(255,84,41,.10);
       border-color:rgba(255,84,41,.45);
       transform:translateY(-2px);
     }
 
-    /* HERO: desktop => overlay روی ویدئو / mobile => زیر ویدئو */
+    /* HERO */
     .hero{padding:12px;margin-bottom:18px}
-    .hero-wrap{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
-    }
+    .hero-wrap{display:grid; grid-template-columns:1fr; gap:14px}
     .hero-stage{
-      position:relative;
-      width:100%;
-      aspect-ratio:16/9;
-      border-radius:calc(var(--radius) - 6px);
-      overflow:hidden;
-      background:#000;
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow:0 22px 60px rgba(0,0,0,.55);
+      position:relative; width:100%; aspect-ratio:16/9;
+      border-radius:calc(var(--radius) - 6px); overflow:hidden;
+      background:#000; border:1px solid rgba(0,0,0,.08);
+      box-shadow:0 22px 60px rgba(14,16,23,.08);
     }
     .hero-stage video{width:100%;height:100%;object-fit:cover;display:block}
 
     .hero-overlay{
-      padding:18px;
-      border-radius:20px;
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-      background:rgba(10,10,14,.38);
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow:0 18px 40px rgba(0,0,0,.35);
+      padding:22px; border-radius:18px;
+      backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      background:rgba(255,255,255,.82);
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 18px 40px rgba(14,16,23,.08);
       transition:transform .2s ease, opacity .2s ease;
-      will-change:transform;
+      color:#0e1017;
+    }
+    [data-theme="dark"] .hero-overlay{
+      background:rgba(20,24,32,.62);
+      border-color:rgba(255,255,255,.12);
+      color:#f4f6fb;
     }
 
-    /* Desktop behavior: overlay becomes absolute on video */
     @media(min-width: 900px){
       .hero-wrap{position:relative}
       .hero-overlay{
         position:absolute;
-        top:18px;
-        right:18px;
-        width:min(480px, calc(100% - 36px));
+        top:22px;
+        right:22px;
+        width:min(520px, calc(100% - 44px));
         z-index:2;
       }
-      html[dir="ltr"] .hero-overlay{left:18px; right:auto}
+      html[dir="ltr"] .hero-overlay{left:22px; right:auto}
     }
 
     .kicker{
-      opacity:.78;
-      font-weight:800;
-      letter-spacing:.6px;
-      font-size:.78rem;
-      text-transform:uppercase;
-      margin-bottom:10px;
+      color:var(--accent); font-weight:800; letter-spacing:.6px;
+      font-size:.78rem; text-transform:uppercase; margin-bottom:8px;
     }
     .h-title{
-      font-weight:900;
-      line-height:1.25;
-      letter-spacing:-.4px;
-      font-size:clamp(1.25rem, 2.4vw, 2.1rem);
-      margin-bottom:10px;
+      font-weight:900; line-height:1.35; letter-spacing:-.4px;
+      font-size:clamp(1.2rem, 2.2vw, 1.95rem); margin-bottom:12px;
     }
-    .h-desc{opacity:.82; font-size:.98rem; line-height:1.75; margin-bottom:12px}
+    .h-desc{opacity:.9; font-size:.95rem; line-height:1.85; margin-bottom:14px; text-align:justify}
 
     .autotype{
-      font-weight:900;
-      display:inline-block;
-      min-height:1.3em;
-      white-space:nowrap;
-      border-left:2px solid rgba(255,255,255,.75);
-      padding-left:10px;
+      font-weight:700; display:inline-block; min-height:1.3em; white-space:nowrap;
+      border-right:2px solid var(--accent); padding-right:10px;
     }
-    html[dir="rtl"] .autotype{
-      border-left:none;
-      border-right:2px solid rgba(255,255,255,.75);
-      padding-left:0; padding-right:10px;
-    }
+    html[dir="ltr"] .autotype{border-right:none; border-left:2px solid var(--accent); padding-right:0; padding-left:10px}
 
     /* Sections */
-    .section{padding:16px; margin-bottom:18px}
-    .section-title{font-weight:900; font-size:1.1rem; margin-bottom:10px}
-    .section-desc{color:rgba(255,255,255,.82); line-height:1.9}
-    [data-theme="light"] .section-desc{color:rgba(14,16,23,.78)}
+    .section{padding:20px 24px; margin-bottom:18px}
+    .section-title{font-weight:800; font-size:1.15rem; margin-bottom:10px; letter-spacing:-.2px}
+    .section-desc{color:var(--muted); line-height:1.9; text-align:justify}
 
-    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
     .cta{
-      display:inline-flex; align-items:center; gap:10px;
-      text-decoration:none;
-      background:rgba(255,255,255,.06);
-      border:1px solid var(--border);
-      color:var(--text);
-      padding:10px 14px;
-      border-radius:999px;
-      font-weight:900;
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; background:rgba(255,255,255,.75);
+      border:1px solid var(--border); color:var(--text);
+      padding:9px 18px; border-radius:999px; font-weight:700; font-size:.88rem;
       transition:transform .22s ease, background .22s ease, border-color .22s ease;
     }
-    .cta:hover{
-      background:rgba(255,84,41,.18);
-      border-color:rgba(255,84,41,.55);
-      transform:translateY(-2px);
-    }
+    [data-theme="dark"] .cta{background:rgba(20,24,32,.55)}
+    .cta:hover{background:rgba(255,84,41,.10); border-color:rgba(255,84,41,.55); transform:translateY(-2px)}
 
     /* App view switcher */
     .view{display:none}
     .view.active{display:block}
 
-    /* portfolio loader */
-    .loader{opacity:.85; padding:14px; border-radius:16px}
+    /* List & Loaders */
+    .loader{opacity:.92; padding:18px; border-radius:16px}
+    .list{display:grid; gap:12px}
+    .list-item{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:16px 20px; border-radius:16px;
+      background:rgba(255,255,255,.75); border:1px solid var(--border);
+      cursor:pointer; transition:transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    [data-theme="dark"] .list-item{background:rgba(20,24,32,.55)}
+    .list-item:hover{
+      transform:translateY(-2px);
+      background:rgba(255,84,41,.06);
+      border-color:rgba(255,84,41,.35);
+    }
+    .item-title{font-weight:800; margin-bottom:4px}
+    .item-meta{color:var(--muted); font-size:.85rem}
+    .item-action{font-weight:700; font-size:.85rem; color:var(--accent); white-space:nowrap}
+
+    /* Project overlay (mount) */
+    .project-overlay{
+      position:fixed; inset:0; z-index:1000;
+      display:none; align-items:center; justify-content:center;
+      padding:24px; overflow:auto; background:rgba(0,0,0,.5);
+    }
+    .project-card{
+      max-width:1100px; width:100%; max-height:92vh;
+      background:var(--glass); border:1px solid var(--border);
+      border-radius:20px; box-shadow:var(--elev);
+      backdrop-filter:var(--blur); -webkit-backdrop-filter:var(--blur);
+      display:flex; flex-direction:column; overflow:hidden;
+    }
+    .project-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 20px; background:rgba(255,255,255,.75);
+      border-bottom:1px solid var(--border);
+    }
+    [data-theme="dark"] .project-head{background:rgba(20,24,32,.5)}
+    .project-close{
+      appearance:none; border:none; background:transparent; color:inherit;
+      font-weight:800; cursor:pointer; padding:6px 12px; border-radius:8px;
+      font-size:1rem;
+    }
+    .project-close:hover{background:rgba(255,84,41,.15)}
+    .project-body{padding:0; flex:1; overflow:hidden}
+    .project-iframe{width:100%; height:78vh; border:0; display:block; background:#fff}
   </style>
 </head>
 
@@ -239,8 +259,9 @@
       </a>
 
       <div class="nav-actions">
-        <button class="chip" id="goHome" type="button">Home</button>
-        <button class="chip" id="goPortfolio" type="button">Portfolio</button>
+        <button class="chip" id="goHome" type="button" data-i18n="navHome">صفحه اصلی</button>
+        <button class="chip" id="goSamples" type="button" data-i18n="navSamples">نمونه‌کارها</button>
+        <button class="chip" id="goCreativities" type="button" data-i18n="navCreativities">نوآوری‌ها و پروژه‌ها</button>
         <button class="chip" id="themeToggle" type="button" data-i18n="themeLabel">حالت روز/شب</button>
         <select id="langSelect" aria-label="Language">
           <option value="fa">فارسی</option>
@@ -258,14 +279,15 @@
             <video autoplay loop muted playsinline src="main/kayan.mp4"></video>
           </div>
 
-          <!-- On mobile: this is below the video. On desktop: absolute on video -->
           <div class="hero-overlay" id="heroOverlay">
-            <div class="kicker" data-i18n="heroKicker">سینماتوگرافی هوش مصنوعی / کارگردانی هنری</div>
-            <div class="h-title" data-i18n="heroTitle">خلق داستان‌های ماندگار با هوش مصنوعی و سینما</div>
-            <div class="h-desc" data-i18n="heroDesc">کارگردانی هنری تخصصی، تلفیق جلوه‌های ویژه، تصاویر هوایی و پروداکشن‌های سطح اول برای برندهای پیشرو.</div>
+            <div class="kicker" data-i18n="heroKicker">کارگردانی هنری و سینماتوگرافی هوش مصنوعی</div>
+            <div class="h-title" data-i18n="heroTitle">تلفیق استاندارد سینمایی و خطوط تولید مبتنی بر هوش مصنوعی</div>
+            <div class="h-desc" data-i18n="heroDesc">
+              طراحی، نظارت و پیاده‌سازی پایپ‌لاین‌های نوین پروداکشن تصویری برای سازمان‌ها و برندهای تجاری؛ تبدیل ایده‌های پیچیده به دارایی‌های بصری راهبردی با بالاترین سطح بازدهی و بازگشت سرمایه.
+            </div>
 
-            <div class="glass-soft" style="padding:12px 14px;">
-              <div style="font-weight:900; opacity:.85; margin-bottom:6px;" data-i18n="autoTypeLabel">تمرکز تخصصی:</div>
+            <div class="glass-soft" style="padding:12px 16px;">
+              <div style="font-weight:800; font-size:.85rem; opacity:.85; margin-bottom:6px;" data-i18n="autoTypeLabel">حوزه‌های تمرکز راهبردی:</div>
               <div class="autotype" id="autoType"></div>
             </div>
           </div>
@@ -273,87 +295,155 @@
       </section>
 
       <section class="section glass" id="about">
-        <div class="section-title" data-i18n="aboutTitle">درباره من</div>
+        <div class="section-title" data-i18n="aboutTitle">چارچوب و متدولوژی همکاری</div>
         <div class="section-desc" data-i18n="aboutDesc">
-          من روی کارگردانی هنری، روایت تبلیغاتی سینمایی، و پایپ‌لاین‌های تولید با هوش مصنوعی تمرکز دارم؛
-          از ایده تا اجرا (Pre/Prod/Post) با استانداردهای برندینگ و کیفیت تجاری.
+          رویکرد اجرایی بر اساس پایپ‌لاین‌های مهندسی‌شده و مبتنی بر هدف (Objective-Driven) شکل گرفته است. در هر پروژه، تحلیل دقیق جایگاه برند و شاخص‌های کلیدی عملکرد (KPI) مبنای نگارش کانسپت بصری قرار می‌گیرد. با یکپارچه‌سازی فرآیندهای پیش‌تولید هوشمند، فیلم‌برداری میدانی و هوایی، و کامپوزیت تلفیقی هوش مصنوعی، محصول نهایی بدون اتلاف منابع و با استانداردهای سازمانی تحویل می‌گردد.
         </div>
       </section>
 
       <section class="section glass" id="contact">
-        <div class="section-title" data-i18n="contactTitle">ارتباط با من</div>
+        <div class="section-title" data-i18n="contactTitle">ارتباط و مذاکرات همکاری</div>
         <div class="section-desc" data-i18n="contactDesc">
-          برای همکاری‌های تجاری، پروژه‌های تبلیغاتی و تولید محتوای سطح بالا پیام بده.
+          جهت بررسی امکان‌سنجی پروژه‌ها، برگزاری جلسات مشاوره هنری، و اجرای کمپین‌های تجاری چندمرحله‌ای می‌توانید از درگاه‌های ذیل اقدام نمایید.
         </div>
         <div class="cta-row">
           <a class="cta" href="https://t.me/danialkayan" target="_blank" rel="noopener">Telegram: @danialkayan</a>
           <a class="cta" href="https://instagram.com/danialkayan" target="_blank" rel="noopener">Instagram: @danialkayan</a>
-          <a class="cta" href="https://www.linkedin.com/in/danialkayan" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="cta" href="https://www.linkedin.com/in/danialkayan" target="_blank" rel="noopener">LinkedIn Profile</a>
         </div>
       </section>
     </div>
 
-    <!-- PORTFOLIO VIEW (loads portfolio.html into here) -->
-    <div class="view" id="viewPortfolio">
-      <div class="glass section loader" id="portfolioLoader">در حال بارگذاری نمونه‌کارها...</div>
-      <div id="portfolioMount"></div>
+    <!-- SAMPLES VIEW -->
+    <div class="view" id="viewSamples">
+      <div class="glass section loader" id="samplesLoader" data-i18n="samplesLoading">در حال بارگذاری نمونه‌کارهای منتخب...</div>
+      <div id="samplesMount"></div>
+    </div>
+
+    <!-- CREATIVITIES / LAUNCHES VIEW -->
+    <div class="view" id="viewCreativities">
+      <section class="section glass">
+        <div class="section-title" data-i18n="creaTitle">نوآوری‌ها و پایپ‌لاین‌های پیاده‌سازی‌شده</div>
+        <div class="section-desc" data-i18n="creaDesc">
+          مجموعه‌ای از ساختارهای تولیدی نوآورانه و مستندات لانچ اختصاصی پروژه‌ها. جهت بررسی ساختار فنی، کانسپت و روند توسعه هر پروژه، بر روی عنوان مربوطه کلیک فرمایید.
+        </div>
+      </section>
+
+      <section class="section glass">
+        <div class="list" id="creaList">
+          <div class="list-item" data-slug="ab-afarinsabz-ronak">
+            <div>
+              <div class="item-title">کمپین جامع برندینگ و لانچ: آب‌آفرین سبز روناک</div>
+              <div class="item-meta">پایپ‌لاین اجرایی: Creative Direction • Drone Cinematography • AI Compositing • 3D Motion</div>
+            </div>
+            <div class="item-action">بررسی پروژه ←</div>
+          </div>
+
+          <div class="list-item" data-slug="hdpe-caliper-campaign">
+            <div>
+              <div class="item-title">ارائه تمایز صنعتی (USP): مقاطع HDPE و کولیس ورنیه</div>
+              <div class="item-meta">پایپ‌لاین اجرایی: Commercial Concept • Photoreal Paper Texture • B2B Sales-Driven Assets</div>
+            </div>
+            <div class="item-action">بررسی پروژه ←</div>
+          </div>
+
+          <div class="list-item" data-slug="kling-ai-music-film">
+            <div>
+              <div class="item-title">پایپ‌لاین سینمایی نسل جدید: تلفیق موسیقی اختصاصی و هوش مصنوعی</div>
+              <div class="item-meta">پایپ‌لاین اجرایی: Kling AI Pipeline • Sound Design • Cinematic Color Grading • Direction</div>
+            </div>
+            <div class="item-action">بررسی پروژه ←</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- PROJECT OVERLAY -->
+  <div class="project-overlay" id="projectOverlay" aria-hidden="true">
+    <div class="project-card">
+      <div class="project-head">
+        <div style="font-weight:800; font-size:.95rem" id="projectTitle">مشخصات و اسناد پروژه</div>
+        <button class="project-close" id="projectClose" type="button" aria-label="بستن پنجره">✕</button>
+      </div>
+      <div class="project-body">
+        <iframe class="project-iframe" id="projectFrame" title="نمایش تفصیلی پروژه"></iframe>
+      </div>
     </div>
   </div>
 
   <script>
     const I18N = {
       fa: {
-        dir: 'rtl',
-        themeLabel: 'حالت روز/شب',
-        heroKicker: 'سینماتوگرافی هوش مصنوعی / کارگردانی هنری',
-        heroTitle: 'خلق داستان‌های ماندگار با هوش مصنوعی و سینما',
-        heroDesc: 'کارگردانی هنری تخصصی، تلفیق جلوه‌های ویژه، تصاویر هوایی و پروداکشن‌های سطح اول برای برندهای پیشرو.',
-        autoTypeLabel: 'تمرکز تخصصی:',
-        aboutTitle: 'درباره من',
-        aboutDesc: 'من روی کارگردانی هنری، روایت تبلیغاتی سینمایی، و پایپ‌لاین‌های تولید با هوش مصنوعی تمرکز دارم؛ از ایده تا اجرا (Pre/Prod/Post) با استانداردهای برندینگ و کیفیت تجاری.',
-        contactTitle: 'ارتباط با من',
-        contactDesc: 'برای همکاری‌های تجاری، پروژه‌های تبلیغاتی و تولید محتوای سطح بالا پیام بده.',
-        typeLines: [
-          'کارگردانی هنری (Creative Direction)',
-          'سینماتوگرافی و روایت تبلیغاتی',
-          'AI Rendering / Compositing',
-          'VFX / 3D / Motion Design'
+        dir:'rtl',
+        navHome:'صفحه اصلی',
+        navSamples:'نمونه‌کارها',
+        navCreativities:'نوآوری‌ها و پروژه‌ها',
+        themeLabel:'حالت روز/شب',
+        heroKicker:'کارگردانی هنری و سینماتوگرافی هوش مصنوعی',
+        heroTitle:'تلفیق استاندارد سینمایی و خطوط تولید مبتنی بر هوش مصنوعی',
+        heroDesc:'طراحی، نظارت و پیاده‌سازی پایپ‌لاین‌های نوین پروداکشن تصویری برای سازمان‌ها و برندهای تجاری؛ تبدیل ایده‌های پیچیده به دارایی‌های بصری راهبردی با بالاترین سطح بازدهی و بازگشت سرمایه.',
+        autoTypeLabel:'حوزه‌های تمرکز راهبردی:',
+        aboutTitle:'چارچوب و متدولوژی همکاری',
+        aboutDesc:'رویکرد اجرایی بر اساس پایپ‌لاین‌های مهندسی‌شده و مبتنی بر هدف (Objective-Driven) شکل گرفته است. در هر پروژه، تحلیل دقیق جایگاه برند و شاخص‌های کلیدی عملکرد (KPI) مبنای نگارش کانسپت بصری قرار می‌گیرد. با یکپارچه‌سازی فرآیندهای پیش‌تولید هوشمند، فیلم‌برداری میدانی و هوایی، و کامپوزیت تلفیقی هوش مصنوعی، محصول نهایی بدون اتلاف منابع و با استانداردهای سازمانی تحویل می‌گردد.',
+        contactTitle:'ارتباط و مذاکرات همکاری',
+        contactDesc:'جهت بررسی امکان‌سنجی پروژه‌ها، برگزاری جلسات مشاوره هنری، و اجرای کمپین‌های تجاری چندمرحله‌ای می‌توانید از درگاه‌های ذیل اقدام نمایید.',
+        samplesLoading:'در حال بارگذاری نمونه‌کارهای منتخب...',
+        creaTitle:'نوآوری‌ها و پایپ‌لاین‌های پیاده‌سازی‌شده',
+        creaDesc:'مجموعه‌ای از ساختارهای تولیدی نوآورانه و مستندات لانچ اختصاصی پروژه‌ها. جهت بررسی ساختار فنی، کانسپت و روند توسعه هر پروژه، بر روی عنوان مربوطه کلیک فرمایید.',
+        typeLines:[
+          'کارگردانی هنری مبتنی بر شاخص‌های عملکرد (KPI)',
+          'روایت‌پردازی سینمایی و سینماتوگرافی تبلیغاتی',
+          'کامپوزیت، تلفیق بصری و رندرینگ هوش مصنوعی',
+          'طراحی جلوه‌های بصری (VFX) و گرافیک متحرک سه‌بعدی'
         ]
       },
       en: {
-        dir: 'ltr',
-        themeLabel: 'Theme',
-        heroKicker: 'AI CINEMATOGRAPHY / CREATIVE DIRECTION',
-        heroTitle: 'Crafting Cinematic Realism Powered by AI',
-        heroDesc: 'High-end creative direction, aerial cinematography, and AI-driven pipelines for modern brands.',
-        autoTypeLabel: 'Specialization:',
-        aboutTitle: 'About',
-        aboutDesc: 'I focus on creative direction, cinematic commercial storytelling, and AI-powered production pipelines — from concept to final delivery with brand-grade quality.',
-        contactTitle: 'Contact',
-        contactDesc: 'For commercial collaborations and high-end production, feel free to reach out.',
-        typeLines: [
-          'Creative Direction & Visual Identity',
-          'Cinematic Commercial Storytelling',
-          'AI Compositing & Rendering',
-          'VFX / 3D / Motion Design'
+        dir:'ltr',
+        navHome:'Home',
+        navSamples:'Selected Works',
+        navCreativities:'Innovations & Deployments',
+        themeLabel:'Theme',
+        heroKicker:'CREATIVE DIRECTION & AI CINEMATOGRAPHY',
+        heroTitle:'Converging Cinematic Precision with AI Production Pipelines',
+        heroDesc:'Designing and executing advanced visual production workflows for enterprise brands; translating complex concepts into high-impact strategic visual assets engineered for optimal ROI.',
+        autoTypeLabel:'Core Strategic Focus:',
+        aboutTitle:'Operational Framework & Methodology',
+        aboutDesc:'The production approach is strictly objective-driven. Each engagement begins with strategic brand positioning analysis and KPI definition. By unifying intelligent pre-visualization, aerial and commercial cinematography, and advanced AI compositing, deliverable quality meets elite commercial standards while optimizing resource utilization.',
+        contactTitle:'Inquiries & Strategic Partnerships',
+        contactDesc:'For commercial feasibility assessments, creative advisory, and full-scale campaign execution, please initiate communication through the verified channels below.',
+        samplesLoading:'Loading selected works...',
+        creaTitle:'Innovations & Production Pipelines',
+        creaDesc:'A curated directory of proprietary production workflows and comprehensive project deployments. Select an item to inspect technical specifications, frameworks, and visual assets.',
+        typeLines:[
+          'KPI-Driven Creative Direction',
+          'Commercial Cinematography & Visual Narrative',
+          'Advanced AI Compositing & Rendering',
+          'VFX Engineering & 3D Motion Systems'
         ]
       },
       ar: {
-        dir: 'rtl',
-        themeLabel: 'المظهر',
-        heroKicker: 'تصوير سينمائي بالذكاء الاصطناعي / إخراج إبداعي',
-        heroTitle: 'صناعة الإبهار البصري بالذكاء الاصطناعي والسينما',
-        heroDesc: 'إخراج بصري متقدم، تصوير جوي، وأنظمة إنتاج ذكية لصناعة محتوى احترافي للعلامات التجارية.',
-        autoTypeLabel: 'مجال التركيز:',
-        aboutTitle: 'نبذة عني',
-        aboutDesc: 'أركز على الإخراج الإبداعي والسرد الإعلاني السينمائي وخطوط إنتاج بالذكاء الاصطناعي — من الفكرة إلى التسليم النهائي بجودة تجارية.',
-        contactTitle: 'تواصل معي',
-        contactDesc: 'للتعاونات التجارية والإنتاج الاحترافي، أرسل رسالة.',
-        typeLines: [
-          'إخراج إبداعي وهوية بصرية',
-          'سرد إعلاني سينمائي',
-          'دمج ورندر بالذكاء الاصطناعي',
-          'مؤثرات بصرية / ثلاثي الأبعاد / موشن'
+        dir:'rtl',
+        navHome:'الرئيسية',
+        navSamples:'الأعمال المختارة',
+        navCreativities:'الابتكارات والمشاريع',
+        themeLabel:'المظهر',
+        heroKicker:'الإخراج الفني والسينماتوغرافيا بالذكاء الاصطناعي',
+        heroTitle:'دمج الدقة السينمائية مع خطوط الإنتاج المعتمدة على الذكاء الاصطناعي',
+        heroDesc:'تصميم وتنفيذ مسارات إنتاج بصري متطورة للعلامات التجارية والشركات الكبرى؛ تحويل الرؤى المعقدة إلى أصول بصرية استراتيجية تحقق أعلى درجات العائد الاستثماري.',
+        autoTypeLabel:'المحاور الاستراتيجية:',
+        aboutTitle:'منهجية العمل والإنتاج',
+        aboutDesc:'تعتمد آلية التنفيذ على خطوط إنتاج هندسية قائمة على تحقيق مؤشرات الأداء (KPIs). نبدأ بتحليل دقيق لتموضع العلامة التجارية، ثم نقوم بدمج التخطيط الذكي، والتصوير الجوي والميداني، والمعالجة البصرية المتقدمة بالذكاء الاصطناعي لتقديم منتج يلائم أرقى المعايير التجارية.',
+        contactTitle:'قنوات التواصل والتعاون',
+        contactDesc:'لمناقشة المشاريع التجارية، الاستشارات الفنية، أو إطلاق الحملات الإعلانية الشاملة، يرجى التواصل عبر المنصات التالية.',
+        samplesLoading:'جاري تحميل الأعمال المختارة...',
+        creaTitle:'الابتكارات ومسارات الإنتاج المنفذة',
+        creaDesc:'دليل موثق للأنظمة الإنتاجية المبتكرة وتفاصيل إطلاق المشاريع. انقر على أي مشروع للاطلاع على الوثائق الفنية ومراحل التطوير.',
+        typeLines:[
+          'إخراج إبداعي موجه بمؤشرات الأداء (KPIs)',
+          'سرد سينمائي وتصوير إعلاني عالي الدقة',
+          'دمج ومعالجة بصرية متقدمة بالذكاء الاصطناعي',
+          'مؤثرات بصرية (VFX) وأنظمة تحريك ثلاثية الأبعاد'
         ]
       }
     };
@@ -387,8 +477,6 @@
       });
 
       startAutoType(dict.typeLines);
-
-      // forward language to portfolio view (if loaded)
       window.dispatchEvent(new CustomEvent('kayan:lang', { detail: { lang } }));
     }
     function smartLocale(){
@@ -411,7 +499,7 @@
       autoTypeEl.textContent='';
 
       let lineIndex=0, charIndex=0, deleting=false;
-      const typeSpeed=26, deleteSpeed=18, holdTime=950, betweenLines=420;
+      const typeSpeed=24, deleteSpeed=16, holdTime=1100, betweenLines=400;
 
       const tick=()=>{
         const line=lines[lineIndex] || '';
@@ -439,25 +527,31 @@
       tick();
     }
 
-    // Views (SPA style)
+    // Views (SPA Router)
     const viewHome = document.getElementById('viewHome');
-    const viewPortfolio = document.getElementById('viewPortfolio');
-    const goHome = document.getElementById('goHome');
-    const goPortfolio = document.getElementById('goPortfolio');
-    const portfolioMount = document.getElementById('portfolioMount');
-    const portfolioLoader = document.getElementById('portfolioLoader');
+    const viewSamples = document.getElementById('viewSamples');
+    const viewCreativities = document.getElementById('viewCreativities');
 
-    let portfolioLoaded=false;
+    const goHome = document.getElementById('goHome');
+    const goSamples = document.getElementById('goSamples');
+    const goCreativities = document.getElementById('goCreativities');
+
+    const samplesMount = document.getElementById('samplesMount');
+    const samplesLoader = document.getElementById('samplesLoader');
+    let samplesLoaded=false;
 
     function setView(which){
-      if(which==='portfolio'){
-        viewHome.classList.remove('active');
-        viewPortfolio.classList.add('active');
+      [viewHome, viewSamples, viewCreativities].forEach(v=>v.classList.remove('active'));
+      if(which==='samples'){
+        viewSamples.classList.add('active');
         window.scrollTo({top:0, behavior:'smooth'});
-        if(!portfolioLoaded) loadPortfolio();
-        history.replaceState({view:'portfolio'}, '', '#portfolio');
-      }else{
-        viewPortfolio.classList.remove('active');
+        if(!samplesLoaded) loadSamples();
+        history.replaceState({view:'samples'}, '', '#samples');
+      } else if(which==='creativities'){
+        viewCreativities.classList.add('active');
+        window.scrollTo({top:0, behavior:'smooth'});
+        history.replaceState({view:'creativities'}, '', '#creativities');
+      } else {
         viewHome.classList.add('active');
         window.scrollTo({top:0, behavior:'smooth'});
         history.replaceState({view:'home'}, '', '#top');
@@ -465,22 +559,21 @@
     }
 
     goHome.addEventListener('click', ()=>setView('home'));
-    goPortfolio.addEventListener('click', ()=>setView('portfolio'));
+    goSamples.addEventListener('click', ()=>setView('samples'));
+    goCreativities.addEventListener('click', ()=>setView('creativities'));
 
-    async function loadPortfolio(){
+    async function loadSamples(){
       try{
-        portfolioLoader.style.display='block';
-        const res = await fetch('portfolio.html', { cache: 'no-store' });
+        samplesLoader.style.display='block';
+        const res = await fetch('samples.html', { cache: 'no-store' });
         const html = await res.text();
 
-        // Extract only body content to mount
         const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
         const bodyContent = bodyMatch ? bodyMatch[1] : html;
 
-        portfolioMount.innerHTML = bodyContent;
+        samplesMount.innerHTML = bodyContent;
 
-        // Execute scripts inside mounted content
-        const scripts = portfolioMount.querySelectorAll('script');
+        const scripts = samplesMount.querySelectorAll('script');
         scripts.forEach(oldScript=>{
           const s=document.createElement('script');
           if(oldScript.src) s.src=oldScript.src;
@@ -489,23 +582,69 @@
           oldScript.remove();
         });
 
-        portfolioLoaded=true;
+        samplesLoaded=true;
       }catch(err){
-        portfolioMount.innerHTML = '<div class="glass section">خطا در بارگذاری portfolio.html (فایل کنار index.html باشد).</div>';
+        samplesMount.innerHTML = '<div class="glass section">عدم دسترسی به فایل samples.html؛ لطفاً وجود این فایل را در مسیر ریشه بررسی فرمایید.</div>';
       }finally{
-        portfolioLoader.style.display='none';
+        samplesLoader.style.display='none';
       }
     }
 
     window.addEventListener('popstate', (e)=>{
-      if(location.hash==='#portfolio') setView('portfolio');
+      if(location.hash==='#samples') setView('samples');
+      else if(location.hash==='#creativities') setView('creativities');
       else setView('home');
+    });
+
+    // Project Overlay Mount (Iframe Sandbox for Custom Project HTMLs)
+    const BASE_PATH = 'projects/';
+    const creaList = document.getElementById('creaList');
+    const projectOverlay = document.getElementById('projectOverlay');
+    const projectFrame = document.getElementById('projectFrame');
+    const projectClose = document.getElementById('projectClose');
+    const projectTitle = document.getElementById('projectTitle');
+
+    function openProject(slug, titleText){
+      const url = BASE_PATH + slug + '.html';
+      projectTitle.textContent = titleText || 'پروژه سازمانی';
+      projectFrame.src = url;
+      projectOverlay.style.display = 'flex';
+      projectOverlay.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      history.pushState({view:'project', slug}, '', '#project-'+slug);
+    }
+
+    function closeProject(){
+      projectFrame.src = 'about:blank';
+      projectOverlay.style.display = 'none';
+      projectOverlay.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      if(location.hash.startsWith('#project-')){
+        history.back();
+      }
+    }
+
+    projectClose.addEventListener('click', closeProject);
+    projectOverlay.addEventListener('click', (e)=>{
+      if(e.target===projectOverlay) closeProject();
+    });
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape' && projectOverlay.style.display==='flex') closeProject();
+    });
+
+    creaList.addEventListener('click', (e)=>{
+      const item = e.target.closest('.list-item');
+      if(!item) return;
+      const slug = item.getAttribute('data-slug');
+      const title = item.querySelector('.item-title')?.textContent?.trim() || 'پروژه';
+      openProject(slug, title);
     });
 
     // Init
     applyTheme(smartTheme());
     applyLanguage(smartLocale());
-    if(location.hash==='#portfolio') setView('portfolio');
+    if(location.hash==='#samples') setView('samples');
+    else if(location.hash==='#creativities') setView('creativities');
   </script>
 </body>
 </html>
