@@ -202,7 +202,7 @@
     .list{display:grid; gap:12px}
     .list-item{
       display:flex; align-items:center; justify-content:space-between;
-      gap:14px; padding:16px 20px; border-radius:16px;
+      gap:14px; padding:18px 22px; border-radius:16px;
       background:rgba(255,255,255,.75); border:1px solid var(--border);
       cursor:pointer; transition:transform .2s ease, background .2s ease, border-color .2s ease;
     }
@@ -212,18 +212,18 @@
       background:rgba(255,84,41,.06);
       border-color:rgba(255,84,41,.35);
     }
-    .item-title{font-weight:800; margin-bottom:4px}
-    .item-meta{color:var(--muted); font-size:.85rem}
-    .item-action{font-weight:700; font-size:.85rem; color:var(--accent); white-space:nowrap}
+    .item-title{font-weight:800; font-size:1.05rem; margin-bottom:4px}
+    .item-meta{color:var(--muted); font-size:.88rem; line-height:1.6}
+    .item-action{font-weight:700; font-size:.88rem; color:var(--accent); white-space:nowrap}
 
-    /* Project overlay (mount) */
+    /* Project overlay (modal) */
     .project-overlay{
       position:fixed; inset:0; z-index:1000;
       display:none; align-items:center; justify-content:center;
       padding:24px; overflow:auto; background:rgba(0,0,0,.5);
     }
     .project-card{
-      max-width:1100px; width:100%; max-height:92vh;
+      max-width:1150px; width:100%; max-height:92vh;
       background:var(--glass); border:1px solid var(--border);
       border-radius:20px; box-shadow:var(--elev);
       backdrop-filter:var(--blur); -webkit-backdrop-filter:var(--blur);
@@ -238,7 +238,7 @@
     .project-close{
       appearance:none; border:none; background:transparent; color:inherit;
       font-weight:800; cursor:pointer; padding:6px 12px; border-radius:8px;
-      font-size:1rem;
+      font-size:1.1rem;
     }
     .project-close:hover{background:rgba(255,84,41,.15)}
     .project-body{padding:0; flex:1; overflow:hidden}
@@ -261,7 +261,7 @@
       <div class="nav-actions">
         <button class="chip" id="goHome" type="button" data-i18n="navHome">صفحه اصلی</button>
         <button class="chip" id="goSamples" type="button" data-i18n="navSamples">نمونه‌کارها</button>
-        <button class="chip" id="goCreativities" type="button" data-i18n="navCreativities">نوآوری‌ها و پروژه‌ها</button>
+        <button class="chip" id="goCreativities" type="button" data-i18n="navCreativities">نوآوری‌ها</button>
         <button class="chip" id="themeToggle" type="button" data-i18n="themeLabel">حالت روز/شب</button>
         <select id="langSelect" aria-label="Language">
           <option value="fa">فارسی</option>
@@ -302,9 +302,9 @@
       </section>
 
       <section class="section glass" id="contact">
-        <div class="section-title" data-i18n="contactTitle">ارتباط و مذاکرات همکاری</div>
+        <div class="section-title" data-i18n="contactTitle">ارتباط و مذاکرات تجاری</div>
         <div class="section-desc" data-i18n="contactDesc">
-          جهت بررسی امکان‌سنجی پروژه‌ها، برگزاری جلسات مشاوره هنری، و اجرای کمپین‌های تجاری چندمرحله‌ای می‌توانید از درگاه‌های ذیل اقدام نمایید.
+          جهت بررسی امکان‌سنجی پروژه‌ها، برگزاری جلسات مشاوره هنری، و اجرای کمپین‌های تجاری می‌توانید از طریق کانال‌های ذیل اقدام فرمایید.
         </div>
         <div class="cta-row">
           <a class="cta" href="https://t.me/danialkayan" target="_blank" rel="noopener">Telegram: @danialkayan</a>
@@ -320,54 +320,39 @@
       <div id="samplesMount"></div>
     </div>
 
-    <!-- CREATIVITIES / LAUNCHES VIEW -->
+    <!-- CREATIVITIES VIEW (Single Key Innovation Project) -->
     <div class="view" id="viewCreativities">
       <section class="section glass">
-        <div class="section-title" data-i18n="creaTitle">نوآوری‌ها و پایپ‌لاین‌های پیاده‌سازی‌شده</div>
+        <div class="section-title" data-i18n="creaTitle">نوآوری‌های تعاملی و پروداکشن‌های مهندسی</div>
         <div class="section-desc" data-i18n="creaDesc">
-          مجموعه‌ای از ساختارهای تولیدی نوآورانه و مستندات لانچ اختصاصی پروژه‌ها. جهت بررسی ساختار فنی، کانسپت و روند توسعه هر پروژه، بر روی عنوان مربوطه کلیک فرمایید.
+          تلفیق تکنولوژی سه‌بعدی تعاملی و تشریح مکانیزم‌های صنعتی با رویکرد ارتقای درک مشتری و اثربخشی بازاریابی B2B. با کلیک بر روی پروژه، ساختار نرم‌افزاری و بصری آن قابل مشاهده است.
         </div>
       </section>
 
       <section class="section glass">
-        <div class="list" id="creaList">
-          <div class="list-item" data-slug="ab-afarinsabz-ronak">
+        <div class="list">
+          <!-- نام فایل مستقیماً tavan-bardasht.html در ریشه سایت -->
+          <div class="list-item" id="itemTavanBardasht" data-file="tavan-bardasht.html">
             <div>
-              <div class="item-title">کمپین جامع برندینگ و لانچ: آب‌آفرین سبز روناک</div>
-              <div class="item-meta">پایپ‌لاین اجرایی: Creative Direction • Drone Cinematography • AI Compositing • 3D Motion</div>
+              <div class="item-title" data-i18n="tavanTitle">توان برداشت جویبار | کانسپت نرم‌افزار سه‌بعدی و تشریح تعاملی ادوات کشاورزی</div>
+              <div class="item-meta" data-i18n="tavanMeta">محور پروژه: تشریح اجزا و مکانیزم‌های ماشین‌آلات کشاورزی • مدل‌سازی و انیمیشن سه‌بعدی مهندسی • طراحی تعاملی و ابزار کاربردی فروش صنعتی</div>
             </div>
-            <div class="item-action">بررسی پروژه ←</div>
-          </div>
-
-          <div class="list-item" data-slug="hdpe-caliper-campaign">
-            <div>
-              <div class="item-title">ارائه تمایز صنعتی (USP): مقاطع HDPE و کولیس ورنیه</div>
-              <div class="item-meta">پایپ‌لاین اجرایی: Commercial Concept • Photoreal Paper Texture • B2B Sales-Driven Assets</div>
-            </div>
-            <div class="item-action">بررسی پروژه ←</div>
-          </div>
-
-          <div class="list-item" data-slug="kling-ai-music-film">
-            <div>
-              <div class="item-title">پایپ‌لاین سینمایی نسل جدید: تلفیق موسیقی اختصاصی و هوش مصنوعی</div>
-              <div class="item-meta">پایپ‌لاین اجرایی: Kling AI Pipeline • Sound Design • Cinematic Color Grading • Direction</div>
-            </div>
-            <div class="item-action">بررسی پروژه ←</div>
+            <div class="item-action" data-i18n="tavanAction">مشاهده پروژه و اجرا ←</div>
           </div>
         </div>
       </section>
     </div>
   </div>
 
-  <!-- PROJECT OVERLAY -->
+  <!-- PROJECT OVERLAY (MODAL) -->
   <div class="project-overlay" id="projectOverlay" aria-hidden="true">
     <div class="project-card">
       <div class="project-head">
-        <div style="font-weight:800; font-size:.95rem" id="projectTitle">مشخصات و اسناد پروژه</div>
-        <button class="project-close" id="projectClose" type="button" aria-label="بستن پنجره">✕</button>
+        <div style="font-weight:800; font-size:.95rem" id="projectTitle">مشخصات و اجرای تعاملی پروژه</div>
+        <button class="project-close" id="projectClose" type="button" aria-label="بستن">✕</button>
       </div>
       <div class="project-body">
-        <iframe class="project-iframe" id="projectFrame" title="نمایش تفصیلی پروژه"></iframe>
+        <iframe class="project-iframe" id="projectFrame" title="نمایش کانسپت پروژه"></iframe>
       </div>
     </div>
   </div>
@@ -378,7 +363,7 @@
         dir:'rtl',
         navHome:'صفحه اصلی',
         navSamples:'نمونه‌کارها',
-        navCreativities:'نوآوری‌ها و پروژه‌ها',
+        navCreativities:'نوآوری‌ها',
         themeLabel:'حالت روز/شب',
         heroKicker:'کارگردانی هنری و سینماتوگرافی هوش مصنوعی',
         heroTitle:'تلفیق استاندارد سینمایی و خطوط تولید مبتنی بر هوش مصنوعی',
@@ -386,11 +371,14 @@
         autoTypeLabel:'حوزه‌های تمرکز راهبردی:',
         aboutTitle:'چارچوب و متدولوژی همکاری',
         aboutDesc:'رویکرد اجرایی بر اساس پایپ‌لاین‌های مهندسی‌شده و مبتنی بر هدف (Objective-Driven) شکل گرفته است. در هر پروژه، تحلیل دقیق جایگاه برند و شاخص‌های کلیدی عملکرد (KPI) مبنای نگارش کانسپت بصری قرار می‌گیرد. با یکپارچه‌سازی فرآیندهای پیش‌تولید هوشمند، فیلم‌برداری میدانی و هوایی، و کامپوزیت تلفیقی هوش مصنوعی، محصول نهایی بدون اتلاف منابع و با استانداردهای سازمانی تحویل می‌گردد.',
-        contactTitle:'ارتباط و مذاکرات همکاری',
-        contactDesc:'جهت بررسی امکان‌سنجی پروژه‌ها، برگزاری جلسات مشاوره هنری، و اجرای کمپین‌های تجاری چندمرحله‌ای می‌توانید از درگاه‌های ذیل اقدام نمایید.',
+        contactTitle:'ارتباط و مذاکرات تجاری',
+        contactDesc:'جهت بررسی امکان‌سنجی پروژه‌ها، برگزاری جلسات مشاوره هنری، و اجرای کمپین‌های تجاری می‌توانید از طریق کانال‌های ذیل اقدام فرمایید.',
         samplesLoading:'در حال بارگذاری نمونه‌کارهای منتخب...',
-        creaTitle:'نوآوری‌ها و پایپ‌لاین‌های پیاده‌سازی‌شده',
-        creaDesc:'مجموعه‌ای از ساختارهای تولیدی نوآورانه و مستندات لانچ اختصاصی پروژه‌ها. جهت بررسی ساختار فنی، کانسپت و روند توسعه هر پروژه، بر روی عنوان مربوطه کلیک فرمایید.',
+        creaTitle:'نوآوری‌های تعاملی و پروداکشن‌های مهندسی',
+        creaDesc:'تلفیق تکنولوژی سه‌بعدی تعاملی و تشریح مکانیزم‌های صنعتی با رویکرد ارتقای درک مشتری و اثربخشی بازاریابی B2B. با کلیک بر روی پروژه، ساختار نرم‌افزاری و بصری آن قابل مشاهده است.',
+        tavanTitle:'توان برداشت جویبار | کانسپت نرم‌افزار سه‌بعدی و تشریح تعاملی ادوات کشاورزی',
+        tavanMeta:'محور پروژه: تشریح اجزا و مکانیزم‌های ماشین‌آلات کشاورزی • مدل‌سازی و انیمیشن سه‌بعدی مهندسی • طراحی تعاملی و ابزار کاربردی فروش صنعتی',
+        tavanAction:'مشاهده پروژه و اجرا ←',
         typeLines:[
           'کارگردانی هنری مبتنی بر شاخص‌های عملکرد (KPI)',
           'روایت‌پردازی سینمایی و سینماتوگرافی تبلیغاتی',
@@ -402,7 +390,7 @@
         dir:'ltr',
         navHome:'Home',
         navSamples:'Selected Works',
-        navCreativities:'Innovations & Deployments',
+        navCreativities:'Innovations',
         themeLabel:'Theme',
         heroKicker:'CREATIVE DIRECTION & AI CINEMATOGRAPHY',
         heroTitle:'Converging Cinematic Precision with AI Production Pipelines',
@@ -413,8 +401,11 @@
         contactTitle:'Inquiries & Strategic Partnerships',
         contactDesc:'For commercial feasibility assessments, creative advisory, and full-scale campaign execution, please initiate communication through the verified channels below.',
         samplesLoading:'Loading selected works...',
-        creaTitle:'Innovations & Production Pipelines',
-        creaDesc:'A curated directory of proprietary production workflows and comprehensive project deployments. Select an item to inspect technical specifications, frameworks, and visual assets.',
+        creaTitle:'Interactive Innovations & Industrial R&D',
+        creaDesc:'Integrating real-time 3D environments and interactive mechanical breakdowns to enhance B2B commercial conversion and technical comprehension.',
+        tavanTitle:'Tavan Bardasht Juybar | 3D Interactive Web Application & Ag-Machinery Disassembly',
+        tavanMeta:'Scope: Exploded view of agricultural machinery components • Engineering 3D visualization • Interactive industrial sales enablement',
+        tavanAction:'Launch Interactive Project →',
         typeLines:[
           'KPI-Driven Creative Direction',
           'Commercial Cinematography & Visual Narrative',
@@ -426,19 +417,22 @@
         dir:'rtl',
         navHome:'الرئيسية',
         navSamples:'الأعمال المختارة',
-        navCreativities:'الابتكارات والمشاريع',
+        navCreativities:'الابتكارات',
         themeLabel:'المظهر',
         heroKicker:'الإخراج الفني والسينماتوغرافيا بالذكاء الاصطناعي',
         heroTitle:'دمج الدقة السينمائية مع خطوط الإنتاج المعتمدة على الذكاء الاصطناعي',
         heroDesc:'تصميم وتنفيذ مسارات إنتاج بصري متطورة للعلامات التجارية والشركات الكبرى؛ تحويل الرؤى المعقدة إلى أصول بصرية استراتيجية تحقق أعلى درجات العائد الاستثماري.',
         autoTypeLabel:'المحاور الاستراتيجية:',
         aboutTitle:'منهجية العمل والإنتاج',
-        aboutDesc:'تعتمد آلية التنفيذ على خطوط إنتاج هندسية قائمة على تحقيق مؤشرات الأداء (KPIs). نبدأ بتحليل دقيق لتموضع العلامة التجارية، ثم نقوم بدمج التخطيط الذكي، والتصوير الجوي والميداني، والمعالجة البصرية المتقدمة بالذكاء الاصطناعي لتقديم منتج يلائم أرقى المعايير التجارية.',
+        aboutDesc:'تعتمد آلية التنفيذ على خطوط إنتاج هندسية قائمة على تحقيق مؤشرات الأداء (KPIs). نبدأ بتحليل تموضع العلامة التجارية، ثم ندمج التخطيط الذكي، والتصوير الميداني، والمعالجة البصرية بالذكاء الاصطناعي لتسليم نتائج تجارية رفيعة المستوى.',
         contactTitle:'قنوات التواصل والتعاون',
         contactDesc:'لمناقشة المشاريع التجارية، الاستشارات الفنية، أو إطلاق الحملات الإعلانية الشاملة، يرجى التواصل عبر المنصات التالية.',
         samplesLoading:'جاري تحميل الأعمال المختارة...',
-        creaTitle:'الابتكارات ومسارات الإنتاج المنفذة',
-        creaDesc:'دليل موثق للأنظمة الإنتاجية المبتكرة وتفاصيل إطلاق المشاريع. انقر على أي مشروع للاطلاع على الوثائق الفنية ومراحل التطوير.',
+        creaTitle:'الابتكارات التفاعلية والإنتاج الهندسي',
+        creaDesc:'دمج البيئات ثلاثية الأبعاد التفاعلية والتشريح الميكانيكي لرفع كفاءة التسويق الصناعي واستيعاب الآليات.',
+        tavanTitle:'توان برداشت جويبار | مفهوم تطبيق ثلاثي الأبعاد وتفكيك الآلات الزراعية تفاعلياً',
+        tavanMeta:'نطاق المشروع: تشريح مكونات الآليات الزراعية • محاكاة هندسية ثلاثية الأبعاد • أداة تفاعلية لدعم المبيعات الصناعية',
+        tavanAction:'عرض المشروع ←',
         typeLines:[
           'إخراج إبداعي موجه بمؤشرات الأداء (KPIs)',
           'سرد سينمائي وتصوير إعلاني عالي الدقة',
@@ -527,7 +521,7 @@
       tick();
     }
 
-    // Views (SPA Router)
+    // Views Routing
     const viewHome = document.getElementById('viewHome');
     const viewSamples = document.getElementById('viewSamples');
     const viewCreativities = document.getElementById('viewCreativities');
@@ -584,7 +578,7 @@
 
         samplesLoaded=true;
       }catch(err){
-        samplesMount.innerHTML = '<div class="glass section">عدم دسترسی به فایل samples.html؛ لطفاً وجود این فایل را در مسیر ریشه بررسی فرمایید.</div>';
+        samplesMount.innerHTML = '<div class="glass section">عدم دسترسی به فایل samples.html؛ لطفاً بررسی نمایید فایل دقیقاً در کنار index.html قرار داشته باشد.</div>';
       }finally{
         samplesLoader.style.display='none';
       }
@@ -596,22 +590,20 @@
       else setView('home');
     });
 
-    // Project Overlay Mount (Iframe Sandbox for Custom Project HTMLs)
-    const BASE_PATH = 'projects/';
-    const creaList = document.getElementById('creaList');
+    // Project Overlay Direct File Execution
     const projectOverlay = document.getElementById('projectOverlay');
     const projectFrame = document.getElementById('projectFrame');
     const projectClose = document.getElementById('projectClose');
     const projectTitle = document.getElementById('projectTitle');
+    const itemTavanBardasht = document.getElementById('itemTavanBardasht');
 
-    function openProject(slug, titleText){
-      const url = BASE_PATH + slug + '.html';
-      projectTitle.textContent = titleText || 'پروژه سازمانی';
-      projectFrame.src = url;
+    function openProjectFile(fileName, titleText){
+      projectTitle.textContent = titleText || 'پروژه تعاملی توان برداشت جویبار';
+      projectFrame.src = fileName;
       projectOverlay.style.display = 'flex';
       projectOverlay.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
-      history.pushState({view:'project', slug}, '', '#project-'+slug);
+      history.pushState({view:'project', file:fileName}, '', '#tavan-bardasht');
     }
 
     function closeProject(){
@@ -619,7 +611,7 @@
       projectOverlay.style.display = 'none';
       projectOverlay.setAttribute('aria-hidden','true');
       document.body.style.overflow = '';
-      if(location.hash.startsWith('#project-')){
+      if(location.hash==='#tavan-bardasht'){
         history.back();
       }
     }
@@ -632,12 +624,10 @@
       if(e.key==='Escape' && projectOverlay.style.display==='flex') closeProject();
     });
 
-    creaList.addEventListener('click', (e)=>{
-      const item = e.target.closest('.list-item');
-      if(!item) return;
-      const slug = item.getAttribute('data-slug');
-      const title = item.querySelector('.item-title')?.textContent?.trim() || 'پروژه';
-      openProject(slug, title);
+    itemTavanBardasht.addEventListener('click', ()=>{
+      const fileName = itemTavanBardasht.getAttribute('data-file');
+      const title = itemTavanBardasht.querySelector('.item-title')?.textContent?.trim();
+      openProjectFile(fileName, title);
     });
 
     // Init
