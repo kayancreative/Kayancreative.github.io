@@ -51,7 +51,7 @@
       font-size:15px;
     }
     html[lang="en"] body{font-family:var(--font-en)}
-    .container{max-width:1240px;margin:0 auto;width:100%}
+    .container{max-width:1240px;margin:0 auto}
 
     .ambient-bg{
       position:fixed; inset:0; z-index:-2; pointer-events:none; overflow:hidden;
@@ -82,7 +82,7 @@
       border-color:rgba(255,255,255,.12);
     }
 
-    /* HEADER & BRAND */
+    /* HEADER & BRAND - OPTIMIZED FOR MOBILE VISIBILITY */
     header.nav{
       display:flex; 
       align-items:center; 
@@ -101,7 +101,7 @@
       font-weight:900; 
       letter-spacing:-.4px;
       font-size:1.25rem;
-      flex-shrink:0;
+      flex-shrink:0; /* تضمین عدم فشرده شدن نام در موبایل */
     }
     .brand img{
       width:52px;
@@ -151,6 +151,47 @@
       transform:translateY(-2px);
     }
 
+    /* Mobile Header Behavior */
+    @media (max-width: 768px) {
+      header.nav{
+        padding:14px 18px;
+        gap:12px;
+      }
+      .brand{
+        font-size:1.15rem;
+        gap:12px;
+      }
+      .brand img{
+        width:46px;
+        height:46px;
+        border-radius:13px;
+      }
+      .nav-actions{
+        width:100%;
+        justify-content:flex-start;
+        overflow-x:auto;
+        padding-bottom:4px;
+        flex-wrap:nowrap;
+        -webkit-overflow-scrolling:touch;
+      }
+      .chip, select{
+        padding:7px 14px;
+        font-size:.8rem;
+        white-space:nowrap;
+        flex-shrink:0;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .brand{
+        font-size:1.08rem;
+      }
+      .brand img{
+        width:42px;
+        height:42px;
+      }
+    }
+
     /* HERO */
     .hero{padding:12px;margin-bottom:18px}
     .hero-wrap{display:grid; grid-template-columns:1fr; gap:14px}
@@ -170,8 +211,6 @@
       box-shadow:0 18px 40px rgba(14,16,23,.08);
       transition:transform .2s ease, opacity .2s ease;
       color:#0e1017;
-      word-break:break-word;
-      overflow-wrap:break-word;
     }
     [data-theme="dark"] .hero-overlay{
       background:rgba(20,24,32,.62);
@@ -201,20 +240,11 @@
     }
     .h-desc{opacity:.9; font-size:.95rem; line-height:1.85; margin-bottom:14px; text-align:justify}
 
-    /* AutoType: اصلاح‌شده جهت شکسته‌شدن متن در موبایل و عدم خروج از کادر */
     .autotype{
-      font-weight:700; 
-      display:inline; 
-      min-height:1.3em; 
-      white-space:normal;
-      word-break:break-word;
-      overflow-wrap:break-word;
-      border-right:2px solid var(--accent); 
-      padding-right:8px;
-      font-size:.9rem;
-      line-height:1.6;
+      font-weight:700; display:inline-block; min-height:1.3em; white-space:nowrap;
+      border-right:2px solid var(--accent); padding-right:10px;
     }
-    html[dir="ltr"] .autotype{border-right:none; border-left:2px solid var(--accent); padding-right:0; padding-left:8px}
+    html[dir="ltr"] .autotype{border-right:none; border-left:2px solid var(--accent); padding-right:0; padding-left:10px}
 
     /* Sections */
     .section{padding:20px 24px; margin-bottom:18px}
@@ -238,13 +268,12 @@
 
     /* List & Loaders */
     .loader{opacity:.92; padding:18px; border-radius:16px}
-    .list{display:grid; gap:12px; width:100%}
+    .list{display:grid; gap:12px}
     .list-item{
       display:flex; align-items:center; justify-content:space-between;
       gap:14px; padding:18px 22px; border-radius:16px;
       background:rgba(255,255,255,.75); border:1px solid var(--border);
       cursor:pointer; transition:transform .2s ease, background .2s ease, border-color .2s ease;
-      width:100%;
     }
     [data-theme="dark"] .list-item{background:rgba(20,24,32,.55)}
     .list-item:hover{
@@ -252,9 +281,9 @@
       background:rgba(255,84,41,.06);
       border-color:rgba(255,84,41,.35);
     }
-    .item-title{font-weight:800; font-size:1.05rem; margin-bottom:4px; line-height:1.5}
-    .item-meta{color:var(--muted); font-size:.88rem; line-height:1.6; text-align:justify}
-    .item-action{font-weight:700; font-size:.88rem; color:var(--accent); white-space:nowrap; flex-shrink:0}
+    .item-title{font-weight:800; font-size:1.05rem; margin-bottom:4px}
+    .item-meta{color:var(--muted); font-size:.88rem; line-height:1.6}
+    .item-action{font-weight:700; font-size:.88rem; color:var(--accent); white-space:nowrap}
 
     /* Project overlay (modal) */
     .project-overlay{
@@ -273,92 +302,16 @@
       display:flex; align-items:center; justify-content:space-between;
       padding:14px 20px; background:rgba(255,255,255,.75);
       border-bottom:1px solid var(--border);
-      gap:10px;
     }
     [data-theme="dark"] .project-head{background:rgba(20,24,32,.5)}
     .project-close{
       appearance:none; border:none; background:transparent; color:inherit;
       font-weight:800; cursor:pointer; padding:6px 12px; border-radius:8px;
-      font-size:1.1rem; flex-shrink:0;
+      font-size:1.1rem;
     }
     .project-close:hover{background:rgba(255,84,41,.15)}
     .project-body{padding:0; flex:1; overflow:hidden}
     .project-iframe{width:100%; height:78vh; border:0; display:block; background:#fff}
-
-    /* RESPONSIVE DESIGN (مخصوص نمایشگرهای موبایل و تبلت بدون تغییر استایل اصلی) */
-    @media (max-width: 768px) {
-      body{padding:10px}
-      
-      header.nav{
-        padding:14px 16px;
-        gap:12px;
-        margin-bottom:12px;
-      }
-      .brand{
-        font-size:1.15rem;
-        gap:12px;
-      }
-      .brand img{
-        width:46px;
-        height:46px;
-        border-radius:13px;
-      }
-      .nav-actions{
-        width:100%;
-        justify-content:flex-start;
-        overflow-x:auto;
-        padding-bottom:4px;
-        flex-wrap:nowrap;
-        -webkit-overflow-scrolling:touch;
-      }
-      .chip, select{
-        padding:7px 14px;
-        font-size:.8rem;
-        white-space:nowrap;
-        flex-shrink:0;
-      }
-
-      .hero{padding:8px; margin-bottom:12px}
-      .hero-overlay{padding:16px; border-radius:14px}
-      .hero-stage{aspect-ratio:16/10}
-
-      .autotype{
-        font-size:.85rem;
-      }
-
-      .section{padding:16px; margin-bottom:12px}
-      
-      /* رفع بیرون زدن لیست کارها در موبایل */
-      .list-item{
-        flex-direction:column;
-        align-items:flex-start;
-        padding:16px;
-        gap:12px;
-      }
-      .item-action{
-        align-self:flex-end;
-      }
-
-      .project-overlay{padding:10px}
-      .project-card{max-height:96vh; border-radius:16px}
-      .project-iframe{height:80vh}
-    }
-
-    @media (max-width: 420px) {
-      body{padding:8px}
-      .brand{
-        font-size:1.05rem;
-      }
-      .brand img{
-        width:40px;
-        height:40px;
-      }
-      .hero-overlay{padding:14px}
-      .h-title{font-size:1.15rem}
-      .h-desc{font-size:.88rem; line-height:1.75}
-      .item-title{font-size:.98rem}
-      .item-meta{font-size:.82rem}
-    }
   </style>
 </head>
 
@@ -717,4 +670,39 @@
       projectFrame.src = fileName;
       projectOverlay.style.display = 'flex';
       projectOverlay.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
+      history.pushState({view:'project', file:fileName}, '', '#tavan-bardasht');
+    }
+
+    function closeProject(){
+      projectFrame.src = 'about:blank';
+      projectOverlay.style.display = 'none';
+      projectOverlay.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      if(location.hash==='#tavan-bardasht'){
+        history.back();
+      }
+    }
+
+    projectClose.addEventListener('click', closeProject);
+    projectOverlay.addEventListener('click', (e)=>{
+      if(e.target===projectOverlay) closeProject();
+    });
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape' && projectOverlay.style.display==='flex') closeProject();
+    });
+
+    itemTavanBardasht.addEventListener('click', ()=>{
+      const fileName = itemTavanBardasht.getAttribute('data-file');
+      const title = itemTavanBardasht.querySelector('.item-title')?.textContent?.trim();
+      openProjectFile(fileName, title);
+    });
+
+    // Init
+    applyTheme(smartTheme());
+    applyLanguage(smartLocale());
+    if(location.hash==='#samples') setView('samples');
+    else if(location.hash==='#creativities') setView('creativities');
+  </script>
+</body>
+</html>
