@@ -82,7 +82,7 @@
       border-color:rgba(255,255,255,.12);
     }
 
-    /* HEADER & BRAND */
+    /* HEADER & BRAND - OPTIMIZED FOR MOBILE VISIBILITY */
     header.nav{
       display:flex; 
       align-items:center; 
@@ -122,41 +122,14 @@
       font-weight:900;
     }
 
-    /* Header Nav Wrapper & Scroll Hint */
-    .nav-menu-wrap{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      gap:4px;
-      flex:1;
-      min-width:0;
-    }
     .nav-actions{
       display:flex; 
       align-items:center; 
       gap:10px; 
       flex-wrap:wrap; 
       justify-content:flex-end;
+      position:relative;
     }
-    .nav-scroll-hint{
-      display:none;
-      color:var(--accent);
-      font-size:.72rem;
-      font-weight:700;
-      line-height:1.4;
-      white-space:nowrap;
-      opacity:.88;
-      transition:opacity .25s ease, max-height .25s ease, margin .25s ease;
-      max-height:20px;
-    }
-    .nav-scroll-hint.is-hidden{
-      opacity:0;
-      max-height:0;
-      margin:0;
-      overflow:hidden;
-      pointer-events:none;
-    }
-
     .chip, select{
       background:rgba(255,255,255,.75);
       border:1px solid var(--border);
@@ -170,7 +143,7 @@
       transition:transform .22s ease, background .22s ease, border-color .22s ease;
       user-select:none;
     }
-    [data-theme="dark"] .chip, [data-theme="dark"] select{
+    [data-theme="dark"] .chip,[data-theme="dark"] select{
       background:rgba(20,24,32,.55);
     }
     .chip:hover, select:hover{
@@ -179,53 +152,59 @@
       transform:translateY(-2px);
     }
 
-    /* Mobile Header Behavior */
+    /* Mobile Header Behavior with scroll indicator */
     @media (max-width: 768px) {
       header.nav{
-        padding:14px 16px;
+        padding:14px 18px;
         gap:12px;
       }
       .brand{
-        font-size:1.12rem;
-        gap:10px;
+        font-size:1.15rem;
+        gap:12px;
       }
       .brand img{
-        width:44px;
-        height:44px;
-        border-radius:12px;
-      }
-      .nav-menu-wrap{
-        width:100%;
-        align-items:stretch;
+        width:46px;
+        height:46px;
+        border-radius:13px;
       }
       .nav-actions{
         width:100%;
-        display:flex;
-        flex-wrap:nowrap;
         justify-content:flex-start;
-        align-items:center;
-        gap:8px;
         overflow-x:auto;
         overflow-y:hidden;
-        padding-bottom:6px;
+        padding-bottom:8px;
+        flex-wrap:nowrap;
         -webkit-overflow-scrolling:touch;
         scrollbar-width:thin;
-        scrollbar-color:rgba(255,84,41,.45) transparent;
+        scrollbar-color:var(--accent) transparent;
+        position:relative;
+      }
+      /* Scroll indicator gradient */
+      .nav-actions::after{
+        content:'';
+        position:absolute;
+        left:0;
+        top:0;
+        bottom:8px;
+        width:32px;
+        background:linear-gradient(to left, transparent, var(--bg));
+        pointer-events:none;
+        z-index:1;
+      }
+      html[dir="ltr"] .nav-actions::after{
+        left:auto;
+        right:0;
+        background:linear-gradient(to right, transparent, var(--bg));
       }
       .nav-actions::-webkit-scrollbar{
-        height:3px;
+        height:4px;
       }
       .nav-actions::-webkit-scrollbar-track{
         background:transparent;
       }
       .nav-actions::-webkit-scrollbar-thumb{
-        background:rgba(255,84,41,.5);
-        border-radius:999px;
-      }
-      .nav-scroll-hint{
-        display:block;
-        padding-top:2px;
-        text-align:start;
+        background:var(--accent);
+        border-radius:2px;
       }
       .chip, select{
         padding:7px 14px;
@@ -237,15 +216,15 @@
 
     @media (max-width: 420px) {
       .brand{
-        font-size:1.02rem;
+        font-size:1.08rem;
       }
       .brand img{
-        width:38px;
-        height:38px;
+        width:42px;
+        height:42px;
       }
     }
 
-    /* HERO */
+    /* HERO - SMALLER PANEL & TYPEWRITER */
     .hero{padding:12px;margin-bottom:18px}
     .hero-wrap{display:grid; grid-template-columns:1fr; gap:14px}
     .hero-stage{
@@ -256,10 +235,9 @@
     }
     .hero-stage video{width:100%;height:100%;object-fit:cover;display:block}
 
-    /* HERO OVERLAY - COMPACT */
     .hero-overlay{
-      padding:16px 18px; 
-      border-radius:18px;
+      padding:16px 18px;
+      border-radius:16px;
       backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
       background:rgba(255,255,255,.82);
       border:1px solid rgba(0,0,0,.06);
@@ -277,12 +255,13 @@
       .hero-wrap{position:relative}
       .hero-overlay{
         position:absolute;
-        top:18px;
-        right:18px;
-        width:min(440px, calc(100% - 36px));
+        top:22px;
+        right:22px;
+        width:min(480px, calc(100% - 44px));
         z-index:2;
+        padding:18px 20px;
       }
-      html[dir="ltr"] .hero-overlay{left:18px; right:auto}
+      html[dir="ltr"] .hero-overlay{left:22px; right:auto}
     }
 
     .kicker{
@@ -290,61 +269,61 @@
       font-size:.72rem; text-transform:uppercase; margin-bottom:6px;
     }
     .h-title{
-      font-weight:900; line-height:1.4; letter-spacing:-.3px;
-      font-size:clamp(1.1rem, 1.8vw, 1.55rem); margin-bottom:8px;
+      font-weight:900; line-height:1.3; letter-spacing:-.3px;
+      font-size:clamp(1.05rem, 2vw, 1.65rem); margin-bottom:10px;
     }
     .h-desc{
-      opacity:.9; font-size:.86rem; line-height:1.75; margin-bottom:10px; text-align:justify;
+      opacity:.88; 
+      font-size:.88rem; 
+      line-height:1.7; 
+      margin-bottom:12px; 
+      text-align:justify;
     }
 
-    /* AUTOTYPE - COMPACT & RESPONSIVE */
     .autotype{
-      font-weight:700; display:inline-block; min-height:1.4em; white-space:nowrap;
-      border-right:2px solid var(--accent); padding-right:8px;
-      font-size:.82rem; line-height:1.65;
+      font-weight:700; 
+      display:inline-block; 
+      min-height:1.2em; 
+      white-space:nowrap;
+      border-right:2px solid var(--accent); 
+      padding-right:8px;
+      font-size:.88rem;
     }
-    html[dir="ltr"] .autotype{border-right:none; border-left:2px solid var(--accent); padding-right:0; padding-left:8px}
+    html[dir="ltr"] .autotype{
+      border-right:none; 
+      border-left:2px solid var(--accent); 
+      padding-right:0; 
+      padding-left:8px;
+    }
 
-    @media (max-width: 768px){
-      .hero{padding:8px}
+    @media (max-width: 768px) {
       .hero-overlay{
-        padding:13px 14px;
-        border-radius:15px;
+        padding:14px 16px;
       }
       .kicker{
-        font-size:.65rem;
-        margin-bottom:4px;
+        font-size:.68rem;
+        margin-bottom:5px;
       }
       .h-title{
-        font-size:clamp(1rem, 4.2vw, 1.25rem);
-        line-height:1.45;
-        margin-bottom:6px;
+        font-size:.98rem;
+        margin-bottom:8px;
       }
       .h-desc{
-        font-size:.78rem;
-        line-height:1.72;
-        margin-bottom:8px;
-        text-align:start;
+        font-size:.82rem;
+        line-height:1.65;
+        margin-bottom:10px;
       }
-      .hero-overlay .glass-soft{
-        padding:8px 10px !important;
-        border-radius:12px;
+      .glass-soft{
+        padding:10px 12px !important;
       }
-      .hero-overlay .glass-soft > div:first-child{
-        font-size:.72rem !important;
-        margin-bottom:3px !important;
+      .glass-soft > div:first-child{
+        font-size:.75rem !important;
+        margin-bottom:4px !important;
       }
       .autotype{
-        display:block;
-        width:100%;
-        min-height:2.6em;
-        font-size:.76rem;
-        line-height:1.6;
-        white-space:normal;
-        overflow-wrap:anywhere;
-        padding-right:6px;
+        font-size:.8rem;
+        min-height:1.1em;
       }
-      html[dir="ltr"] .autotype{padding-right:0; padding-left:6px}
     }
 
     /* Sections */
@@ -372,7 +351,7 @@
     .list{display:grid; gap:12px}
     .list-item{
       display:flex; align-items:center; justify-content:space-between;
-      gap:14px; padding:18px 22px; border-radius:16px;
+      gap:14px; padding:16px 20px; border-radius:16px;
       background:rgba(255,255,255,.75); border:1px solid var(--border);
       cursor:pointer; transition:transform .2s ease, background .2s ease, border-color .2s ease;
     }
@@ -382,75 +361,53 @@
       background:rgba(255,84,41,.06);
       border-color:rgba(255,84,41,.35);
     }
-    .item-title{font-weight:800; font-size:1.05rem; margin-bottom:4px}
-    .item-meta{color:var(--muted); font-size:.88rem; line-height:1.6}
-    .item-action{font-weight:700; font-size:.88rem; color:var(--accent); white-space:nowrap}
-
-    /* COMPACT & RESPONSIVE CREATIVITIES VIEW */
-    #viewCreativities .section{
-      padding:16px 20px;
+    .item-title{
+      font-weight:800; 
+      font-size:.98rem; 
+      margin-bottom:4px;
+      line-height:1.4;
     }
-    #viewCreativities .section-title{
-      font-size:1.02rem;
-      margin-bottom:6px;
+    .item-meta{
+      color:var(--muted); 
+      font-size:.82rem; 
+      line-height:1.55;
     }
-    #viewCreativities .section-desc{
-      font-size:.84rem;
-      line-height:1.8;
-      text-align:justify;
-    }
-    #viewCreativities .list{
-      gap:8px;
-    }
-    #viewCreativities .list-item{
-      align-items:center;
-      gap:12px;
-      padding:14px 16px;
-      border-radius:14px;
-    }
-    #viewCreativities .item-title{
-      font-size:.92rem;
-      line-height:1.65;
-      margin-bottom:3px;
-    }
-    #viewCreativities .item-meta{
-      font-size:.78rem;
-      line-height:1.65;
-    }
-    #viewCreativities .item-action{
-      font-size:.78rem;
+    .item-action{
+      font-weight:700; 
+      font-size:.85rem; 
+      color:var(--accent); 
+      white-space:nowrap;
       flex-shrink:0;
     }
 
-    @media (max-width: 600px){
-      #viewCreativities .section{
-        padding:12px 14px;
-      }
-      #viewCreativities .section-title{
-        font-size:.92rem;
-      }
-      #viewCreativities .section-desc{
-        font-size:.78rem;
-        line-height:1.75;
-        text-align:start;
-      }
-      #viewCreativities .list-item{
+    /* COMPACT INNOVATION SECTION ON MOBILE */
+    @media (max-width: 768px) {
+      .list-item{
         flex-direction:column;
         align-items:flex-start;
-        padding:12px 13px;
-        gap:8px;
+        gap:10px;
+        padding:14px 16px;
       }
-      #viewCreativities .item-title{
-        font-size:.85rem;
-        line-height:1.6;
+      .item-title{
+        font-size:.88rem;
+        line-height:1.35;
       }
-      #viewCreativities .item-meta{
-        font-size:.72rem;
-        line-height:1.65;
+      .item-meta{
+        font-size:.76rem;
+        line-height:1.5;
       }
-      #viewCreativities .item-action{
-        font-size:.74rem;
+      .item-action{
+        font-size:.78rem;
         align-self:flex-end;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .item-title{
+        font-size:.82rem;
+      }
+      .item-meta{
+        font-size:.72rem;
       }
     }
 
@@ -496,19 +453,16 @@
         <span>Kayan Creative</span>
       </a>
 
-      <div class="nav-menu-wrap">
-        <div class="nav-actions" id="navActions">
-          <button class="chip" id="goHome" type="button" data-i18n="navHome">صفحه اصلی</button>
-          <button class="chip" id="goSamples" type="button" data-i18n="navSamples">نمونه‌کارها</button>
-          <button class="chip" id="goCreativities" type="button" data-i18n="navCreativities">نوآوری‌ها</button>
-          <button class="chip" id="themeToggle" type="button" data-i18n="themeLabel">حالت روز/شب</button>
-          <select id="langSelect" aria-label="Language">
-            <option value="fa">فارسی</option>
-            <option value="en">English</option>
-            <option value="ar">العربية</option>
-          </select>
-        </div>
-        <div class="nav-scroll-hint" id="navScrollHint" data-i18n="scrollHint" aria-hidden="true">برای مشاهده گزینه‌ها، افقی بکشید ←</div>
+      <div class="nav-actions">
+        <button class="chip" id="goHome" type="button" data-i18n="navHome">صفحه اصلی</button>
+        <button class="chip" id="goSamples" type="button" data-i18n="navSamples">نمونه‌کارها</button>
+        <button class="chip" id="goCreativities" type="button" data-i18n="navCreativities">نوآوری‌ها</button>
+        <button class="chip" id="themeToggle" type="button" data-i18n="themeLabel">حالت روز/شب</button>
+        <select id="langSelect" aria-label="Language">
+          <option value="fa">فارسی</option>
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
       </div>
     </header>
 
@@ -528,7 +482,7 @@
             </div>
 
             <div class="glass-soft" style="padding:10px 14px;">
-              <div style="font-weight:800; font-size:.8rem; opacity:.85; margin-bottom:4px;" data-i18n="autoTypeLabel">حوزه‌های تمرکز راهبردی:</div>
+              <div style="font-weight:800; font-size:.8rem; opacity:.85; margin-bottom:5px;" data-i18n="autoTypeLabel">حوزه‌های تمرکز راهبردی:</div>
               <div class="autotype" id="autoType"></div>
             </div>
           </div>
@@ -566,7 +520,7 @@
       <section class="section glass">
         <div class="section-title" data-i18n="creaTitle">نوآوری‌های تعاملی و پروداکشن‌های مهندسی</div>
         <div class="section-desc" data-i18n="creaDesc">
-          ترکیب سه‌بعدی تعاملی و تشریح مکانیزم‌های صنعتی با رویکرد ارتقای درک مشتری و تقویت فروش B2B. برای مشاهده و تعامل با شبیه‌ساز، روی کارت پروژه کلیک کنید.
+          تلفیق تکنولوژی سه‌بعدی تعاملی و تشریح مکانیزم‌های صنعتی با رویکرد ارتقای درک مشتری و اثربخشی بازاریابی B2B. با کلیک بر روی پروژه، ساختار نرم‌افزاری و بصری آن قابل مشاهده است.
         </div>
       </section>
 
@@ -574,8 +528,8 @@
         <div class="list">
           <div class="list-item" id="itemTavanBardasht" data-file="tavan-bardasht.html">
             <div>
-              <div class="item-title" data-i18n="tavanTitle">توان برداشت جویبار | نرم‌افزار سه‌بعدی تعاملی ماشین‌آلات کشاورزی</div>
-              <div class="item-meta" data-i18n="tavanMeta">تشریح اجزا و مکانیزم‌ها • مدل‌سازی مهندسی سه‌بعدی • ابزار کاربردی فروش صنعتی</div>
+              <div class="item-title" data-i18n="tavanTitle">توان برداشت جویبار | کانسپت نرم‌افزار سه‌بعدی و تشریح تعاملی ادوات کشاورزی</div>
+              <div class="item-meta" data-i18n="tavanMeta">محور پروژه: تشریح اجزا و مکانیزم‌های ماشین‌آلات کشاورزی • مدل‌سازی و انیمیشن سه‌بعدی مهندسی • طراحی تعاملی و ابزار کاربردی فروش صنعتی</div>
             </div>
             <div class="item-action" data-i18n="tavanAction">مشاهده پروژه و اجرا ←</div>
           </div>
@@ -605,7 +559,6 @@
         navSamples:'نمونه‌کارها',
         navCreativities:'نوآوری‌ها',
         themeLabel:'حالت روز/شب',
-        scrollHint:'برای مشاهده گزینه‌ها، افقی بکشید ←',
         heroKicker:'کارگردانی هنری و سینماتوگرافی هوش مصنوعی',
         heroTitle:'تلفیق استاندارد سینمایی و خطوط تولید مبتنی بر هوش مصنوعی',
         heroDesc:'طراحی، نظارت و پیاده‌سازی پایپ‌لاین‌های نوین پروداکشن تصویری برای سازمان‌ها و برندهای تجاری؛ تبدیل ایده‌های پیچیده به دارایی‌های بصری راهبردی با بالاترین سطح بازدهی و بازگشت سرمایه.',
@@ -616,9 +569,9 @@
         contactDesc:'جهت بررسی امکان‌سنجی پروژه‌ها، برگزاری جلسات مشاوره هنری، و اجرای کمپین‌های تجاری می‌توانید از طریق کانال‌های ذیل اقدام فرمایید.',
         samplesLoading:'در حال بارگذاری نمونه‌کارهای منتخب...',
         creaTitle:'نوآوری‌های تعاملی و پروداکشن‌های مهندسی',
-        creaDesc:'ترکیب سه‌بعدی تعاملی و تشریح مکانیزم‌های صنعتی با رویکرد ارتقای درک مشتری و تقویت فروش B2B. برای مشاهده و تعامل با شبیه‌ساز، روی کارت پروژه کلیک کنید.',
-        tavanTitle:'توان برداشت جویبار | نرم‌افزار سه‌بعدی تعاملی ماشین‌آلات کشاورزی',
-        tavanMeta:'تشریح اجزا و مکانیزم‌ها • مدل‌سازی مهندسی سه‌بعدی • ابزار کاربردی فروش صنعتی',
+        creaDesc:'تلفیق تکنولوژی سه‌بعدی تعاملی و تشریح مکانیزم‌های صنعتی با رویکرد ارتقای درک مشتری و اثربخشی بازاریابی B2B. با کلیک بر روی پروژه، ساختار نرم‌افزاری و بصری آن قابل مشاهده است.',
+        tavanTitle:'توان برداشت جویبار | کانسپت نرم‌افزار سه‌بعدی و تشریح تعاملی ادوات کشاورزی',
+        tavanMeta:'محور پروژه: تشریح اجزا و مکانیزم‌های ماشین‌آلات کشاورزی • مدل‌سازی و انیمیشن سه‌بعدی مهندسی • طراحی تعاملی و ابزار کاربردی فروش صنعتی',
         tavanAction:'مشاهده پروژه و اجرا ←',
         typeLines:[
           'کارگردانی هنری مبتنی بر شاخص‌های عملکرد (KPI)',
@@ -633,7 +586,6 @@
         navSamples:'Selected Works',
         navCreativities:'Innovations',
         themeLabel:'Theme',
-        scrollHint:'Swipe horizontally for more options →',
         heroKicker:'CREATIVE DIRECTION & AI CINEMATOGRAPHY',
         heroTitle:'Converging Cinematic Precision with AI Production Pipelines',
         heroDesc:'Designing and executing advanced visual production workflows for enterprise brands; translating complex concepts into high-impact strategic visual assets engineered for optimal ROI.',
@@ -645,9 +597,9 @@
         samplesLoading:'Loading selected works...',
         creaTitle:'Interactive Innovations & Industrial R&D',
         creaDesc:'Integrating real-time 3D environments and interactive mechanical breakdowns to enhance B2B commercial conversion and technical comprehension.',
-        tavanTitle:'Tavan Bardasht Juybar | Interactive 3D Agricultural Machinery Application',
-        tavanMeta:'Component breakdown • Engineering 3D visualization • Interactive industrial sales tool',
-        tavanAction:'Launch Project →',
+        tavanTitle:'Tavan Bardasht Juybar | 3D Interactive Web Application & Ag-Machinery Disassembly',
+        tavanMeta:'Scope: Exploded view of agricultural machinery components • Engineering 3D visualization • Interactive industrial sales enablement',
+        tavanAction:'Launch Interactive Project →',
         typeLines:[
           'KPI-Driven Creative Direction',
           'Commercial Cinematography & Visual Narrative',
@@ -661,20 +613,19 @@
         navSamples:'الأعمال المختارة',
         navCreativities:'الابتكارات',
         themeLabel:'المظهر',
-        scrollHint:'اسحب أفقياً لرؤية المزيد ←',
-        heroKicker:'الإخراج الفني والسینماتوغرافيا بالذكاء الاصطناعي',
+        heroKicker:'الإخراج الفني والسينماتوغرافيا بالذكاء الاصطناعي',
         heroTitle:'دمج الدقة السينمائية مع خطوط الإنتاج المعتمدة على الذكاء الاصطناعي',
         heroDesc:'تصميم وتنفيذ مسارات إنتاج بصري متطورة للعلامات التجارية والشركات الكبرى؛ تحويل الرؤى المعقدة إلى أصول بصرية استراتيجية تحقق أعلى درجات العائد الاستثماري.',
         autoTypeLabel:'المحاور الاستراتيجية:',
         aboutTitle:'منهجية العمل والإنتاج',
-        aboutDesc:'تعتمد آلية التنفيذ على خطوط إنتاج هندسية قائمة على تحقيق مؤشرات الأداء (KPIs). نبدأ بتحليل تموضع العلامة التجارية، ثم ندمج التخطيط الذكي، والتصوير الميداني، والمعالجة البصرية بالذكاء الاصطناعي لتسليم نتائج تجارية رفيعة المستوى.',
+        aboutDesc:'تعتمد آلية التنفيذ على خطوط إنتاج هندسية قائمة على تحقيق مؤشرات الأداء (KPIs). نبدأ بتحليل تموضع العلامة التجارية، ثم ندمج التخطيط الذکی، والتصویر المیدانی، والمعالجة البصرية بالذكاء الاصطناعي لتسليم نتائج تجارية رفيعة المستوى.',
         contactTitle:'قنوات التواصل والتعاون',
         contactDesc:'لمناقشة المشاريع التجارية، الاستشارات الفنية، أو إطلاق الحملات الإعلانية الشاملة، يرجى التواصل عبر المنصات التالية.',
         samplesLoading:'جاري تحميل الأعمال المختارة...',
         creaTitle:'الابتكارات التفاعلية والإنتاج الهندسي',
-        creaDesc:'دمج التصور ثلاثي الأبعاد والتشريح الميكانيكي لتحسين فهم المنتج ودعم المبيعات الصناعية. اضغط على البطاقة لفتح المشروع.',
-        tavanTitle:'توان برداشت جويبار | تطبيق تفاعلي ثلاثي الأبعاد للآلات الزراعية',
-        tavanMeta:'تشريح المكونات والآليات • محاكاة هندسية ثلاثية الأبعاد • أداة تفاعلية للمبيعات الصناعية',
+        creaDesc:'دمج البيئات ثلاثية الأبعاد التفاعلية والتشريح الميكانيكي لرفع كفاءة التسويق الصناعي واستيعاب الآليات.',
+        tavanTitle:'توان برداشت جويبار | مفهوم تطبيق ثلاثي الأبعاد وتفكيك الآلات الزراعية تفاعلياً',
+        tavanMeta:'نطاق المشروع: تشريح مكونات الآليات الزراعية • محاكاة هندسية ثلاثية الأبعاد • أداة تفاعلية لدعم المبيعات الصناعية',
         tavanAction:'عرض المشروع ←',
         typeLines:[
           'إخراج إبداعي موجه بمؤشرات الأداء (KPIs)',
@@ -685,69 +636,41 @@
       }
     };
 
-    const themeToggle = document.getElementById('themeToggle');
+    const themeToggle=document.getElementById('themeToggle');
     function applyTheme(theme){
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('kayan_theme', theme);
     }
     function smartTheme(){
-      const saved = localStorage.getItem('kayan_theme');
+      const saved=localStorage.getItem('kayan_theme');
       if(saved) return saved;
       return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
     themeToggle.addEventListener('click', ()=>{
-      const cur = document.documentElement.getAttribute('data-theme');
-      applyTheme(cur === 'dark' ? 'light' : 'dark');
+      const cur=document.documentElement.getAttribute('data-theme');
+      applyTheme(cur==='dark'?'light':'dark');
     });
 
-    const langSelect = document.getElementById('langSelect');
-    const navActions = document.getElementById('navActions');
-    const navScrollHint = document.getElementById('navScrollHint');
-
-    function updateNavScrollHint(){
-      if(!navActions || !navScrollHint) return;
-      const hasOverflow = navActions.scrollWidth > navActions.clientWidth + 4;
-      if(!hasOverflow){
-        navScrollHint.classList.add('is-hidden');
-        return;
-      }
-      const hasSeen = navScrollHint.dataset.seen === 'true';
-      navScrollHint.classList.toggle('is-hidden', hasSeen);
-    }
-
-    if(navActions && navScrollHint){
-      navActions.addEventListener('scroll', ()=>{
-        navScrollHint.dataset.seen = 'true';
-        navScrollHint.classList.add('is-hidden');
-      }, { passive: true });
-      window.addEventListener('resize', updateNavScrollHint);
-    }
-
+    const langSelect=document.getElementById('langSelect');
     function applyLanguage(lang){
-      const dict = I18N[lang] || I18N.fa;
-      document.documentElement.lang = lang;
-      document.documentElement.dir = dict.dir;
-      langSelect.value = lang;
+      const dict=I18N[lang] || I18N.fa;
+      document.documentElement.lang=lang;
+      document.documentElement.dir=dict.dir;
+      langSelect.value=lang;
       localStorage.setItem('kayan_lang', lang);
 
       document.querySelectorAll('[data-i18n]').forEach(el=>{
-        const key = el.getAttribute('data-i18n');
-        if(dict[key]) el.textContent = dict[key];
+        const key=el.getAttribute('data-i18n');
+        if(dict[key]) el.textContent=dict[key];
       });
 
       startAutoType(dict.typeLines);
       window.dispatchEvent(new CustomEvent('kayan:lang', { detail: { lang } }));
-
-      if(navScrollHint){
-        navScrollHint.removeAttribute('data-seen');
-      }
-      setTimeout(updateNavScrollHint, 120);
     }
-
     function smartLocale(){
-      const saved = localStorage.getItem('kayan_lang');
+      const saved=localStorage.getItem('kayan_lang');
       if(saved && I18N[saved]) return saved;
-      const nav = (navigator.language || '').toLowerCase();
+      const nav=(navigator.language||'').toLowerCase();
       if(nav.startsWith('ar')) return 'ar';
       if(nav.startsWith('fa')) return 'fa';
       if(nav.startsWith('en')) return 'en';
@@ -756,37 +679,37 @@
     langSelect.addEventListener('change', (e)=>applyLanguage(e.target.value));
 
     // AutoType
-    const autoTypeEl = document.getElementById('autoType');
-    let typeTimer = null;
+    const autoTypeEl=document.getElementById('autoType');
+    let typeTimer=null;
     function startAutoType(lines){
       if(!autoTypeEl) return;
       if(typeTimer) clearTimeout(typeTimer);
-      autoTypeEl.textContent = '';
+      autoTypeEl.textContent='';
 
-      let lineIndex = 0, charIndex = 0, deleting = false;
-      const typeSpeed = 24, deleteSpeed = 16, holdTime = 1100, betweenLines = 400;
+      let lineIndex=0, charIndex=0, deleting=false;
+      const typeSpeed=24, deleteSpeed=16, holdTime=1100, betweenLines=400;
 
-      const tick = ()=>{
-        const line = lines[lineIndex] || '';
+      const tick=()=>{
+        const line=lines[lineIndex] || '';
         if(!deleting){
           charIndex++;
-          autoTypeEl.textContent = line.slice(0, charIndex);
-          if(charIndex >= line.length){
-            deleting = true;
-            typeTimer = setTimeout(tick, holdTime);
+          autoTypeEl.textContent=line.slice(0,charIndex);
+          if(charIndex>=line.length){
+            deleting=true;
+            typeTimer=setTimeout(tick, holdTime);
             return;
           }
-          typeTimer = setTimeout(tick, typeSpeed);
+          typeTimer=setTimeout(tick, typeSpeed);
         } else {
           charIndex--;
-          autoTypeEl.textContent = line.slice(0, Math.max(0, charIndex));
-          if(charIndex <= 0){
-            deleting = false;
-            lineIndex = (lineIndex + 1) % lines.length;
-            typeTimer = setTimeout(tick, betweenLines);
+          autoTypeEl.textContent=line.slice(0,Math.max(0,charIndex));
+          if(charIndex<=0){
+            deleting=false;
+            lineIndex=(lineIndex+1)%lines.length;
+            typeTimer=setTimeout(tick, betweenLines);
             return;
           }
-          typeTimer = setTimeout(tick, deleteSpeed);
+          typeTimer=setTimeout(tick, deleteSpeed);
         }
       };
       tick();
@@ -794,4 +717,73 @@
 
     // Views Routing
     const viewHome = document.getElementById('viewHome');
-    const viewSamples = document.
+    const viewSamples = document.getElementById('viewSamples');
+    const viewCreativities = document.getElementById('viewCreativities');
+
+    const goHome = document.getElementById('goHome');
+    const goSamples = document.getElementById('goSamples');
+    const goCreativities = document.getElementById('goCreativities');
+
+    const samplesMount = document.getElementById('samplesMount');
+    const samplesLoader = document.getElementById('samplesLoader');
+    let samplesLoaded=false;
+
+    function setView(which){
+      [viewHome, viewSamples, viewCreativities].forEach(v=>v.classList.remove('active'));
+      if(which==='samples'){
+        viewSamples.classList.add('active');
+        window.scrollTo({top:0, behavior:'smooth'});
+        if(!samplesLoaded) loadSamples();
+        history.replaceState({view:'samples'}, '', '#samples');
+      } else if(which==='creativities'){
+        viewCreativities.classList.add('active');
+        window.scrollTo({top:0, behavior:'smooth'});
+        history.replaceState({view:'creativities'}, '', '#creativities');
+      } else {
+        viewHome.classList.add('active');
+        window.scrollTo({top:0, behavior:'smooth'});
+        history.replaceState({view:'home'}, '', '#top');
+      }
+    }
+
+    goHome.addEventListener('click', ()=>setView('home'));
+    goSamples.addEventListener('click', ()=>setView('samples'));
+    goCreativities.addEventListener('click', ()=>setView('creativities'));
+
+    async function loadSamples(){
+      try{
+        samplesLoader.style.display='block';
+        const res = await fetch('samples.html', { cache: 'no-store' });
+        const html = await res.text();
+
+        const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+        const bodyContent = bodyMatch ? bodyMatch[1] : html;
+
+        samplesMount.innerHTML = bodyContent;
+
+        const scripts = samplesMount.querySelectorAll('script');
+        scripts.forEach(oldScript=>{
+          const s=document.createElement('script');
+          if(oldScript.src) s.src=oldScript.src;
+          s.textContent = oldScript.textContent;
+          document.body.appendChild(s);
+          oldScript.remove();
+        });
+
+        samplesLoaded=true;
+      }catch(err){
+        samplesMount.innerHTML = '<div class="glass section">عدم دسترسی به فایل samples.html؛ لطفاً بررسی نمایید فایل دقیقاً در کنار index.html قرار داشته باشد.</div>';
+      }finally{
+        samplesLoader.style.display='none';
+      }
+    }
+
+    window.addEventListener('popstate', (e)=>{
+      if(location.hash==='#samples') setView('samples');
+      else if(location.hash==='#creativities') setView('creativities');
+      else setView('home');
+    });
+
+    // Project Overlay Direct File Execution
+    const projectOverlay = document.getElementById('projectOverlay');
+    const projectFrame = document.getElementById('
