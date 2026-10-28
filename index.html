@@ -222,11 +222,11 @@
     .hero-stage video{width:100%;height:100%;object-fit:cover;display:block}
 
     .hero-overlay{
-      padding:22px; border-radius:18px;
+      padding:14px 16px; border-radius:16px;
       backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
       background:rgba(255,255,255,.82);
       border:1px solid rgba(0,0,0,.06);
-      box-shadow:0 18px 40px rgba(14,16,23,.08);
+      box-shadow:0 14px 32px rgba(14,16,23,.08);
       transition:transform .2s ease, opacity .2s ease;
       color:#0e1017;
     }
@@ -240,38 +240,38 @@
       .hero-wrap{position:relative}
       .hero-overlay{
         position:absolute;
-        top:22px;
-        right:22px;
-        width:min(520px, calc(100% - 44px));
+        top:16px;
+        right:16px;
+        width:min(400px, calc(100% - 32px));
         z-index:2;
       }
-      html[dir="ltr"] .hero-overlay{left:22px; right:auto}
+      html[dir="ltr"] .hero-overlay{left:16px; right:auto}
     }
 
     .kicker{
-      color:var(--accent); font-weight:800; letter-spacing:.6px;
-      font-size:.78rem; text-transform:uppercase; margin-bottom:8px;
+      color:var(--accent); font-weight:800; letter-spacing:.5px;
+      font-size:.68rem; text-transform:uppercase; margin-bottom:6px;
     }
     .h-title{
-      font-weight:900; line-height:1.35; letter-spacing:-.4px;
-      font-size:clamp(1.2rem, 2.2vw, 1.95rem); margin-bottom:12px;
+      font-weight:900; line-height:1.28; letter-spacing:-.3px;
+      font-size:clamp(1rem, 1.55vw, 1.42rem); margin-bottom:8px;
     }
-    .h-desc{opacity:.9; font-size:.95rem; line-height:1.85; margin-bottom:14px; text-align:justify}
+    .h-desc{opacity:.9; font-size:.8rem; line-height:1.65; margin-bottom:10px; text-align:justify}
 
     /* Typewriter - Smaller frame, continues running */
     .autotype-wrapper{
-      padding:10px 14px;
+      padding:7px 11px;
       max-width: 100%;
     }
     .autotype{
       font-weight:700; 
       display:inline-block; 
-      min-height:1.25em; 
+      min-height:1.2em; 
       white-space:nowrap;
       border-right:2px solid var(--accent); 
-      padding-right:8px;
-      font-size: 0.92rem;
-      line-height: 1.3;
+      padding-right:6px;
+      font-size: 0.78rem;
+      line-height: 1.25;
     }
     html[dir="ltr"] .autotype{border-right:none; border-left:2px solid var(--accent); padding-right:0; padding-left:8px}
 
@@ -374,7 +374,7 @@
       <section class="hero glass">
         <div class="hero-wrap">
           <div class="hero-stage">
-            <video autoplay loop muted playsinline src="main/kayan.mp4"></video>
+            <img src="ggggggggggg.webp" alt="Kayan Creative Hero" style="width:100%; height:100%; object-fit:cover;">
           </div>
 
           <div class="hero-overlay" id="heroOverlay">
@@ -385,7 +385,7 @@
             </div>
 
             <div class="glass-soft autotype-wrapper">
-              <div style="font-weight:800; font-size:.82rem; opacity:.85; margin-bottom:5px;" data-i18n="autoTypeLabel">حوزه‌های تمرکز راهبردی:</div>
+              <div style="font-weight:800; font-size:.72rem; opacity:.85; margin-bottom:3px;" data-i18n="autoTypeLabel">حوزه‌های تمرکز راهبردی:</div>
               <div class="autotype" id="autoType"></div>
             </div>
           </div>
