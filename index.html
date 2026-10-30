@@ -493,7 +493,7 @@
         tavanMeta:'محور پروژه: تشریح اجزا و مکانیزم‌های ماشین‌آلات کشاورزی • مدل‌سازی و انیمیشن سه‌بعدی مهندسی • طراحی تعاملی و ابزار کاربردی فروش صنعتی',
         tavanAction:'مشاهده پروژه و اجرا ←',
         projectModalHead:'مشخصات و اجرای تعاملی پروژه',
-        samplesNotFound:'عدم دسترسی به فایل samples.html؛ لطفاً بررسی نمایید فایل دقیقاً در کنار index.html قرار داشته باشد.',
+        samplesNotFound:'عدم دسترسی به فایل works.html؛ لطفاً بررسی نمایید فایل دقیقاً در کنار index.html قرار داشته باشد.',
         typeLines:[
           'کارگردانی هنری مبتنی بر شاخص‌های عملکرد (KPI)',
           'روایت‌پردازی سینمایی و سینماتوگرافی تبلیغاتی',
@@ -522,7 +522,7 @@
         tavanMeta:'Scope: Exploded view of agricultural machinery components • Engineering 3D visualization • Interactive industrial sales enablement',
         tavanAction:'Launch Interactive Project →',
         projectModalHead:'Project Specifications & Interactive Runtime',
-        samplesNotFound:'Unable to load samples.html. Please ensure samples.html is in the same directory as index.html.',
+        samplesNotFound:'Unable to load works.html. Please ensure works.html is in the same directory as index.html.',
         typeLines:[
           'KPI-Driven Creative Direction',
           'Commercial Cinematography & Visual Narrative',
@@ -551,7 +551,7 @@
         tavanMeta:'نطاق المشروع: تشريح مكونات الآليات الزراعية • محاكاة هندسية ثلاثية الأبعاد • أداة تفاعلية لدعم المبيعات الصناعية',
         tavanAction:'عرض المشروع ←',
         projectModalHead:'مواصفات المشروع والتشغيل التفاعلي',
-        samplesNotFound:'تعذر الوصول إلى ملف samples.html؛ يرجى التأكد من وجوده بجوار index.html.',
+        samplesNotFound:'تعذر الوصول إلى ملف works.html؛ يرجى التأكد من وجوده بجوار index.html.',
         typeLines:[
           'إخراج إبداعي موجه بمؤشرات الأداء (KPIs)',
           'سرد سينمائي وتصوير إعلاني عالي الدقة',
@@ -600,7 +600,7 @@
       // Restart Typewriter with new dictionary immediately
       startContinuousTypewriter(dict.typeLines);
 
-      // Dispatch global custom event for submodules / samples.html
+      // Dispatch global custom event for submodules / works.html
       window.dispatchEvent(new CustomEvent('kayan:lang', { detail: { lang, dict } }));
     }
 
@@ -704,7 +704,7 @@
       if (samplesLoaded) return;
       samplesLoader.style.display = 'block';
       try {
-        const res = await fetch('samples.html', { cache: 'no-store' });
+        const res = await fetch('works.html', { cache: 'no-store' });
         if(!res.ok) throw new Error('File not accessible');
         const html = await res.text();
         const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -726,7 +726,7 @@
       } catch (err) {
         samplesLoader.textContent = (I18N[currentLang] || I18N.fa).samplesNotFound;
         samplesLoader.style.display = 'block';
-        console.error('Could not load samples.html:', err);
+        console.error('Could not load works.html:', err);
       }
     }
 
