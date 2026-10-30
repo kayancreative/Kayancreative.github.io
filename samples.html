@@ -1,386 +1,893 @@
-<!-- portfolio.html -->
-<div class="portfolio-wrapper">
-  <!-- منوی فیلترها -->
-  <div class="filter-wrapper">
-    <nav class="filter-nav" id="pfFilterNav">
-      <button class="filter-btn active" data-filter="all" type="button">همه</button>
-      <button class="filter-btn" data-filter="Corporate" type="button">شرکتی</button>
-      <button class="filter-btn" data-filter="jewelry" type="button">طلا و جواهرات</button>
-      <button class="filter-btn" data-filter="cafe" type="button">کافه و رستوران</button>
-      <button class="filter-btn" data-filter="Medical" type="button">پزشکی</button>
-      <button class="filter-btn" data-filter="gym" type="button">باشگاه و ورزشی</button>
-    </nav>
-  </div>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- سئو هدفمند با تمرکز روی Kayan Creative و کایان -->
+  <title id="meta-title">REPERTOIRE. کارهای شاخص | Kayan Creative</title>
+  <meta name="description" content="Kayan Creative (آژانس خلاق کایان)؛ استودیو تخصصی فیلم‌های تجاری و شرکتی، مدیکال، تیزر کافه و رستوران، و آزمایشگاه نوآوری و هوش مصنوعی.">
+  <meta name="keywords" content="کایان, kayan, kayan creative, کایان کریتیو, آژانس کایان, تیزر کایان, ویدیوگرافی کایان">
+  <link rel="canonical" href="https://kayancreative.agency/">
 
-  <!-- گرید پورتفولیو -->
-  <main class="gallery-grid" id="pfGalleryGrid"></main>
-</div>
-
-<!-- مودال نمایش تمام صفحه -->
-<div class="modal-backdrop" id="pfModalBackdrop" role="dialog" aria-modal="true">
-  <div class="modal-viewport">
-    <button class="btn-close" id="pfBtnCloseModal" aria-label="بستن">✕</button>
-    <div id="pfModalContent" style="width:100%;height:100%;"></div>
-  </div>
-</div>
-
-<style>
-  .filter-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 24px;
-    overflow-x: auto;
-    padding: 4px 6px 12px;
-    scrollbar-width: none;
+  <!-- اسکیما دیتای سئو گوگل برای تسخیر سرچ کایان و Kayan Creative -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Kayan Creative | کایان کریتیو",
+    "alternateName": ["کایان", "Kayan", "Kayan Creative Agency", "كايان كرييتيف"],
+    "url": "https://kayancreative.agency",
+    "logo": "https://kayancreative.agency/main/logo.png",
+    "description": "High-end commercial films, cinematic brand campaigns, and experimental visual pipelines by Kayan Creative.",
+    "sameAs": [
+      "https://instagram.com/kayancreative",
+      "https://kayancreative.agency"
+    ]
   }
-  .filter-wrapper::-webkit-scrollbar { display: none; }
+  </script>
 
-  .filter-nav {
-    display: inline-flex;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 999px;
-    padding: 4px;
-    gap: 4px;
-    backdrop-filter: blur(16px);
-  }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800;900&family=Vazirmatn:wght@300;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  .filter-btn {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--muted);
-    padding: 8px 18px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    border-radius: 999px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  .filter-btn.active, .filter-btn:hover {
-    background: var(--accent);
-    color: #fff;
-    box-shadow: 0 4px 18px var(--accent-glow);
-  }
-
-  /* گرید پورتفولیو — ۲ ستون فیکس در موبایل */
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-
-  @media (min-width: 680px) {
-    .gallery-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-  }
-
-  @media (min-width: 1040px) {
-    .gallery-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-  }
-
-  /* کارت‌های عمودی 9:16 استاندارد ریلز */
-  .reel-card {
-    position: relative;
-    aspect-ratio: 9 / 16;
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: #0d0f15;
-    border: 1px solid var(--glass-border);
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                border-color 0.35s ease, 
-                box-shadow 0.35s ease;
-    will-change: transform;
-  }
-
-  .reel-card:hover {
-    transform: translateY(-6px) scale(1.015);
-    border-color: rgba(255, 84, 41, 0.5);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 20px var(--accent-glow);
-  }
-
-  .card-media {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s ease;
-  }
-
-  .reel-card:hover .card-media {
-    transform: scale(1.05);
-  }
-
-  .card-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.85) 100%);
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .card-badge {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    background: rgba(14, 16, 22, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(8px);
-    color: #fff;
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 5px 10px;
-    border-radius: 999px;
-    z-index: 2;
-  }
-
-  .play-indicator {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(6px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 2;
-  }
-  .play-indicator svg {
-    width: 12px;
-    height: 12px;
-    fill: #fff;
-    margin-left: 1px;
-  }
-
-  /* مودال */
-  .modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(3, 4, 6, 0.94);
-    backdrop-filter: blur(20px);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .modal-backdrop.open {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .modal-viewport {
-    position: relative;
-    width: 100%;
-    max-width: 440px;
-    aspect-ratio: 9 / 16;
-    border-radius: 24px;
-    overflow: hidden;
-    background: #000;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9);
-    transform: scale(0.94);
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  .modal-backdrop.open .modal-viewport {
-    transform: scale(1);
-  }
-
-  .modal-viewport video, .modal-viewport img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .btn-close {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: transform 0.2s ease, background 0.2s ease;
-  }
-
-  .btn-close:hover {
-    background: var(--accent);
-    transform: rotate(90deg);
-  }
-</style>
-
-<script>
-  (function() {
-    const ITEMS = [
-      { category: 'Corporate', src: 'Corporate/Corporate01.mp4', title: 'Corporate 01' },
-      { category: 'Corporate', src: 'Corporate/Corporate02.mp4', title: 'Corporate 02' },
-      { category: 'Corporate', src: 'Corporate/Corporate03.mp4', title: 'Corporate 03' },
-      { category: 'Corporate', src: 'Corporate/Corporate04.mp4', title: 'Corporate 04' },
-      { category: 'Corporate', src: 'Corporate/Corporate05.mp4', title: 'Corporate 05' },
-      { category: 'Corporate', src: 'Corporate/Corporate06.jpg', title: 'Corporate 06' },
-      { category: 'Corporate', src: 'Corporate/Corporate07.jpg', title: 'Corporate 07' },
-      { category: 'Corporate', src: 'Corporate/Corporate08.jpg', title: 'Corporate 08' },
-      { category: 'Corporate', src: 'Corporate/Corporate09.jpg', title: 'Corporate 09' },
-      { category: 'Corporate', src: 'Corporate/Corporate10.jpg', title: 'Corporate 10' },
-      { category: 'Corporate', src: 'Corporate/Corporate11.jpg', title: 'Corporate 11' },
-
-      { category: 'jewelry', src: 'jewelry/jewelry01.mp4', title: 'Jewelry 01' },
-      { category: 'jewelry', src: 'jewelry/jewelry02.mp4', title: 'Jewelry 02' },
-      { category: 'jewelry', src: 'jewelry/jewelry03.mp4', title: 'Jewelry 03' },
-
-      { category: 'cafe', src: 'cafe/cafe01.mp4', title: 'Cafe 01' },
-      { category: 'cafe', src: 'cafe/cafe02.mp4', title: 'Cafe 02' },
-      { category: 'cafe', src: 'cafe/cafe03.mp4', title: 'Cafe 03' },
-
-      { category: 'Medical', src: 'Medical/Medical 01.mp4', title: 'Medical 01' },
-      { category: 'Medical', src: 'Medical/Medical 02.mp4', title: 'Medical 02' },
-
-      { category: 'gym', src: 'gym.mp4', title: 'Gym Showcase' }
-    ];
-
-    const galleryGrid = document.getElementById('pfGalleryGrid');
-    const modalBackdrop = document.getElementById('pfModalBackdrop');
-    const modalContent = document.getElementById('pfModalContent');
-    const btnCloseModal = document.getElementById('pfBtnCloseModal');
-
-    function isVideo(src) {
-      const s = String(src).toLowerCase();
-      return s.endsWith('.mp4') || s.endsWith('.webm') || s.endsWith('.mov');
+  <style>
+    :root {
+      --bg: #050507;
+      --surface: #0e0e13;
+      --accent: #ff601c;
+      --accent-glow: rgba(255, 96, 28, 0.45);
+      --neon-violet: #8a2be2;
+      --text: #ffffff;
+      --text-dim: #8b8b9e;
+      --font-bold: 'Syne', sans-serif;
+      --font-fa: 'Vazirmatn', sans-serif;
+      --font-mono: 'Space Mono', monospace;
     }
 
-    function renderGrid(filter = 'all') {
-      if (!galleryGrid) return;
-      galleryGrid.innerHTML = '';
-      const list = filter === 'all' ? ITEMS : ITEMS.filter(item => item.category === filter);
-
-      list.forEach(item => {
-        const isVid = isVideo(item.src);
-        const card = document.createElement('article');
-        card.className = 'reel-card';
-        card.setAttribute('role', 'button');
-        card.setAttribute('tabindex', '0');
-
-        let mediaEl;
-        if (isVid) {
-          mediaEl = document.createElement('video');
-          mediaEl.className = 'card-media';
-          mediaEl.src = item.src;
-          mediaEl.muted = true;
-          mediaEl.loop = true;
-          mediaEl.playsInline = true;
-          mediaEl.preload = 'metadata';
-        } else {
-          mediaEl = document.createElement('img');
-          mediaEl.className = 'card-media';
-          mediaEl.src = item.src;
-          mediaEl.loading = 'lazy';
-        }
-
-        const overlay = document.createElement('div');
-        overlay.className = 'card-overlay';
-
-        const badge = document.createElement('span');
-        badge.className = 'card-badge';
-        badge.textContent = item.category;
-
-        if (isVid) {
-          const playIndicator = document.createElement('div');
-          playIndicator.className = 'play-indicator';
-          playIndicator.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-          card.appendChild(playIndicator);
-        }
-
-        card.appendChild(mediaEl);
-        card.appendChild(overlay);
-        card.appendChild(badge);
-
-        card.addEventListener('mouseenter', () => { if (isVid) mediaEl.play().catch(() => {}); });
-        card.addEventListener('mouseleave', () => {
-          if (isVid) {
-            mediaEl.pause();
-            mediaEl.currentTime = 0;
-          }
-        });
-
-        const triggerOpen = () => openModal(item);
-        card.addEventListener('click', triggerOpen);
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') triggerOpen();
-        });
-
-        galleryGrid.appendChild(card);
-      });
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    function openModal(item) {
-      modalContent.innerHTML = '';
-      const isVid = isVideo(item.src);
-      
-      if (isVid) {
-        const vid = document.createElement('video');
-        vid.src = item.src;
-        vid.controls = true;
-        vid.autoplay = true;
-        vid.playsInline = true;
-        vid.loop = true;
-        modalContent.appendChild(vid);
-      } else {
-        const img = document.createElement('img');
-        img.src = item.src;
-        modalContent.appendChild(img);
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-fa);
+      overflow-x: hidden;
+      padding: 60px 0 140px;
+      position: relative;
+      transition: direction 0.3s ease;
+    }
+
+    /* رفتار در زبان انگلیسی (LTR) */
+    html[dir="ltr"] body {
+      font-family: var(--font-bold), var(--font-fa);
+    }
+    html[dir="ltr"] .project-narrative,
+    html[dir="ltr"] .seo-subtitle,
+    html[dir="ltr"] .exp-desc {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-weight: 400;
+    }
+
+    /* ستاره‌های ۴پر چرخان سبک جمنای */
+    .bg-sparkle {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+      animation: geminiSpin 18s linear infinite;
+    }
+
+    .sparkle-1 { top: 8%; left: 6%; width: 50px; animation-duration: 22s; }
+    .sparkle-2 { top: 35%; right: 4%; width: 44px; animation-duration: 16s; animation-direction: reverse; }
+    .sparkle-3 { top: 62%; left: 5%; width: 58px; animation-duration: 24s; }
+    .sparkle-4 { top: 86%; right: 7%; width: 46px; animation-duration: 18s; animation-direction: reverse; }
+
+    @keyframes geminiSpin {
+      0% { transform: rotate(0deg) scale(0.92); }
+      50% { transform: rotate(180deg) scale(1.15); filter: drop-shadow(0 0 16px var(--accent-glow)); }
+      100% { transform: rotate(360deg) scale(0.92); }
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* نوار کنترل زبان و وضعیت */
+    .top-utility-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    .lang-btn:hover { color: #fff; }
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    /* هدر بولد */
+    .brand-lead-header {
+      margin-bottom: 55px;
+    }
+
+    .brand-badge {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .giant-title {
+      font-family: var(--font-bold);
+      font-size: clamp(2.8rem, 6.5vw, 6.2rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #ffffff 45%, rgba(255,255,255,0.22) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .sub-fa-title {
+      font-family: var(--font-fa);
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      font-weight: 900;
+      display: block;
+      color: #ffffff;
+      margin-top: 6px;
+      letter-spacing: 0;
+    }
+
+    .seo-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-dim);
+      margin-top: 18px;
+      font-weight: 300;
+      max-width: 780px;
+      line-height: 1.8;
+    }
+
+    .seo-subtitle strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* تب‌های فیلتر */
+    .filter-dock {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 75px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 22px;
+    }
+
+    .tab-item {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: inherit;
+      font-size: 1.02rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 18px;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tab-item:hover { color: #fff; }
+    .tab-item.active { color: #ffffff; }
+    .tab-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -23px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+    }
+
+    /* ساختار لاین‌های شاخص */
+    .showcase-flow {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .showcase-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .ghost-num {
+      position: absolute;
+      top: -55px;
+      inset-inline-start: -25px;
+      font-family: var(--font-bold);
+      font-size: clamp(6.5rem, 14vw, 13rem);
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.03);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      transition: color 0.5s ease, transform 0.5s ease;
+    }
+
+    .showcase-row:hover .ghost-num {
+      color: rgba(255, 96, 28, 0.09);
+      transform: translateY(-8px);
+    }
+
+    .bold-media {
+      position: relative;
+      width: 68%;
+      aspect-ratio: 16 / 9;
+      border-radius: 26px;
+      overflow: hidden;
+      z-index: 2;
+      box-shadow: 0 25px 60px -20px rgba(0, 0, 0, 0.95);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+    }
+
+    .showcase-row:hover .bold-media {
+      transform: scale(1.02);
+      box-shadow: 0 35px 80px -25px var(--accent-glow);
+    }
+
+    .bold-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.1) brightness(0.92);
+      transition: filter 0.5s ease, transform 0.6s ease;
+    }
+
+    .showcase-row:hover .bold-media video {
+      filter: saturate(1.2) brightness(1);
+      transform: scale(1.03);
+    }
+
+    .floating-layer {
+      position: absolute;
+      inset-inline-end: 0;
+      width: 44%;
+      z-index: 3;
+      background: rgba(14, 14, 19, 0.74);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 42px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.65);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+    }
+
+    html[dir="rtl"] .showcase-row:hover .floating-layer {
+      transform: translateX(-15px);
+      border-color: rgba(255, 96, 28, 0.45);
+    }
+    html[dir="ltr"] .showcase-row:hover .floating-layer {
+      transform: translateX(15px);
+      border-color: rgba(255, 96, 28, 0.45);
+    }
+
+    /* حالت قرینه (Reverse Row) */
+    .showcase-row.reverse {
+      justify-content: flex-start;
+    }
+    .showcase-row.reverse .bold-media {
+      margin-inline-start: auto;
+    }
+    .showcase-row.reverse .floating-layer {
+      inset-inline-end: auto;
+      inset-inline-start: 0;
+    }
+    .showcase-row.reverse .ghost-num {
+      inset-inline-start: auto;
+      inset-inline-end: -25px;
+    }
+
+    html[dir="rtl"] .showcase-row.reverse:hover .floating-layer {
+      transform: translateX(15px);
+    }
+    html[dir="ltr"] .showcase-row.reverse:hover .floating-layer {
+      transform: translateX(-15px);
+    }
+
+    .industry-lead {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .project-name {
+      font-size: clamp(1.45rem, 2.2vw, 2rem);
+      font-weight: 900;
+      line-height: 1.3;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .project-narrative {
+      font-size: 0.94rem;
+      line-height: 1.8;
+      color: #9d9db0;
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    .action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 18px;
+    }
+
+    .deliverable-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 5px 12px;
+      border-radius: 6px;
+      color: #cfcfe0;
+    }
+
+    .expand-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
+    }
+
+    .showcase-row:hover .expand-btn {
+      background: var(--accent);
+      color: #fff;
+      transform: rotate(-45deg) scale(1.1);
+      box-shadow: 0 0 18px var(--accent);
+    }
+
+    /* فلش‌های اتصال متحرک */
+    .flow-connector {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 95px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .connector-svg {
+      width: 150px;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .connector-path {
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 2;
+      stroke-dasharray: 6 6;
+      fill: none;
+    }
+
+    .flow-arrow-head {
+      fill: var(--accent);
+      filter: drop-shadow(0 0 8px var(--accent));
+      animation: arrowPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes arrowPulse {
+      0%, 100% { transform: translateY(0); opacity: 0.7; }
+      50% { transform: translateY(6px); opacity: 1; }
+    }
+
+    /* آزمایشگاه نوآوری و پروژه‌های تجربی */
+    .innovation-section {
+      margin-top: 130px;
+      padding-top: 80px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .innovation-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 45px;
+    }
+
+    .innovation-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 16px;
+      background: rgba(255, 96, 28, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 100px;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+    }
+
+    .blinking-indicator {
+      width: 7px;
+      height: 7px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent);
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    .innovation-title {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+
+    .experimental-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 28px;
+    }
+
+    .glow-loop-card {
+      position: relative;
+      border-radius: 24px;
+      padding: 2px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.04);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glow-loop-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .glow-loop-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        transparent,
+        var(--accent),
+        var(--neon-violet),
+        transparent 65%
+      );
+      animation: rotateLoop 6s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes rotateLoop {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+      background: #09090d;
+      border-radius: 22px;
+      padding: 32px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .exp-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: #a0a0b8;
+    }
+
+    .live-tag {
+      color: var(--accent);
+      font-weight: 700;
+      border: 1px solid rgba(255, 96, 28, 0.35);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .exp-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .exp-desc {
+      font-size: 0.92rem;
+      color: #8c8c9f;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .exp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .exp-link:hover { color: var(--accent); }
+
+    /* ریسپانسیو */
+    @media (max-width: 1024px) {
+      .showcase-row, .showcase-row.reverse {
+        flex-direction: column;
+        align-items: stretch;
       }
-
-      modalBackdrop.classList.add('open');
-      document.body.style.overflow = 'hidden';
+      .bold-media {
+        width: 100%;
+        border-radius: 20px;
+      }
+      .floating-layer {
+        position: relative;
+        width: 95%;
+        margin: -40px auto 0;
+        inset-inline-start: auto !important;
+        inset-inline-end: auto !important;
+        transform: none !important;
+        padding: 24px;
+      }
+      .ghost-num { display: none; }
+      .flow-connector { height: 60px; }
+      .experimental-grid { grid-template-columns: 1fr; }
     }
+  </style>
+</head>
+<body>
 
-    function closeModal() {
-      modalBackdrop.classList.remove('open');
-      document.body.style.overflow = '';
-      setTimeout(() => { modalContent.innerHTML = ''; }, 300);
-    }
+  <!-- المان‌های پس‌زمینه ستاره‌ای چرخنده جمنای -->
+  <svg class="bg-sparkle sparkle-1" viewBox="0 0 100 100" fill="none">
+    <path d="M50 0 C50 35 65 50 100 50 C65 50 50 65 50 100 C50 65 35 50 0 50 C35 50 50 35 50 0 Z" fill="url(#geminiGlow)" />
+    <defs>
+      <linearGradient id="geminiGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#ff601c"/>
+      </linearGradient>
+    </defs>
+  </svg>
+  <svg class="bg-sparkle sparkle-2" viewBox="0 0 100 100" fill="none"><path d="M50 0 C50 35 65 50 100 50 C65 50 50 65 50 100 C50 65 35 50 0 50 C35 50 50 35 50 0 Z" fill="url(#geminiGlow)" /></svg>
+  <svg class="bg-sparkle sparkle-3" viewBox="0 0 100 100" fill="none"><path d="M50 0 C50 35 65 50 100 50 C65 50 50 65 50 100 C50 65 35 50 0 50 C35 50 50 35 50 0 Z" fill="url(#geminiGlow)" /></svg>
+  <svg class="bg-sparkle sparkle-4" viewBox="0 0 100 100" fill="none"><path d="M50 0 C50 35 65 50 100 50 C65 50 50 65 50 100 C50 65 35 50 0 50 C35 50 50 35 50 0 Z" fill="url(#geminiGlow)" /></svg>
 
-    btnCloseModal.addEventListener('click', closeModal);
-    modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modalBackdrop.classList.contains('open')) closeModal();
-    });
+  <div class="container">
 
-    // مدیریت فیلترها
-    document.querySelectorAll('#pfFilterNav .filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#pfFilterNav .filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderGrid(btn.dataset.filter);
-      });
-    });
+    <!-- نوار سوییچر زبان -->
+    <div class="top-utility-bar">
+      <div></div>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="fa">FA</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ar">AR</button>
+      </div>
+    </div>
 
-    renderGrid('all');
-  })();
-</script>
+    <!-- هدر بولد و سئومحور -->
+    <header class="brand-lead-header">
+      <span class="brand-badge">
+        <svg width="14" height="14" viewBox="0 0 100 100" fill="#ff601c"><path d="M50 0 C50 35 65 50 100 50 C65 50 50 65 50 100 C50 65 35 50 0 50 C35 50 50 35 50 0 Z"/></svg>
+        <span data-i18n="badge">KAYAN CREATIVE // SELECTED ARCHIVE</span>
+      </span>
+      <h1 class="giant-title">
+        REPERTOIRE.
+        <span class="sub-fa-title" data-i18n="title">کارهای شاخص</span>
+      </h1>
+      <p class="seo-subtitle" data-i18n="subtitle">
+        مجموعه تولیدات استراتژیک <strong>کایان کریتیو (Kayan Creative)</strong>؛ راهکارهای تخصصی ویدیوگرافی، تیزرسازی مدرن شرکتی، مدیکال و سناریونویسی فروش‌محور برای برندهای پیشرو.
+      </p>
+    </header>
+
+    <!-- نوار فیلتر تب‌ها -->
+    <nav class="filter-dock">
+      <button class="tab-item active" data-category="all" data-i18n="tab_all">همه کارها</button>
+      <button class="tab-item" data-category="corporate" data-i18n="tab_corp">تجاری و شرکتی</button>
+      <button class="tab-item" data-category="medical" data-i18n="tab_med">پزشکی و سلامت</button>
+      <button class="tab-item" data-category="hospitality" data-i18n="tab_hosp">کافه و رستوران</button>
+      <button class="tab-item" data-category="other" data-i18n="tab_other">سایر کسب‌وکارها</button>
+    </nav>
+
+    <!-- جریان ۴ ردیف اصلی -->
+    <main class="showcase-flow">
+
+      <!-- اولویت ۱: تجاری و شرکتی -->
+      <article class="showcase-row" data-type="corporate">
+        <span class="ghost-num">01</span>
+        <div class="bold-media">
+          <video muted loop playsinline preload="metadata">
+            <source src="main/background.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="floating-layer">
+          <div class="industry-lead">
+            <span class="pulse-dot"></span>
+            <span data-i18n="p1_lead">CORPORATE & INDUSTRY • تجاری و شرکتی</span>
+          </div>
+          <h2 class="project-name" data-i18n="p1_title">روایت خطوط تولید و مستندسازی اقتدار صنعتی</h2>
+          <p class="project-narrative" data-i18n="p1_desc">
+            تولید مستندهای سینمایی و ویدیوی زیرساختی کارخانه‌ها توسط کایان کریتیو؛ پرواز FPV در اعماق سوله، زاویه‌بندی مهندسی و تدوین سنگین برای جلب اعتماد خریداران B2B.
+          </p>
+          <div class="action-row">
+            <div class="deliverable-pills">
+              <span class="pill" data-i18n="p1_tag1">فیلم صنعتی سازمانی</span>
+              <span class="pill" data-i18n="p1_tag2">سینماتوگرافی FPV</span>
+            </div>
+            <a href="#" class="expand-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- فلش اتصال ۱ به ۲ -->
+      <div class="flow-connector">
+        <svg class="connector-svg" viewBox="0 0 150 100">
+          <path class="connector-path" d="M110 0 Q95 60 40 85" />
+          <polygon class="flow-arrow-head" points="36,80 32,95 48,90" />
+        </svg>
+      </div>
+
+      <!-- اولویت ۲: پزشکی و سلامت -->
+      <article class="showcase-row reverse" data-type="medical">
+        <span class="ghost-num">02</span>
+        <div class="bold-media">
+          <video muted loop playsinline preload="metadata">
+            <source src="main/kayan.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="floating-layer">
+          <div class="industry-lead">
+            <span class="pulse-dot"></span>
+            <span data-i18n="p2_lead">MEDICAL & CLINIC • پزشکی و سلامت</span>
+          </div>
+          <h2 class="project-name" data-i18n="p2_title">پرستیژ کلینیک و سینماتوگرافی درمان</h2>
+          <p class="project-narrative" data-i18n="p2_desc">
+            استانداردسازی برندینگ پزشکان و مراکز درمانی؛ قاب‌بندی استریل ماکرو از دستگاه‌های های‌تک، متدهای درمانی و ثبت اعتماد بیمار در یک اتمسفر لوکس توسط کایان کریتیو.
+          </p>
+          <div class="action-row">
+            <div class="deliverable-pills">
+              <span class="pill" data-i18n="p2_tag1">تیزر برندینگ کلینیک</span>
+              <span class="pill" data-i18n="p2_tag2">ماکروتراپی و جراحی</span>
+            </div>
+            <a href="#" class="expand-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- فلش اتصال ۲ به ۳ -->
+      <div class="flow-connector">
+        <svg class="connector-svg" viewBox="0 0 150 100">
+          <path class="connector-path" d="M40 0 Q55 60 110 85" />
+          <polygon class="flow-arrow-head" points="102,90 118,95 114,80" />
+        </svg>
+      </div>
+
+      <!-- اولویت ۳: کافه و رستوران -->
+      <article class="showcase-row" data-type="hospitality">
+        <span class="ghost-num">03</span>
+        <div class="bold-media">
+          <video muted loop playsinline preload="metadata">
+            <source src="main/kayan.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="floating-layer">
+          <div class="industry-lead">
+            <span class="pulse-dot"></span>
+            <span data-i18n="p3_lead">HOSPITALITY • کافه و رستوران</span>
+          </div>
+          <h2 class="project-name" data-i18n="p3_title">اتمسفر، تجربه حسی و اشتهاآفرینی بصری</h2>
+          <p class="project-narrative" data-i18n="p3_desc">
+            تیزرهای تخصصی غذا و نوشیدنی با نورپردازی متمرکز و ریتم‌های ادیت جذاب در کایان کریتیو؛ تبدیل طعم و فضا به یک آهنربای بصری برای افزایش مراجعات حضوری.
+          </p>
+          <div class="action-row">
+            <div class="deliverable-pills">
+              <span class="pill" data-i18n="p3_tag1">سینماتوگرافی بار و غذا</span>
+              <span class="pill" data-i18n="p3_tag2">اتمسفر شبانه</span>
+            </div>
+            <a href="#" class="expand-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- فلش اتصال ۳ به ۴ -->
+      <div class="flow-connector">
+        <svg class="connector-svg" viewBox="0 0 150 100">
+          <path class="connector-path" d="M110 0 Q95 60 40 85" />
+          <polygon class="flow-arrow-head" points="36,80 32,95 48,90" />
+        </svg>
+      </div>
+
+      <!-- اولویت ۴: سایر کسب‌وکارها -->
+      <article class="showcase-row reverse" data-type="other">
+        <span class="ghost-num">04</span>
+        <div class="bold-media">
+          <video muted loop playsinline preload="metadata">
+            <source src="main/background.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="floating-layer">
+          <div class="industry-lead">
+            <span class="pulse-dot"></span>
+            <span data-i18n="p4_lead">COMMERCE & SERVICES • سایر کسب‌وکارها</span>
+          </div>
+          <h2 class="project-name" data-i18n="p4_title">ویدیوهای تجاری فروش‌محور و پرفورمنس مارکتینگ</h2>
+          <p class="project-narrative" data-i18n="p4_desc">
+            خلق محتوای تصویری مدرن برای برندهای فشن و پوشاک، معماری و ساختمانی، سالن‌های زیبایی و فروشگاه‌ها توسط کایان کریتیو؛ سناریونویسی قلاب‌دار برای ارتقای فروش.
+          </p>
+          <div class="action-row">
+            <div class="deliverable-pills">
+              <span class="pill" data-i18n="p4_tag1">کمپین فروش سوشال</span>
+              <span class="pill" data-i18n="p4_tag2">معرفی کانسپت و محصول</span>
+            </div>
+            <a href="#" class="expand-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- آزمایشگاه نوآوری و پروژه‌های تجربی کایان کریتیو -->
+    <section class="innovation-section">
+      <div class="innovation-header">
+        <div class="innovation-badge">
+          <span class="blinking-indicator"></span>
+          <span data-i18n="lab_badge">KAYAN CREATIVE // EXPERIMENTAL RUNTIME</span>
+        </div>
+        <h2 class="innovation-title" data-i18n="lab_title">نوآوری، پایپ‌لاین‌های تجربی و لانچ‌های نوین</h2>
+        <p class="seo-subtitle" data-i18n="lab_sub">
+          جایی که مرزهای ویدیوی تجاری را جابه‌جا می‌کنیم؛ تلفیق هوش مصنوعی، رندرهای سه‌بعدی و سبک‌های رادیکال تدوین برای پروژه‌های پیشگام کایان کریتیو.
+        </p>
+      </div>
+
+      <div class="experimental-grid">
+
+        <div class="glow-loop-card">
+          <div class="card-inner">
+            <div>
+              <div class="exp-status-bar">
+                <span>R&D PROTOCOL • AI 2026</span>
+                <span class="live-tag">INNOVATION</span>
+              </div>
+              <h3 class="exp-title" data-i18n="card1_title">سینماتوگرافی هوش مصنوعی و هایبرید پروداکشن</h3>
+              <p class="exp-desc" data-i18n="card1_desc">
+                توسعه پایپ‌لاین اختصاصی کایان کریتیو برای ادغام هوش مصنوعی مولد با تصویربرداری واقعی، کامپوزیت کاراکتر و زوایای غیرممکن دوربین.
+              </p>
+            </div>
+            <a href="#" class="exp-link">
+              <span data-i18n="card1_link">بررسی لاگ فنی پایپ‌لاین</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="glow-loop-card">
+          <div class="card-inner">
+            <div>
+              <div class="exp-status-bar">
+                <span>INTERACTIVE WEB • WEBGL</span>
+                <span class="live-tag">EXPERIMENTAL</span>
+              </div>
+              <h3 class="exp-title" data-i18n="card2_title">کاتالوگ‌های تعاملی ۳بعدی و کانسپت وب</h3>
+              <p class="exp-desc" data-i18n="card2_desc">
+                تجربیات دیجیتال ۳ بعدی که به کاربر صنعتی اجازه می‌دهد تجهیزات را ۳۶۰ درجه بررسی و مکانیزم‌های مهندسی را شبیه‌سازی کند.
+              </p>
+            </div>
+            <a href="#" class="exp-link">
+              <span data-i18n="card2_link">مشاهده دموی زنده</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="glow-loop-card">
+          <div class="card-inner">
+            <div>
+              <div class="exp-status-bar">
+                <span>AUDIO-VISUAL LAB</span>
+                <span class="live-tag">RADICAL EDIT</span>
+              </div>
+              <h3 class="exp-title" data-i18n="card3_title">طراحی صدا و ترنزیشن‌های ریتمیک کایان</h3>
+              <p class="exp-desc" data-i18n="card3_desc">
+                آهنگسازی اختصاصی، ساند دیزاین فولی و تمپوهای کوبنده ادیت در کایان کریتیو برای خلق بالاترین نرخ ماندگاری مخاطب در ثانیه‌های اول.
+              </p>
+            </div>
+            <a href="#" class="exp-link">
+              <span data-i18n="
