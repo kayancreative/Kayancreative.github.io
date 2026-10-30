@@ -88,8 +88,8 @@
       box-shadow:var(--elev);
     }
     .glass-soft{
-      background:rgba(255,255,255,.68);
-      border:1px solid rgba(0,0,0,.06);
+      background:var(--glass);
+      border:1px solid var(--border);
       backdrop-filter:blur(18px);
       -webkit-backdrop-filter:blur(18px);
       border-radius:16px;
@@ -149,7 +149,7 @@
       justify-content:flex-end;
     }
     .chip, select{
-      background:rgba(255,255,255,.75);
+      background:var(--glass);
       border:1px solid var(--border);
       color:var(--text);
       padding:9px 18px;
@@ -299,7 +299,7 @@
     .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
     .cta{
       display:inline-flex; align-items:center; gap:8px;
-      text-decoration:none; background:rgba(255,255,255,.75);
+      text-decoration:none; background:var(--glass);
       border:1px solid var(--border); color:var(--text);
       padding:9px 18px; border-radius:999px; font-weight:700; font-size:.88rem;
       transition:transform .22s ease, background .22s ease, border-color .22s ease;
@@ -317,7 +317,7 @@
     .list-item{
       display:flex; align-items:center; justify-content:space-between;
       gap:14px; padding:18px 22px; border-radius:16px;
-      background:rgba(255,255,255,.75); border:1px solid var(--border);
+      background:var(--glass); border:1px solid var(--border);
       cursor:pointer; transition:transform .2s ease, background .2s ease, border-color .2s ease;
     }
     [data-theme="dark"] .list-item{background:rgba(20,24,32,.55)}
@@ -345,7 +345,7 @@
     }
     .project-head{
       display:flex; align-items:center; justify-content:space-between;
-      padding:14px 20px; background:rgba(255,255,255,.75);
+      padding:14px 20px; background:var(--glass);
       border-bottom:1px solid var(--border);
     }
     [data-theme="dark"] .project-head{background:rgba(20,24,32,.5)}
@@ -356,7 +356,7 @@
     }
     .project-close:hover{background:rgba(255,84,41,.15)}
     .project-body{padding:0; flex:1; overflow:hidden}
-    .project-iframe{width:100%; height:78vh; border:0; display:block; background:#fff}
+    .project-iframe{width:100%; height:78vh; border:0; display:block; background:var(--bg)}
   </style>
 </head>
 
@@ -565,10 +565,10 @@
     const themeToggle = document.getElementById('themeToggle');
     function applyTheme(theme){
       document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('kayan_theme', theme);
+      try { localStorage.setItem('kayan_theme', theme); } catch(e) {}
     }
     function smartTheme(){
-      const saved = localStorage.getItem('kayan_theme');
+      let saved = null; try { saved = localStorage.getItem('kayan_theme'); } catch(e) {}
       if(saved) return saved;
       return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
@@ -587,7 +587,7 @@
       document.documentElement.lang = lang;
       document.documentElement.dir = dict.dir;
       langSelect.value = lang;
-      localStorage.setItem('kayan_lang', lang);
+      try { localStorage.setItem('kayan_lang', lang); } catch(e) {}
 
       // Translate all DOM data-i18n tags across all views/modules
       document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -605,7 +605,7 @@
     }
 
     function smartLocale(){
-      const saved = localStorage.getItem('kayan_lang');
+      let saved = null; try { saved = localStorage.getItem('kayan_lang'); } catch(e) {}
       if(saved && I18N[saved]) return saved;
       const nav = (navigator.language || '').toLowerCase();
       if(nav.startsWith('ar')) return 'ar';
@@ -701,20 +701,85 @@
     goCreativities.addEventListener('click', () => setView('creativities'));
 
     async function loadSamples(){
+      if (samplesLoaded) return;
+      samplesLoader.style.display = 'block';
       try {
-        samplesLoader.style.display = 'block';
         const res = await fetch('samples.html', { cache: 'no-store' });
         if(!res.ok) throw new Error('File not accessible');
-
         const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        samplesMount.innerHTML = doc.body ? doc.body.innerHTML : html;
 
-        // Extract body or parse whole text
-        const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-        const bodyContent = bodyMatch ? bodyMatch[1] : html;
+        // Run scripts from the imported module, preserving their attributes.
+        samplesMount.querySelectorAll('script').forEach(oldScript => {
+          const script = document.createElement('script');
+          for (const attr of oldScript.attributes) script.setAttribute(attr.name, attr.value);
+          if (!oldScript.src) script.textContent = oldScript.textContent;
+          oldScript.replaceWith(script);
+        });
+        samplesLoaded = true;
+        samplesLoader.style.display = 'none';
+        applyLanguage(currentLang); // Includes newly inserted data-i18n nodes.
+        window.dispatchEvent(new CustomEvent('kayan:theme', {
+          detail: { theme: document.documentElement.getAttribute('data-theme') }
+        }));
+      } catch (err) {
+        samplesLoader.textContent = (I18N[currentLang] || I18N.fa).samplesNotFound;
+        samplesLoader.style.display = 'block';
+        console.error('Could not load samples.html:', err);
+      }
+    }
 
-        samplesMount.innerHTML = bodyContent;
+    // Re-translate data-i18n nodes added later by scripts in any tab/module.
+    const dynamicI18nObserver = new MutationObserver(records => {
+      const dict = I18N[currentLang] || I18N.fa;
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          if (node.nodeType !== 1) continue;
+          if (node.matches('[data-i18n]')) {
+            const value = dict[node.getAttribute('data-i18n')];
+            if (value) node.textContent = value;
+          }
+          node.querySelectorAll?.('[data-i18n]').forEach(el => {
+            const value = dict[el.getAttribute('data-i18n')];
+            if (value) el.textContent = value;
+          });
+        }
+      }
+    });
+    dynamicI18nObserver.observe(document.getElementById('samplesMount'), {childList:true, subtree:true});
 
-        // Execute external or inline scripts contained in samples.html
-        const scripts = samplesMount.querySelectorAll('script');
-        scripts.forEach(oldScript => {
-          const s = document.createEl
+    // Initialize saved/system preferences and start the repeating typewriter.
+    applyTheme(smartTheme());
+    applyLanguage(smartLocale());
+
+    // Support direct links to each tab on first load.
+    const initialHash = location.hash.toLowerCase();
+    if (initialHash === '#samples') setView('samples');
+    else if (initialHash === '#creativities') setView('creativities');
+
+    // Project details modal
+    const projectOverlay = document.getElementById('projectOverlay');
+    const projectFrame = document.getElementById('projectFrame');
+    const projectClose = document.getElementById('projectClose');
+    const projectItem = document.getElementById('itemTavanBardasht');
+    function openProject(){
+      if (!projectItem) return;
+      projectFrame.src = projectItem.getAttribute('data-file');
+      projectOverlay.style.display = 'flex';
+      projectOverlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeProject(){
+      projectOverlay.style.display = 'none';
+      projectOverlay.setAttribute('aria-hidden', 'true');
+      projectFrame.src = 'about:blank';
+      document.body.style.overflow = '';
+    }
+    projectItem?.addEventListener('click', openProject);
+    projectClose.addEventListener('click', closeProject);
+    projectOverlay.addEventListener('click', e => { if (e.target === projectOverlay) closeProject(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
+  </script>
+</body>
+</html>
